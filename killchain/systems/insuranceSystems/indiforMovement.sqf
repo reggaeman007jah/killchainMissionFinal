@@ -22,4 +22,4 @@ while {RFCHECK} do {
 	sleep 180;
 };
 
-// not currently used - test to see if still needed!
+// not currently used - keeping it in case is still needed!

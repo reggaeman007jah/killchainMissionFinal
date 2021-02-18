@@ -842,8 +842,8 @@ for "_i" from 1 to 2 do {
 // technicals 
 [_anchor, _objPos] execVM "killChain\systems\spawnerSystems\spawnTechnicals.sqf";
 
-RFCHECK2 = true; 
 _cycles = 0;
+RFCHECK2 = true; 
 
 while {RFCHECK2} do {
 

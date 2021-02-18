@@ -20,5 +20,3 @@ for "_i" from 1 to _num do {
 	_opforVic doMove _target;
 	sleep _delay;
 };
-
-// test
