@@ -839,7 +839,8 @@ for "_i" from 1 to 2 do {
 	sleep 180;
 };
 
-// sleep 120; // too much?
+// technicals 
+[_anchor, _objPos] execVM "killChain\systems\spawnerSystems\spawnTechnicals.sqf";
 
 RFCHECK2 = true; 
 _cycles = 0;
