@@ -35,7 +35,7 @@ _base setMarkerAlpha 0.5;
 _objPos = RGG_PatrolPoints select 0;
 
 // init Point 1 Obj  
-[_initStartPos, _objPos] execVM "killChain\mission\objPoint1.sqf";
+[_initStartPos, _objPos] execVM "killChain\mission\patrolCycle.sqf";
 
 sleep 10;
 

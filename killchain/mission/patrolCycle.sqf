@@ -1001,109 +1001,168 @@ RGG_respawnStore pushBack [_bluforSpawn, _indiSpawn]; // sending to global array
 patrolPointsTaken = patrolPointsTaken +1;
 
 // set up next obj 
-_anchor = _objPos;
+_anchor = _objPos; // switcheroo 
+// private ["_mainAnchor"]; // may not need this..?
 
+// this switch repurposes the _objPos value with the next obj position 
 switch (patrolPointsTaken) do {
 	case 1: {
 		_objPos = RGG_PatrolPoints select 1;
-		[_anchor, _objPos] execVM "killChain\mission\objPoint1.sqf";
-		_indi = [];
-		_units = allUnits inAreaArray "redzone";
-		{if ((side _x) == INDEPENDENT) then {_indi pushBack _x}} forEach _units;
-		{
-			_randomDir = selectRandom [270, 310, 00, 50, 90];
-			_randomDist = selectRandom [20, 22, 24, 26, 28, 30];
-			_endPoint1 = _objPos getPos [_randomDist,_randomDir];
-			sleep 1;
-			_x setBehaviour "COMBAT";
-			_x doMove _endPoint1;
-		} forEach _indi;
-		systemChat "RUNNING PHASE 2";
+		systemChat "RUNNING PHASE 2";	
 	};
 	case 2: {
 		_objPos = RGG_PatrolPoints select 2;
-		[_anchor, _objPos] execVM "killChain\mission\objPoint1.sqf";
-		_indi = [];
-		_units = allUnits inAreaArray "redzone";
-		{if ((side _x) == INDEPENDENT) then {_indi pushBack _x}} forEach _units;
-		{
-			_randomDir = selectRandom [270, 310, 00, 50, 90];
-			_randomDist = selectRandom [20, 22, 24, 26, 28, 30];
-			_endPoint1 = _objPos getPos [_randomDist,_randomDir];
-			sleep 1;
-			_x setBehaviour "COMBAT";
-			_x doMove _endPoint1;
-		} forEach _indi;
-		systemChat "RUNNING PHASE 3";
+		systemChat "RUNNING PHASE 3";	
 	};
 	case 3: {
-		_objPos = RGG_PatrolPoints select 3;
-		[_anchor, _objPos] execVM "killChain\mission\objPoint1.sqf";
-		_indi = [];
-		_units = allUnits inAreaArray "redzone";
-		{if ((side _x) == INDEPENDENT) then {_indi pushBack _x}} forEach _units;
-		{
-			_randomDir = selectRandom [270, 310, 00, 50, 90];
-			_randomDist = selectRandom [20, 22, 24, 26, 28, 30];
-			_endPoint1 = _objPos getPos [_randomDist,_randomDir];
-			sleep 1;
-			_x setBehaviour "COMBAT";
-			_x doMove _endPoint1;
-		} forEach _indi;
-		systemChat "RUNNING PHASE 4";
+		_objPos = RGG_PatrolPoints select 1;
+		systemChat "RUNNING PHASE 4";	
 	};
 	case 4: {
-		_objPos = RGG_PatrolPoints select 4;
-		[_anchor, _objPos] execVM "killChain\mission\objPoint1.sqf";
-		_indi = [];
-		_units = allUnits inAreaArray "redzone";
-		{if ((side _x) == INDEPENDENT) then {_indi pushBack _x}} forEach _units;
-		{
-			_randomDir = selectRandom [270, 310, 00, 50, 90];
-			_randomDist = selectRandom [20, 22, 24, 26, 28, 30];
-			_endPoint1 = _objPos getPos [_randomDist,_randomDir];
-			sleep 1;
-			_x setBehaviour "COMBAT";
-			_x doMove _endPoint1;
-		} forEach _indi;
-		systemChat "RUNNING PHASE 5";
+		_objPos = RGG_PatrolPoints select 2;
+		systemChat "RUNNING PHASE 5";	
 	};
 	case 5: {
-		_objPos = RGG_PatrolPoints select 5;
-		[_anchor, _objPos] execVM "killChain\mission\objPoint1.sqf";
-		_indi = [];
-		_units = allUnits inAreaArray "redzone";
-		{if ((side _x) == INDEPENDENT) then {_indi pushBack _x}} forEach _units;
-		{
-			_randomDir = selectRandom [270, 310, 00, 50, 90];
-			_randomDist = selectRandom [20, 22, 24, 26, 28, 30];
-			_endPoint1 = _objPos getPos [_randomDist,_randomDir];
-			sleep 1;
-			_x setBehaviour "COMBAT";
-			_x doMove _endPoint1;
-		} forEach _indi;
-		systemChat "RUNNING PHASE 6";
+		_objPos = RGG_PatrolPoints select 1;
+		systemChat "RUNNING PHASE 6";	
 	};
 	case 6: {
-		_objPos = RGG_PatrolPoints select 6;
-		[_anchor, _objPos] execVM "killChain\mission\objPoint1.sqf";
-		_indi = [];
-		_units = allUnits inAreaArray "redzone";
-		{if ((side _x) == INDEPENDENT) then {_indi pushBack _x}} forEach _units;
-		{
-			_randomDir = selectRandom [270, 310, 00, 50, 90];
-			_randomDist = selectRandom [20, 22, 24, 26, 28, 30];
-			_endPoint1 = _objPos getPos [_randomDist,_randomDir];
-			sleep 1;
-			_x setBehaviour "COMBAT";
-			_x doMove _endPoint1;
-		} forEach _indi;
-		systemChat "RUNNING ENDGAME";
+		_objPos = RGG_PatrolPoints select 2;
+		systemChat "RUNNING ENDGAME";	
 	};
 	default {
-		systemChat "error Patrol Point switch";
+		systemChat "error: Patrol Point switch";
 	};
 };
+
+if (patrolPointsTaken <= 5) then {
+	[_anchor, _objPos] execVM "killChain\mission\patrolCycle.sqf";	
+} else {
+	[_anchor, _objPos] execVM "killChain\mission\patrolFinal.sqf";	
+};
+
+_units = allUnits inAreaArray "redzone";
+_indi = [];
+
+{
+	if ((side _x) == INDEPENDENT) then {_indi pushBack _x}
+} forEach _units;
+
+{
+	_randomDir = selectRandom [270, 310, 00, 50, 90];
+	_randomDist = selectRandom [20, 22, 24, 26, 28, 30];
+	_endPoint1 = _objPos getPos [_randomDist,_randomDir];
+	sleep 1;
+	_x setBehaviour "COMBAT";
+	_x doMove _endPoint1;
+} forEach _indi;
+
+// cleanup
+{ deleteVehicle _x } forEach allDead;
+systemChat "RUNNING CLEANUP";
+
+
+// switch (patrolPointsTaken) do {
+// 	case 1: {
+// 		_objPos = RGG_PatrolPoints select 1;
+// 		[_anchor, _objPos] execVM "killChain\mission\patrolCycle.sqf";
+// 		_indi = [];
+// 		_units = allUnits inAreaArray "redzone";
+// 		{if ((side _x) == INDEPENDENT) then {_indi pushBack _x}} forEach _units;
+// 		{
+// 			_randomDir = selectRandom [270, 310, 00, 50, 90];
+// 			_randomDist = selectRandom [20, 22, 24, 26, 28, 30];
+// 			_endPoint1 = _objPos getPos [_randomDist,_randomDir];
+// 			sleep 1;
+// 			_x setBehaviour "COMBAT";
+// 			_x doMove _endPoint1;
+// 		} forEach _indi;
+// 		systemChat "RUNNING PHASE 2";
+// 	};
+// 	case 2: {
+// 		_objPos = RGG_PatrolPoints select 2;
+// 		[_anchor, _objPos] execVM "killChain\mission\objPoint1.sqf";
+// 		_indi = [];
+// 		_units = allUnits inAreaArray "redzone";
+// 		{if ((side _x) == INDEPENDENT) then {_indi pushBack _x}} forEach _units;
+// 		{
+// 			_randomDir = selectRandom [270, 310, 00, 50, 90];
+// 			_randomDist = selectRandom [20, 22, 24, 26, 28, 30];
+// 			_endPoint1 = _objPos getPos [_randomDist,_randomDir];
+// 			sleep 1;
+// 			_x setBehaviour "COMBAT";
+// 			_x doMove _endPoint1;
+// 		} forEach _indi;
+// 		systemChat "RUNNING PHASE 3";
+// 	};
+// 	case 3: {
+// 		_objPos = RGG_PatrolPoints select 3;
+// 		[_anchor, _objPos] execVM "killChain\mission\objPoint1.sqf";
+// 		_indi = [];
+// 		_units = allUnits inAreaArray "redzone";
+// 		{if ((side _x) == INDEPENDENT) then {_indi pushBack _x}} forEach _units;
+// 		{
+// 			_randomDir = selectRandom [270, 310, 00, 50, 90];
+// 			_randomDist = selectRandom [20, 22, 24, 26, 28, 30];
+// 			_endPoint1 = _objPos getPos [_randomDist,_randomDir];
+// 			sleep 1;
+// 			_x setBehaviour "COMBAT";
+// 			_x doMove _endPoint1;
+// 		} forEach _indi;
+// 		systemChat "RUNNING PHASE 4";
+// 	};
+// 	case 4: {
+// 		_objPos = RGG_PatrolPoints select 4;
+// 		[_anchor, _objPos] execVM "killChain\mission\objPoint1.sqf";
+// 		_indi = [];
+// 		_units = allUnits inAreaArray "redzone";
+// 		{if ((side _x) == INDEPENDENT) then {_indi pushBack _x}} forEach _units;
+// 		{
+// 			_randomDir = selectRandom [270, 310, 00, 50, 90];
+// 			_randomDist = selectRandom [20, 22, 24, 26, 28, 30];
+// 			_endPoint1 = _objPos getPos [_randomDist,_randomDir];
+// 			sleep 1;
+// 			_x setBehaviour "COMBAT";
+// 			_x doMove _endPoint1;
+// 		} forEach _indi;
+// 		systemChat "RUNNING PHASE 5";
+// 	};
+// 	case 5: {
+// 		_objPos = RGG_PatrolPoints select 5;
+// 		[_anchor, _objPos] execVM "killChain\mission\objPoint1.sqf";
+// 		_indi = [];
+// 		_units = allUnits inAreaArray "redzone";
+// 		{if ((side _x) == INDEPENDENT) then {_indi pushBack _x}} forEach _units;
+// 		{
+// 			_randomDir = selectRandom [270, 310, 00, 50, 90];
+// 			_randomDist = selectRandom [20, 22, 24, 26, 28, 30];
+// 			_endPoint1 = _objPos getPos [_randomDist,_randomDir];
+// 			sleep 1;
+// 			_x setBehaviour "COMBAT";
+// 			_x doMove _endPoint1;
+// 		} forEach _indi;
+// 		systemChat "RUNNING PHASE 6";
+// 	};
+// 	case 6: {
+// 		_objPos = RGG_PatrolPoints select 6;
+// 		[_anchor, _objPos] execVM "killChain\mission\patrolCycle.sqf";
+// 		_indi = [];
+// 		_units = allUnits inAreaArray "redzone";
+// 		{if ((side _x) == INDEPENDENT) then {_indi pushBack _x}} forEach _units;
+// 		{
+// 			_randomDir = selectRandom [270, 310, 00, 50, 90];
+// 			_randomDist = selectRandom [20, 22, 24, 26, 28, 30];
+// 			_endPoint1 = _objPos getPos [_randomDist,_randomDir];
+// 			sleep 1;
+// 			_x setBehaviour "COMBAT";
+// 			_x doMove _endPoint1;
+// 		} forEach _indi;
+// 		systemChat "RUNNING ENDGAME";
+// 	};
+// 	default {
+// 		systemChat "error Patrol Point switch";
+// 	};
+// };
 
 
 
@@ -1114,9 +1173,7 @@ switch (patrolPointsTaken) do {
 // _anchor = _objPos;
 // _objPos = RGG_PatrolPoints select 1;
 
-// cleanup
-{ deleteVehicle _x } forEach allDead;
-systemChat "RUNNING CLEANUP";
+
 
 // init Point 1 Obj  
 

@@ -19,22 +19,18 @@ System with more simple system
 // this is to enable player-controlled mission start 
 waitUntil { (KILLCHAINMISSIONSTART == true) };
 
-systemChat "cold-zone system works";
+systemChat "cold-zone system activated - go to the office to start the mission";
 
 // initialise counter system 
 execVM "killchain\systems\countingSystems\counter.sqf";
 
-// initialise flybys 
-// execVM "killchain\systems\ambientSystems\randomFlybys.sqf";
-
-// initialise pickup scripts 
+// initialise mh-6 pickup scripts 
 execVM "killchain\systems\pickupSystems\pickUpSystems1\pickupInit.sqf";
 execVM "killchain\systems\pickupSystems\pickUpSystems2\pickupInit.sqf";
 execVM "killchain\systems\pickupSystems\pickUpSystems3\pickupInit.sqf";
 
 // initialise para spawner script 
 execVM "killchain\systems\spawnerSystems\spawnParas.sqf";
-
 
 // voice bools 
 COMMANDSPEAKING = false;
@@ -59,16 +55,19 @@ publicVariable "patrolPointsTaken";
 
 // flybyIsActive 
 flybyIsActive = true;
+// this helps to ensure an orderly spawning of ambient aircraft 
 
 // field bases array
 RGG_fieldbases = [];
-// what dies this do?? store patrol base info?
+// TBC what does this hold and what is it used for?
 
 // campItems 
 RGG_CampItems = [];
+// used to store and then delete camp data 
 
 // respawn location store 
 RGG_respawnStore = [];
+// used to manage the last-point-spawn system 
 
 // mission status 
 MISSIONTASK = "Setting up initial patrol";
@@ -92,7 +91,7 @@ RGG_PatrolPoints pushBack _killchainObj4;
 RGG_PatrolPoints pushBack _killchainObj5;
 RGG_PatrolPoints pushBack _killchainObj6;
 RGG_PatrolPoints pushBack _killchainObjFinal;
-// RGG_PatrolPoints now holds 6 patrol points and 1 end point 
+// here RGG_PatrolPoints holds 6 patrol points and 1 end point 
 
 // roamers 
 execVM "killChain\systems\randomThreatSystems\randomThreats.sqf";
