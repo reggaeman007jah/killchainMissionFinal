@@ -4,7 +4,7 @@ VAA_Activate = true;
 
 sleep 10;
 
-
+// this manages the start of the mission
 KILLCHAINMISSIONSTART = false;
 
 // initialise APS
