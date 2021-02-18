@@ -198,7 +198,458 @@ publicVariable "reinforcementsCalled";
 
 ============================================================================
 
+// createGuardedPoint [east, RGG_patrol_obj, -1, objNull];
+// systemChat "guard wp set";
+
 ============================================================================
+
+// // calculate static defences 
+// switch (patrolPointsTaken) do {
+// 	case 0: {
+// 		systemChat "no statics this time around";
+// 		_rndOp1 = random [8, 12, 16];
+// 		_grp = createGroup east;
+// 		systemchat format ["op defence: %1", _rndOp1];
+// 		for "_i" from 1 to _rndOp1 do {
+// 			_rndtype = selectRandom _opforClass;
+// 			_pos = [RGG_patrol_obj, 0, 200] call BIS_fnc_findSafePos;
+// 			_unit = _grp createUnit [_rndtype, _pos, [], 30, "none"]; 
+// 			_randomDir = selectRandom [270, 290, 01, 30, 90];
+// 			_randomDist = random [5, 25, 50]; 
+// 			_endPoint = RGG_patrol_obj getPos [_randomDist, _randomDir];
+// 			_unit setBehaviour "COMBAT";
+// 			_unit doMove _endPoint;
+// 			spawnedOpforUnit = spawnedOpforUnit +1;
+// 			sleep 1;									
+// 		};
+// 	};
+// 	case 1: {
+// 		for "_i" from 1 to 1 do {
+// 			_pos = [RGG_patrol_obj, 0, 50] call BIS_fnc_findSafePos; 
+// 			_unit = _grp createUnit ["o_g_soldier_ar_f", _pos, [], 1, "none"]; 
+// 			_static = "O_HMG_01_high_F" createVehicle _pos;
+// 			_unit moveInGunner _static; 
+// 			_unit setBehaviour "COMBAT";
+// 			spawnedOpforUnit = spawnedOpforUnit + 1;
+// 			systemChat "spawning static opfor";
+// 			sleep 1;						
+// 		};
+// 		for "_i" from 1 to 1 do {
+// 			_pos = [RGG_patrol_obj, 0, 50] call BIS_fnc_findSafePos; 
+// 			_unit = _grp createUnit ["o_g_soldier_ar_f", _pos, [], 1, "none"]; 
+// 			_static = "O_static_AT_F" createVehicle _pos;
+// 			_unit moveInGunner _static; 
+// 			_unit setBehaviour "COMBAT";
+// 			spawnedOpforUnit = spawnedOpforUnit + 1;
+// 			systemChat "spawning static opfor";
+// 			sleep 1;						
+// 		};
+// 		// O_static_AT_F
+// 		_rndOp1 = random [8, 14, 18];
+// 		_grp = createGroup east;
+// 		systemchat format ["op defence: %1", _rndOp1];
+// 		for "_i" from 1 to _rndOp1 do {
+// 			_rndtype = selectRandom _opforClass;
+// 			_pos = [RGG_patrol_obj, 0, 200] call BIS_fnc_findSafePos;
+// 			_unit = _grp createUnit [_rndtype, _pos, [], 30, "none"]; 
+// 			_randomDir = selectRandom [270, 290, 01, 30, 90];
+// 			_randomDist = random [5, 25, 50]; 
+// 			_endPoint = RGG_patrol_obj getPos [_randomDist, _randomDir];
+// 			_unit setBehaviour "COMBAT";
+// 			_unit doMove _endPoint;
+// 			spawnedOpforUnit = spawnedOpforUnit +1;
+// 			sleep 1;									
+// 		};
+// 	};
+// 	case 2: {
+// 		for "_i" from 1 to 1 do {
+// 			_pos = [RGG_patrol_obj, 0, 50] call BIS_fnc_findSafePos; 
+// 			_unit = _grp createUnit ["o_g_soldier_ar_f", _pos, [], 1, "none"]; 
+// 			_static = "O_G_Mortar_01_F" createVehicle _pos;
+// 			_unit moveInGunner _static; 
+// 			_unit setBehaviour "COMBAT";
+// 			spawnedOpforUnit = spawnedOpforUnit + 1;
+// 			systemChat "spawning mortar opfor";
+// 			sleep 1;						
+// 		};
+// 		for "_i" from 1 to 1 do {
+// 			_pos = [RGG_patrol_obj, 0, 50] call BIS_fnc_findSafePos; 
+// 			_unit = _grp createUnit ["o_g_soldier_ar_f", _pos, [], 1, "none"]; 
+// 			_static = "O_static_AT_F" createVehicle _pos;
+// 			_unit moveInGunner _static; 
+// 			_unit setBehaviour "COMBAT";
+// 			spawnedOpforUnit = spawnedOpforUnit + 1;
+// 			systemChat "spawning static opfor";
+// 			sleep 1;						
+// 		};
+// 		_rndOp1 = random [8, 16, 20];
+// 		_grp = createGroup east;
+// 		systemchat format ["op defence: %1", _rndOp1];
+// 		for "_i" from 1 to _rndOp1 do {
+// 			_rndtype = selectRandom _opforClass;
+// 			_pos = [RGG_patrol_obj, 0, 200] call BIS_fnc_findSafePos;
+// 			_unit = _grp createUnit [_rndtype, _pos, [], 30, "none"]; 
+// 			_randomDir = selectRandom [270, 290, 01, 30, 90];
+// 			_randomDist = random [5, 25, 50]; 
+// 			_endPoint = RGG_patrol_obj getPos [_randomDist, _randomDir];
+// 			_unit setBehaviour "COMBAT";
+// 			_unit doMove _endPoint;
+// 			spawnedOpforUnit = spawnedOpforUnit +1;
+// 			sleep 1;									
+// 		};
+// 	};
+// 	case 3: {
+// 		for "_i" from 1 to 2 do {
+// 			_pos = [RGG_patrol_obj, 0, 75] call BIS_fnc_findSafePos; 
+// 			_unit = _grp createUnit ["o_g_soldier_ar_f", _pos, [], 1, "none"]; 
+// 			_static = "O_HMG_01_high_F" createVehicle _pos;
+// 			_unit moveInGunner _static; 
+// 			_unit setBehaviour "COMBAT";
+// 			spawnedOpforUnit = spawnedOpforUnit + 1;
+// 			systemChat "spawning static opfor";
+// 			sleep 1;						
+// 		};
+// 		for "_i" from 1 to 1 do {
+// 			_pos = [RGG_patrol_obj, 0, 50] call BIS_fnc_findSafePos; 
+// 			_unit = _grp createUnit ["o_g_soldier_ar_f", _pos, [], 1, "none"]; 
+// 			_static = "O_static_AT_F" createVehicle _pos;
+// 			_unit moveInGunner _static; 
+// 			_unit setBehaviour "COMBAT";
+// 			spawnedOpforUnit = spawnedOpforUnit + 1;
+// 			systemChat "spawning static opfor";
+// 			sleep 1;						
+// 		};
+// 		_rndOp1 = random [8, 12, 18];
+// 		_grp = createGroup east;
+// 		systemchat format ["op defence: %1", _rndOp1];
+// 		for "_i" from 1 to _rndOp1 do {
+// 			_rndtype = selectRandom _opforClass;
+// 			_pos = [RGG_patrol_obj, 0, 200] call BIS_fnc_findSafePos;
+// 			_unit = _grp createUnit [_rndtype, _pos, [], 30, "none"]; 
+// 			_randomDir = selectRandom [270, 290, 01, 30, 90];
+// 			_randomDist = random [5, 25, 50]; 
+// 			_endPoint = RGG_patrol_obj getPos [_randomDist, _randomDir];
+// 			_unit setBehaviour "COMBAT";
+// 			_unit doMove _endPoint;
+// 			spawnedOpforUnit = spawnedOpforUnit +1;
+// 			sleep 1;									
+// 		};
+// 		_rndOp1 = random [4, 8, 10];
+// 		_grp = createGroup east;
+// 		systemchat format ["op defence: %1", _rndOp1];
+// 		for "_i" from 1 to _rndOp1 do {
+// 			_rndtype = selectRandom _opforClass;
+// 			_pos = [RGG_patrol_obj, 0, 200] call BIS_fnc_findSafePos;
+// 			_unit = _grp createUnit [_rndtype, _pos, [], 30, "none"]; 
+// 			_randomDir = selectRandom [270, 290, 01, 30, 90];
+// 			_randomDist = random [25, 50, 75]; 
+// 			_endPoint = RGG_patrol_obj getPos [_randomDist, _randomDir];
+// 			_unit setBehaviour "COMBAT";
+// 			_unit doMove _endPoint;
+// 			spawnedOpforUnit = spawnedOpforUnit +1;
+// 			sleep 1;									
+// 		};
+// 	};
+// 	case 4: {
+// 		for "_i" from 1 to 2 do {
+// 			_pos = [RGG_patrol_obj, 0, 150] call BIS_fnc_findSafePos; 
+// 			_unit = _grp createUnit ["o_g_soldier_ar_f", _pos, [], 1, "none"]; 
+// 			_static = "O_G_Mortar_01_F" createVehicle _pos;
+// 			_unit moveInGunner _static; 
+// 			_unit setBehaviour "COMBAT";
+// 			spawnedOpforUnit = spawnedOpforUnit + 1;
+// 			systemChat "spawning mortar opfor";
+// 			sleep 1;						
+// 		};
+// 		for "_i" from 1 to 2 do {
+// 			_pos = [RGG_patrol_obj, 0, 50] call BIS_fnc_findSafePos; 
+// 			_unit = _grp createUnit ["o_g_soldier_ar_f", _pos, [], 1, "none"]; 
+// 			_static = "O_static_AT_F" createVehicle _pos;
+// 			_unit moveInGunner _static; 
+// 			_unit setBehaviour "COMBAT";
+// 			spawnedOpforUnit = spawnedOpforUnit + 1;
+// 			systemChat "spawning static opfor";
+// 			sleep 1;						
+// 		};
+// 		_rndOp1 = random [8, 12, 18];
+// 		_grp = createGroup east;
+// 		systemchat format ["op defence: %1", _rndOp1];
+// 		for "_i" from 1 to _rndOp1 do {
+// 			_rndtype = selectRandom _opforClass;
+// 			_pos = [RGG_patrol_obj, 0, 200] call BIS_fnc_findSafePos;
+// 			_unit = _grp createUnit [_rndtype, _pos, [], 30, "none"]; 
+// 			_randomDir = selectRandom [270, 290, 01, 30, 90];
+// 			_randomDist = random [5, 25, 50]; 
+// 			_endPoint = RGG_patrol_obj getPos [_randomDist, _randomDir];
+// 			_unit setBehaviour "COMBAT";
+// 			_unit doMove _endPoint;
+// 			spawnedOpforUnit = spawnedOpforUnit +1;
+// 			sleep 1;									
+// 		};
+// 		_rndOp1 = random [8, 10, 14];
+// 		_grp = createGroup east;
+// 		systemchat format ["op defencee: %1", _rndOp1];
+// 		for "_i" from 1 to _rndOp1 do {
+// 			_rndtype = selectRandom _opforClass;
+// 			_pos = [RGG_patrol_obj, 0, 200] call BIS_fnc_findSafePos;
+// 			_unit = _grp createUnit [_rndtype, _pos, [], 30, "none"]; 
+// 			_randomDir = selectRandom [270, 290, 01, 30, 90];
+// 			_randomDist = random [25, 50, 75]; 
+// 			_endPoint = RGG_patrol_obj getPos [_randomDist, _randomDir];
+// 			_unit setBehaviour "COMBAT";
+// 			_unit doMove _endPoint;
+// 			spawnedOpforUnit = spawnedOpforUnit +1;
+// 			sleep 1;									
+// 		};
+// 	};
+// 	case 5: {
+// 		for "_i" from 1 to 1 do {
+// 			_pos = [RGG_patrol_obj, 0, 75] call BIS_fnc_findSafePos; 
+// 			_unit = _grp createUnit ["o_g_soldier_ar_f", _pos, [], 1, "none"]; 
+// 			_static = "O_HMG_01_high_F" createVehicle _pos;
+// 			_unit moveInGunner _static; 
+// 			_unit setBehaviour "COMBAT";
+// 			spawnedOpforUnit = spawnedOpforUnit + 1;
+// 			systemChat "spawning static opfor";
+// 			sleep 1;						
+// 		};
+// 			for "_i" from 1 to 1 do {
+// 			_pos = [RGG_patrol_obj, 0, 150] call BIS_fnc_findSafePos; 
+// 			_unit = _grp createUnit ["o_g_soldier_ar_f", _pos, [], 1, "none"]; 
+// 			_static = "O_G_Mortar_01_F" createVehicle _pos;
+// 			_unit moveInGunner _static; 
+// 			_unit setBehaviour "COMBAT";
+// 			spawnedOpforUnit = spawnedOpforUnit + 1;
+// 			systemChat "spawning mortar opfor";
+// 			sleep 1;						
+// 		};
+// 		for "_i" from 1 to 1 do {
+// 			_pos = [RGG_patrol_obj, 0, 50] call BIS_fnc_findSafePos; 
+// 			_unit = _grp createUnit ["o_g_soldier_ar_f", _pos, [], 1, "none"]; 
+// 			_static = "O_static_AT_F" createVehicle _pos;
+// 			_unit moveInGunner _static; 
+// 			_unit setBehaviour "COMBAT";
+// 			spawnedOpforUnit = spawnedOpforUnit + 1;
+// 			systemChat "spawning static opfor";
+// 			sleep 1;						
+// 		};
+// 		_rndOp1 = random [10, 14, 20];
+// 		_grp = createGroup east;
+// 		systemchat format ["op defence: %1", _rndOp1];
+// 		for "_i" from 1 to _rndOp1 do {
+// 			_rndtype = selectRandom _opforClass;
+// 			_pos = [RGG_patrol_obj, 0, 200] call BIS_fnc_findSafePos;
+// 			_unit = _grp createUnit [_rndtype, _pos, [], 30, "none"]; 
+// 			_randomDir = selectRandom [270, 290, 01, 30, 90];
+// 			_randomDist = random [5, 25, 50]; 
+// 			_endPoint = RGG_patrol_obj getPos [_randomDist, _randomDir];
+// 			_unit setBehaviour "COMBAT";
+// 			_unit doMove _endPoint;
+// 			spawnedOpforUnit = spawnedOpforUnit +1;
+// 			sleep 1;									
+// 		};
+// 		_rndOp1 = random [6, 10, 12];
+// 		_grp = createGroup east;
+// 		systemchat format ["op defence: %1", _rndOp1];
+// 		for "_i" from 1 to _rndOp1 do {
+// 			_rndtype = selectRandom _opforClass;
+// 			_pos = [RGG_patrol_obj, 0, 200] call BIS_fnc_findSafePos;
+// 			_unit = _grp createUnit [_rndtype, _pos, [], 30, "none"]; 
+// 			_randomDir = selectRandom [270, 290, 01, 30, 90];
+// 			_randomDist = random [25, 50, 75]; 
+// 			_endPoint = RGG_patrol_obj getPos [_randomDist, _randomDir];
+// 			_unit setBehaviour "COMBAT";
+// 			_unit doMove _endPoint;
+// 			spawnedOpforUnit = spawnedOpforUnit +1;
+// 			sleep 1;									
+// 		};
+// 	};
+// 	case 6: {
+// 		for "_i" from 1 to 2 do {
+// 			_pos = [RGG_patrol_obj, 0, 75] call BIS_fnc_findSafePos; 
+// 			_unit = _grp createUnit ["o_g_soldier_ar_f", _pos, [], 1, "none"]; 
+// 			_static = "O_HMG_01_high_F" createVehicle _pos;
+// 			_unit moveInGunner _static; 
+// 			_unit setBehaviour "COMBAT";
+// 			spawnedOpforUnit = spawnedOpforUnit + 1;
+// 			systemChat "spawning static opfor";
+// 			sleep 1;						
+// 		};
+// 			for "_i" from 1 to 2 do {
+// 			_pos = [RGG_patrol_obj, 0, 150] call BIS_fnc_findSafePos; 
+// 			_unit = _grp createUnit ["o_g_soldier_ar_f", _pos, [], 1, "none"]; 
+// 			_static = "O_G_Mortar_01_F" createVehicle _pos;
+// 			_unit moveInGunner _static; 
+// 			_unit setBehaviour "COMBAT";
+// 			spawnedOpforUnit = spawnedOpforUnit + 1;
+// 			systemChat "spawning mortar opfor";
+// 			sleep 1;						
+// 		};
+// 		for "_i" from 1 to 2 do {
+// 			_pos = [RGG_patrol_obj, 0, 50] call BIS_fnc_findSafePos; 
+// 			_unit = _grp createUnit ["o_g_soldier_ar_f", _pos, [], 1, "none"]; 
+// 			_static = "O_static_AT_F" createVehicle _pos;
+// 			_unit moveInGunner _static; 
+// 			_unit setBehaviour "COMBAT";
+// 			spawnedOpforUnit = spawnedOpforUnit + 1;
+// 			systemChat "spawning static opfor";
+// 			sleep 1;						
+// 		};
+// 		_rndOp1 = random [10, 14, 20];
+// 		_grp = createGroup east;
+// 		systemchat format ["op defence: %1", _rndOp1];
+// 		for "_i" from 1 to _rndOp1 do {
+// 			_rndtype = selectRandom _opforClass;
+// 			_pos = [RGG_patrol_obj, 0, 200] call BIS_fnc_findSafePos;
+// 			_unit = _grp createUnit [_rndtype, _pos, [], 30, "none"]; 
+// 			_randomDir = selectRandom [270, 290, 01, 30, 90];
+// 			_randomDist = random [5, 25, 50]; 
+// 			_endPoint = RGG_patrol_obj getPos [_randomDist, _randomDir];
+// 			_unit setBehaviour "COMBAT";
+// 			_unit doMove _endPoint;
+// 			spawnedOpforUnit = spawnedOpforUnit +1;
+// 			sleep 1;									
+// 		};
+// 		_rndOp1 = random [6, 10, 12];
+// 		_grp = createGroup east;
+// 		systemchat format ["op defence: %1", _rndOp1];
+// 		for "_i" from 1 to _rndOp1 do {
+// 			_rndtype = selectRandom _opforClass;
+// 			_pos = [RGG_patrol_obj, 0, 200] call BIS_fnc_findSafePos;
+// 			_unit = _grp createUnit [_rndtype, _pos, [], 30, "none"]; 
+// 			_randomDir = selectRandom [270, 290, 01, 30, 90];
+// 			_randomDist = random [25, 50, 75]; 
+// 			_endPoint = RGG_patrol_obj getPos [_randomDist, _randomDir];
+// 			_unit setBehaviour "COMBAT";
+// 			_unit doMove _endPoint;
+// 			spawnedOpforUnit = spawnedOpforUnit +1;
+// 			sleep 1;									
+// 		};
+// 		_rndOp1 = random [6, 10, 12];
+// 		_grp = createGroup east;
+// 		systemchat format ["op defence: %1", _rndOp1];
+// 		for "_i" from 1 to _rndOp1 do {
+// 			_rndtype = selectRandom _opforClass;
+// 			_pos = [RGG_patrol_obj, 0, 200] call BIS_fnc_findSafePos;
+// 			_unit = _grp createUnit [_rndtype, _pos, [], 30, "none"]; 
+// 			_randomDir = selectRandom [270, 290, 01, 30, 90];
+// 			_randomDist = random [50, 75, 90]; 
+// 			_endPoint = RGG_patrol_obj getPos [_randomDist, _randomDir];
+// 			_unit setBehaviour "COMBAT";
+// 			_unit doMove _endPoint;
+// 			spawnedOpforUnit = spawnedOpforUnit +1;
+// 			sleep 1;									
+// 		};
+// 	};
+// 	// case 6: {
+// 	// 	for "_i" from 1 to 3 do {
+// 	// 		_pos = [RGG_patrol_obj, 0, 75] call BIS_fnc_findSafePos; 
+// 	// 		_unit = _grp createUnit ["o_g_soldier_ar_f", _pos, [], 1, "none"]; 
+// 	// 		_static = "O_HMG_01_high_F" createVehicle _pos;
+// 	// 		_unit moveInGunner _static; 
+// 	// 		_unit setBehaviour "COMBAT";
+// 	// 		spawnedOpforUnit = spawnedOpforUnit + 1;
+// 	// 		systemChat "spawning static opfor";
+// 	// 		sleep 1;						
+// 	// 	};
+// 	// 		for "_i" from 1 to 3 do {
+// 	// 		_pos = [RGG_patrol_obj, 0, 150] call BIS_fnc_findSafePos; 
+// 	// 		_unit = _grp createUnit ["o_g_soldier_ar_f", _pos, [], 1, "none"]; 
+// 	// 		_static = "O_G_Mortar_01_F" createVehicle _pos;
+// 	// 		_unit moveInGunner _static; 
+// 	// 		_unit setBehaviour "COMBAT";
+// 	// 		spawnedOpforUnit = spawnedOpforUnit + 1;
+// 	// 		systemChat "spawning mortar opfor";
+// 	// 		sleep 1;						
+// 	// 	};
+// 	// };
+// 	default {
+// 		_randomStatic = selectRandom [0,1,2,3,4];
+// 		_randomMortar = selectRandom [0,1,2,3,4];
+
+// 		for "_i" from 1 to _randomStatic do {
+// 			_pos = [RGG_patrol_obj, 0, 75] call BIS_fnc_findSafePos; 
+// 			_unit = _grp createUnit ["o_g_soldier_ar_f", _pos, [], 1, "none"]; 
+// 			_static = "O_HMG_01_high_F" createVehicle _pos;
+// 			_unit moveInGunner _static; 
+// 			_unit setBehaviour "COMBAT";
+// 			spawnedOpforUnit = spawnedOpforUnit + 1;
+// 			systemChat "spawning static opfor";
+// 			sleep 1;						
+// 		};
+// 			for "_i" from 1 to _randomMortar do {
+// 			_pos = [RGG_patrol_obj, 0, 150] call BIS_fnc_findSafePos; 
+// 			_unit = _grp createUnit ["o_g_soldier_ar_f", _pos, [], 1, "none"]; 
+// 			_static = "O_G_Mortar_01_F" createVehicle _pos;
+// 			_unit moveInGunner _static; 
+// 			_unit setBehaviour "COMBAT";
+// 			spawnedOpforUnit = spawnedOpforUnit + 1;
+// 			systemChat "spawning mortar opfor";
+// 			sleep 1;						
+// 		};
+// 		_rndOp1 = random [2, 8, 20];
+// 		_grp = createGroup east;
+// 		systemchat format ["op defencee: %1", _rndOp1];
+// 		for "_i" from 1 to _rndOp1 do {
+// 			_rndtype = selectRandom _opforClass;
+// 			_pos = [RGG_patrol_obj, 0, 200] call BIS_fnc_findSafePos;
+// 			_unit = _grp createUnit [_rndtype, _pos, [], 30, "none"]; 
+// 			_randomDir = selectRandom [270, 290, 01, 30, 90];
+// 			_randomDist = random [5, 25, 50]; 
+// 			_endPoint = RGG_patrol_obj getPos [_randomDist, _randomDir];
+// 			_unit setBehaviour "COMBAT";
+// 			_unit doMove _endPoint;
+// 			spawnedOpforUnit = spawnedOpforUnit +1;
+// 			sleep 1;									
+// 		};
+// 		_rndOp1 = random [2, 8, 20];
+// 		_grp = createGroup east;
+// 		systemchat format ["op defencee: %1", _rndOp1];
+// 		for "_i" from 1 to _rndOp1 do {
+// 			_rndtype = selectRandom _opforClass;
+// 			_pos = [RGG_patrol_obj, 0, 200] call BIS_fnc_findSafePos;
+// 			_unit = _grp createUnit [_rndtype, _pos, [], 30, "none"]; 
+// 			_randomDir = selectRandom [270, 290, 01, 30, 90];
+// 			_randomDist = random [25, 50, 75]; 
+// 			_endPoint = RGG_patrol_obj getPos [_randomDist, _randomDir];
+// 			_unit setBehaviour "COMBAT";
+// 			_unit doMove _endPoint;
+// 			spawnedOpforUnit = spawnedOpforUnit +1;
+// 			sleep 1;									
+// 		};
+// 		_rndOp1 = random [2, 8, 20];
+// 		_grp = createGroup east;
+// 		systemchat format ["op defencee: %1", _rndOp1];
+// 		for "_i" from 1 to _rndOp1 do {
+// 			_rndtype = selectRandom _opforClass;
+// 			_pos = [RGG_patrol_obj, 0, 200] call BIS_fnc_findSafePos;
+// 			_unit = _grp createUnit [_rndtype, _pos, [], 30, "none"]; 
+// 			_randomDir = selectRandom [270, 290, 01, 30, 90];
+// 			_randomDist = random [50, 75, 90]; 
+// 			_endPoint = RGG_patrol_obj getPos [_randomDist, _randomDir];
+// 			_unit setBehaviour "COMBAT";
+// 			_unit doMove _endPoint;
+// 			spawnedOpforUnit = spawnedOpforUnit +1;
+// 			sleep 1;									
+// 		};
+// 	};
+// };
+
+// systemChat "op defenders spawn complete .....................";
+
+sleep 20; // changes from 5 to 20, in case this was the reasons for the logic glitching out 
+
+// HERE WE CHECK IF BLUFOR NEED RF 
+// execVM "autoPatrolSystem\reinforcementSystems\bluforRF.sqf";
+// systemchat "debug --- checking for blufor RF";
+// "MP debug --- checking for blufor RF" remoteExec ["systemChat", 0, true];
+// this is one of two points where patrol reinforcements are considered - previously this was every 90 seconds, now it is more lean and cheap
+
+// redirects any indifor units incorrectly sent to the old point as part of an RF action 
+// [_objPos] execVM "killChain\systems\insuranceSystems\indiforMovement.sqf";
+// check if this ^^ is actually still needed ??
+
+// check to see when indifor have taken patrol point, and when to trigger opfor rf 
 
 ============================================================================
 

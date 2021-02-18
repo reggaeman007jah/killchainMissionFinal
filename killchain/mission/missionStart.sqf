@@ -1,17 +1,12 @@
-/*
 
-
-*/
-
-// voice broadcasts
+// voice broadcast called only once at the beginning of the mission
 execVM "media\sounds\thisIsCommand.sqf";
 sleep 3;
-execVM "media\sounds\missionLive.sqf";
-// this ^^ is a one-off sound file called only once at the beginning of the mission 
+execVM "media\sounds\missionLive.sqf"; 
+
+_initStartPos = getPos ammo1; // fixed asset anchor position 
 
 // create marker around FOB Pathfinder 
-_initStartPos = getPos ammo1;
-
 _base = createMarker ["FOB Pathfinder", _initStartPos];
 _base setMarkerShape "ELLIPSE";
 _base setMarkerColor "ColorBlue";
@@ -29,7 +24,6 @@ _base setMarkerAlpha 0.4;
 sleep 0.1;
 _base setMarkerSize [110, 110];
 _base setMarkerAlpha 0.5;
-
 
 // get first objective 
 _objPos = RGG_PatrolPoints select 0;
