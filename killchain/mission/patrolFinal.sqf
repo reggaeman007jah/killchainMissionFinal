@@ -5,7 +5,7 @@ _initStartPos = _this select 0; // starting point for any new mission
 _objPos = _this select 1; // objective point for any new mission 
 
 // OBJ - patrol stage objective 
-deleteMarker "Objective 1"; 
+deleteMarker "Redzone"; 
 _objective1 = createMarker ["Redzone", _objPos];
 _objective1 setMarkerShape "ELLIPSE";
 _objective1 setMarkerColor "ColorRed";
@@ -51,7 +51,7 @@ _base setMarkerAlpha 0.7;
 sleep 1;
 
 // add icon 
-deleteMarker "attackPoint"; - make sure this is deleted later 
+deleteMarker "attackPoint"; 
 _tempMarker = createMarker ["attackPoint", _objPos];
 _tempMarker setMarkerType "hd_objective";
 _tempMarker setMarkerColor "ColorRed";
@@ -96,6 +96,7 @@ for "_i" from 1 to 3 do {
 	RGG_CampItems pushback _campItem;
 };
 
+// to do - replace with hard cover stuff 
 // barrels and other camp stuff 
 for "_i" from 1 to 3 do {
 	_randomDir = random 359;
@@ -939,13 +940,11 @@ RGG_respawnStore pushBack [_bluforSpawn, _indiSpawn]; // sending to global array
 // };
 
 
-// get second objective 
-_anchor = _objPos;
-_objPos = RGG_PatrolPoints select 1;
+
 
 // init Point 1 Obj  
-// [_anchor, _objPos] execVM "killChain\mission\objFinal.sqf";
-hint "GAME OVER WELL DONE";
+[] execVM "killChain\mission\rtb.sqf";
+hint "R-T-B";
 
 
 

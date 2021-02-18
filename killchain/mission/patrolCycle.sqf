@@ -1016,19 +1016,19 @@ switch (patrolPointsTaken) do {
 		systemChat "RUNNING PHASE 3";	
 	};
 	case 3: {
-		_objPos = RGG_PatrolPoints select 1;
+		_objPos = RGG_PatrolPoints select 3;
 		systemChat "RUNNING PHASE 4";	
 	};
 	case 4: {
-		_objPos = RGG_PatrolPoints select 2;
+		_objPos = RGG_PatrolPoints select 4;
 		systemChat "RUNNING PHASE 5";	
 	};
 	case 5: {
-		_objPos = RGG_PatrolPoints select 1;
+		_objPos = RGG_PatrolPoints select 5;
 		systemChat "RUNNING PHASE 6";	
 	};
 	case 6: {
-		_objPos = RGG_PatrolPoints select 2;
+		_objPos = RGG_PatrolPoints select 6;
 		systemChat "RUNNING ENDGAME";	
 	};
 	default {
