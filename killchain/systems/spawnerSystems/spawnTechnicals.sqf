@@ -2,7 +2,8 @@ systemChat "debug - delete when tested - technicals activated";
 _anchor = _this select 0;
 _target = _this select 1;
 
-private ["_num", "_delay"]; 
+// private ["_num", "_delay"]; 
+_num = 0;
 
 switch (patrolPointsTaken) do {
 	case 1: { _num = 1; _delay = 0; };

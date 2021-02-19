@@ -22,7 +22,7 @@ waitUntil { (KILLCHAINMISSIONSTART == true) };
 systemChat "cold-zone system activated - go to the office to start the mission";
 
 // initialise counter system 
-execVM "killchain\systems\countingSystems\counter.sqf";
+// execVM "killchain\systems\countingSystems\counter.sqf";
 
 // initialise mh-6 pickup scripts 
 execVM "killchain\systems\pickupSystems\pickUpSystems1\pickupInit.sqf";
@@ -94,7 +94,7 @@ RGG_PatrolPoints pushBack _killchainObjFinal;
 // here RGG_PatrolPoints holds 6 patrol points and 1 end point 
 
 // roamers 
-execVM "killChain\systems\randomThreatSystems\randomThreats.sqf";
+// execVM "killChain\systems\randomThreatSystems\randomThreats.sqf";
 
 // commence mission 
 execVM "killchain\mission\missionStart.sqf";

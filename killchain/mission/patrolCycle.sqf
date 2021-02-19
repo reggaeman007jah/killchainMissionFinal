@@ -80,6 +80,8 @@ _lineTest setMarkerColor "ColorBlack";
 _lineTest setMarkerDir _reldirX;
 _lineTest setMarkerSize [2, _dist2];
 // to enable a colour change when the chain breaks, these lines need to be pushed back into an array 
+systemChat "markers done"; 
+
 
 // new camp location and items 
 _randomCampLocation = _objPos findEmptyPosition [10,50,"B_Heli_Light_01_dynamicLoadout_F"];
@@ -139,6 +141,7 @@ for "_i" from 1 to _random5 do {
 	_campItem2 setDir _randomDir;
 	RGG_CampItems pushback _campItem2;
 };
+systemChat "Campsite made";
 
 sleep 2;
 
@@ -177,6 +180,7 @@ for "_i" from 1 to _diffLevel do {
 		sleep 2;						
 	};
 };
+systemChat "opfor welcome party done";
 
 sleep 1;
 
@@ -216,7 +220,11 @@ for "_i" from 1 to _rndOp1 do {
  	sleep 1;									
 };
 
+systemChat "opfor defenders done";
+
 sleep 2;
+
+systemChat "RFCHECK starting";
 
 RFCHECK = true; 
 
@@ -261,15 +269,8 @@ while {RFCHECK} do {
 
 	// rf check 
 	if (_redzoneIndi <= 5) then {
-		systemChat "note _redzoneIndi <= 5";
-		// ORDER RF HERE
-		[_initStartPos, _objPos] execVM "killChain\systems\spawnerSystems\createIndiforRFUnits.sqf";
-		_smoke = createVehicle ["G_40mm_smokeYELLOW", _initStartPos, [], 0, "none"]; // drop this from up high 
-
-		// voice broadcasts
-		execVM "sounds\welcome\thisIsCommand.sqf";
-		sleep 3;
-		execVM "sounds\welcome\rfInbound.sqf";
+		// this will check before churning out new reinforcement units 
+		[_initStartPos, _objPos] execVM "killChain\systems\reinforcementSystems\indiforRf.sqf";
 	};
 
 	// check if won point and if so, move to defend 
@@ -352,6 +353,9 @@ _anchor1 = [_mainAnchor, 10, 150] call BIS_fnc_findSafePos;
 
 
 //---------------------------------------------------------------------------------------------------------
+
+systemChat "QRF initiated";
+
 deleteMarker "Point 1"; 
 _objective1 = createMarker ["Point 1", _anchor1];
 _objective1 setMarkerShape "ELLIPSE";
@@ -383,12 +387,17 @@ for "_i" from 1 to 2 do {
 	sleep 180;
 };
 
+systemChat "techs and roamers created";
+
 // technicals 
 [_anchor, _objPos] execVM "killChain\systems\spawnerSystems\spawnTechnicals.sqf";
 // roamers 
 [_objPos, _initStartPos] execVM "killchain\systems\randomThreatSystems\randomThreats.sqf";
 
 _cycles = 0;
+
+systemChat "RFCHECK2 starting";
+
 RFCHECK2 = true; 
 
 while {RFCHECK2} do {
