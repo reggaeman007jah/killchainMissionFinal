@@ -1,4 +1,4 @@
-systemChat "debug - delete when tested - technicals activated";
+systemChat "debug - delete when tested - technical spawner activated";
 _anchor = _this select 0;
 _target = _this select 1;
 

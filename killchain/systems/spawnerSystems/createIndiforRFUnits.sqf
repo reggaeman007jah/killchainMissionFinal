@@ -25,13 +25,11 @@ Each spawned team has:
 1 marksman
 */
 
-sleep 10; // allows other systems boot up on mission start if needed 
-
 _spawnPos = _this select 0; // position parsed to this script on execution
 _destPos = _this select 1; // where they are sent to 
 
 // _numberOfCycles = _this select 1; // number of times we run this // 4 = 4 fire teams  
-_numberOfCycles = 2; // placeholder var  
+_numberOfCycles = 3; // placeholder var  
 _area = 60; // distribution of units on spawn  // I am making this much smaller 
 _timer = 0.3; // spawn cycle gap  
 
