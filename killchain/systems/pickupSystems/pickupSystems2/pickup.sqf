@@ -118,7 +118,7 @@ while {deploymentMission2} do {
     dropoff2 = false;
     complete2 = false;
     deleteMarker "extract2"; // belt and braces
-    execVM "autoPatrolSystem\pickupSystems2\pickupInit.sqf";
+    execVM "killchain\systems\pickupSystems\pickupSystems2\pickup.sqf";
     systemChat "shutting down pickup system";
   };
   // alt check
