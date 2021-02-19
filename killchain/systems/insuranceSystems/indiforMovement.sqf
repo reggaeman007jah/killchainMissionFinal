@@ -1,7 +1,7 @@
 
 systemChat "insurance move order";
 _objPos = _this select 0; // objective point 
-_objPos = RGG_PatrolPoints select 5;
+
 _indi = [];
 
 { if ((side _x) == INDEPENDENT) then {_indi pushBack _x} } forEach allUnits;
