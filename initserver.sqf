@@ -21,12 +21,12 @@ execVM "eventHandlers\slingLoadMonitor.sqf";
 // execVM "killchain\systems\ambientSystems\randomFlybys.sqf";
 
 // // initialise pickup scripts 
-// execVM "killchain\systems\pickupSystems\1\pickupInit.sqf";
-// execVM "killchain\systems\pickupSystems\2\pickupInit.sqf";
-// execVM "killchain\systems\pickupSystems\3\pickupInit.sqf";
+execVM "killchain\systems\pickupSystems\pickupSystems1\pickupInit.sqf";
+execVM "killchain\systems\pickupSystems\pickupSystems2\pickupInit.sqf";
+execVM "killchain\systems\pickupSystems\pickupSystems3\pickupInit.sqf";
 
-// // initialise para spawner script 
-// execVM "killchain\systems\spawnerSystems\spawnParas.sqf";
+// initialise para spawner script 
+execVM "killchain\systems\spawnerSystems\spawnParas.sqf";
 
 /*
 This system needs improvement

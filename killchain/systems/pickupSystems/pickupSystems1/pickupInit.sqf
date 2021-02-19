@@ -3,4 +3,4 @@ From: initServer.sqf
 */
 
 waitUntil { isEngineOn transport1a; }; 
-execVM "autoPatrolSystem\pickupSystems\pickup.sqf";
+execVM "killchain\systems\pickupSystems\pickupSystem1\pickup.sqf";

@@ -24,13 +24,13 @@ systemChat "cold-zone system activated - go to the office to start the mission";
 // initialise counter system 
 // execVM "killchain\systems\countingSystems\counter.sqf";
 
-// initialise mh-6 pickup scripts 
-execVM "killchain\systems\pickupSystems\pickUpSystems1\pickupInit.sqf";
-execVM "killchain\systems\pickupSystems\pickUpSystems2\pickupInit.sqf";
-execVM "killchain\systems\pickupSystems\pickUpSystems3\pickupInit.sqf";
+// // initialise mh-6 pickup scripts 
+// execVM "killchain\systems\pickupSystems\pickUpSystems1\pickupInit.sqf";
+// execVM "killchain\systems\pickupSystems\pickUpSystems2\pickupInit.sqf";
+// execVM "killchain\systems\pickupSystems\pickUpSystems3\pickupInit.sqf";
 
-// initialise para spawner script 
-execVM "killchain\systems\spawnerSystems\spawnParas.sqf";
+// // initialise para spawner script 
+// execVM "killchain\systems\spawnerSystems\spawnParas.sqf";
 
 // voice bools 
 COMMANDSPEAKING = false;
