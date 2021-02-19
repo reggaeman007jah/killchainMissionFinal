@@ -149,7 +149,7 @@ sleep 2;
 _diffLevel = 2; // diff modifier i.e. number of iterations // tbc add patrolPoint accelerator 
 
 for "_i" from 1 to _diffLevel do {
-	_grp = createGroup east;
+	_grp = createGroup [east, true];
 	_rndOp1 = selectRandom [0, 3, 4, 5, 6];
 	systemchat format ["1st wave: %1", _rndOp1];
 
@@ -204,7 +204,7 @@ _opforClass = [
 ];
 
 _rndOp1 = selectRandom [8, 10, 12, 24];
-_grp = createGroup east;
+_grp = createGroup [east, true];
 systemchat format ["opfor camp defence: %1", _rndOp1]; // debug 
 
 for "_i" from 1 to _rndOp1 do {
@@ -224,6 +224,7 @@ systemChat "opfor defenders done";
 
 sleep 2;
 
+// attack point stage -------------------------------------------------------------------------------
 systemChat "RFCHECK starting";
 
 RFCHECK = true; 
@@ -233,10 +234,16 @@ while {RFCHECK} do {
 	// flybys 
 	[_objPos] execVM "killchain\systems\ambientSystems\randomFlybys.sqf";
 
+	// total numbers 
+	_indi = independent countSide allUnits;
+	_east = east countSide allUnits;
+
+	// get overall numbers of troops in redzone 
 	_unitsRedzone = allUnits inAreaArray "redzone";
 	_redzoneIndi = 0;
 	_redzoneOpfor = 0;
 	
+	// get overall numbers of troops in obj core area 
 	_unitsCore = allUnits inAreaArray "missionCore";
 	_coreIndi = 0;
 	_coreOpfor = 0;
@@ -261,7 +268,9 @@ while {RFCHECK} do {
 
 	// debug stats 
 	systemChat "RFCHECK1";
-	systemChat format ["REDZONE INDI: %1", _redzoneIndi];
+	systemChat format ["TOTAL INDI: %1", _indi];
+	systemChat format ["TOTAL OPFOR: %1", _east];
+	systemChat ".....";
 	systemChat format ["REDZONE OPFR: %1", _redzoneOpfor];
 	systemChat ".....";
 	systemChat format ["CORE INDI:    %1", _coreIndi];
@@ -366,7 +375,7 @@ _objective1 setMarkerAlpha 0.2;
 // unit creation 
 for "_i" from 1 to 2 do {
 	for "_i" from 1 to 6 do {
-		_opforGroup = createGroup east;
+		_opforGroup = createGroup [east, true];
 		_anchor1a = [_anchor1, 1, 50, 3, 0] call BIS_fnc_findSafePos;
 		_opforTeam = [];
 
@@ -379,7 +388,7 @@ for "_i" from 1 to 2 do {
 		sleep 0.7;
 
 		// move orders 
-		_ranDist = random 30;
+		_ranDist = random 100;
 		_ranDir = random 359;
 		_unitDest = _objPos getPos [_ranDist, _ranDir];
 		_opforTeam doMove _unitDest;
@@ -390,10 +399,11 @@ for "_i" from 1 to 2 do {
 systemChat "techs and roamers created";
 
 // technicals 
-[_anchor, _objPos] execVM "killChain\systems\spawnerSystems\spawnTechnicals.sqf";
+[_anchor1, _objPos] execVM "killChain\systems\spawnerSystems\spawnTechnicals.sqf";
 // roamers 
 [_objPos, _initStartPos] execVM "killchain\systems\randomThreatSystems\randomThreats.sqf";
 
+// defend point stage -------------------------------------------------------------------------------
 _cycles = 0;
 
 systemChat "RFCHECK2 starting";
@@ -406,6 +416,7 @@ while {RFCHECK2} do {
 	[_objPos] execVM "killchain\systems\ambientSystems\randomFlybys.sqf";
 
 	// THIS MIGHT BE A PROBLEM AT SOME POINT - IE PUSHING A NEW POINT WITH NO ONE ON THE WON POINT 
+	// maybe use redzone here?
 	// if ((_cycles >= 5) && (_coreIndi >=3)) then {
 	if (_cycles >= 5) then {
 		// progress regardless 
@@ -415,6 +426,10 @@ while {RFCHECK2} do {
 		_cycles = _cycles + 1;
 		systemChat format ["Cycles: %1", _cycles];
 
+		// total numbers 
+		_indi = independent countSide allUnits;
+		_east = east countSide allUnits;
+		
 		// get overall numbers of troops in redzone 
 		_unitsRedzone = allUnits inAreaArray "redzone";
 		_redzoneIndi = 0;
@@ -445,6 +460,9 @@ while {RFCHECK2} do {
 
 		// debug stats 
 		systemChat "RFCHECK2";
+		systemChat format ["TOTAL INDI: %1", _indi];
+		systemChat format ["TOTAL OPFOR: %1", _east];
+		systemChat ".....";
 		systemChat format ["REDZONE INDI: %1", _redzoneIndi];
 		systemChat format ["REDZONE OPFR: %1", _redzoneOpfor];
 		systemChat ".....";

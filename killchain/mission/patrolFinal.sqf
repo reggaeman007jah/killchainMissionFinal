@@ -151,7 +151,7 @@ sleep 2;
 _diffLevel = 2; // diff modifier i.e. number of iterations 
 
 for "_i" from 1 to _diffLevel do {
-	_grp = createGroup east;
+	_grp = createGroup [east, true];
 	_rndOp1 = selectRandom [0, 3, 4, 5, 6];
 	systemchat format ["1st wave: %1", _rndOp1];
 
@@ -205,7 +205,7 @@ _opforClass = [
 ];
 
 _rndOp1 = selectRandom [8, 10, 12, 24];
-_grp = createGroup east;
+_grp = createGroup [east, true];
 
 // systemchat format ["op defence: %1", _rndOp1]; // debug 
 
@@ -795,7 +795,7 @@ _objective1 setMarkerAlpha 0.2;
 // unit creation 
 for "_i" from 1 to 3 do {
 	for "_i" from 1 to 6 do {
-		_opforGroup = createGroup east;
+		_opforGroup = createGroup [east, true];
 		_anchor1a = [_anchor1, 1, 50, 3, 0] call BIS_fnc_findSafePos;
 		_opforTeam = [];
 

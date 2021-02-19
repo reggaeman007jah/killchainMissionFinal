@@ -44,7 +44,7 @@ _opforClass = [
 	"O_G_Soldier_SL_F",
 	"O_G_Soldier_TL_F"
 ];
-_opforGroup = createGroup east;
+_opforGroup = createGroup [east, true];
 _opforTeam = [];
 _random = random 6;
 _size = _random + 4; // consider using patrolPoints as a multiplier to number of roamers 

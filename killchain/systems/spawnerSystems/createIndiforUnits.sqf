@@ -36,7 +36,7 @@ _area = 60; // distribution of units on spawn  // I am making this much smaller
 _timer = 0.3; // spawn cycle gap  
 
 for "_i" from 1 to _numberOfCycles do {
-	_indiGroup = createGroup independent;
+	_indiGroup = createGroup [independent, true];
 	_pos = [_spawnPos, 20, _area] call BIS_fnc_findSafePos;
 	// _pos1 = _pos getPos [1,180];
 	// _pos2 = _pos getPos [2,180];
