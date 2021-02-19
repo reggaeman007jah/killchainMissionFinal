@@ -240,15 +240,13 @@ while {RFCHECK} do {
 
 	// get overall numbers of troops in redzone 
 	_unitsRedzone = allUnits inAreaArray "redzone";
-	_redzoneIndi = 0;
-	_redzoneOpfor = 0;
 	
 	// get overall numbers of troops in obj core area 
 	_unitsCore = allUnits inAreaArray "missionCore";
-	_coreIndi = 0;
-	_coreOpfor = 0;
 
 	// Redzone stats 
+	_redzoneIndi = 0;
+	_redzoneOpfor = 0;
 	{
 		switch ((side _x)) do
 		{
@@ -258,6 +256,8 @@ while {RFCHECK} do {
 	} forEach _unitsRedzone;
 
 	// Core stats 
+	_coreIndi = 0;
+	_coreOpfor = 0;
 	{
 		switch ((side _x)) do
 		{
@@ -271,19 +271,22 @@ while {RFCHECK} do {
 	systemChat format ["TOTAL INDI: %1", _indi];
 	systemChat format ["TOTAL OPFOR: %1", _east];
 	systemChat ".....";
+	systemChat format ["REDZONE INDI: %1", _redzoneIndi];
 	systemChat format ["REDZONE OPFR: %1", _redzoneOpfor];
 	systemChat ".....";
 	systemChat format ["CORE INDI:    %1", _coreIndi];
 	systemChat format ["CORE OPFR:    %1", _coreOpfor];
 
 	// rf check 
-	if (_redzoneIndi <= 5) then {
+	if (_redzoneIndi <= 8) then {
 		// this will check before churning out new reinforcement units 
+		systemChat "LOGIC - indifor in redzone is less than 5 now";
 		[_initStartPos, _objPos] execVM "killChain\systems\reinforcementSystems\indiforRf.sqf";
 	};
 
 	// check if won point and if so, move to defend 
 	if ((_coreOpfor <= 3) && (_coreIndi >=3)) then {
+		systemChat "LOGIC - indifor in core is 3+ and opfor is 3-";
 		// move indi units to a rough defensive position around the center point - note will also attrack any opfor strags 
 		{
 			_dir = random 360;
@@ -294,9 +297,13 @@ while {RFCHECK} do {
 			sleep 1;
 		} forEach _unitsCore;
 		RFCHECK = false;
+	} else {
+		// insurance move order while in attack mode 
+		systemChat "LOGIC - initiate insurance movce order";
+		[_objPos] execVM "killChain\systems\insuranceSystems\indiforMovement.sqf";
 	};
 
-	sleep 90;
+	sleep 60;
 };
 
 // at what stage should these initial defenders retreat?
@@ -397,7 +404,6 @@ for "_i" from 1 to 2 do {
 };
 
 systemChat "techs and roamers created";
-
 // technicals 
 [_anchor1, _objPos] execVM "killChain\systems\spawnerSystems\spawnTechnicals.sqf";
 // roamers 
@@ -414,64 +420,62 @@ while {RFCHECK2} do {
 
 	// flybys 
 	[_objPos] execVM "killchain\systems\ambientSystems\randomFlybys.sqf";
+		
+	// total numbers 
+	_indi = independent countSide allUnits;
+	_east = east countSide allUnits;
 
-	// THIS MIGHT BE A PROBLEM AT SOME POINT - IE PUSHING A NEW POINT WITH NO ONE ON THE WON POINT 
-	// maybe use redzone here?
-	// if ((_cycles >= 5) && (_coreIndi >=3)) then {
-	if (_cycles >= 5) then {
-		// progress regardless 
+	// get overall numbers of troops in redzone 
+	_unitsRedzone = allUnits inAreaArray "redzone";
+
+	// get overall numbers of troops in obj core area 
+	_unitsCore = allUnits inAreaArray "missionCore";
+
+	// check indi and opfor numbers in redzone 
+	_redzoneIndi = 0;
+	_redzoneOpfor = 0; 
+	{
+		switch ((side _x)) do
+		{
+			case EAST: {_redzoneOpfor = _redzoneOpfor + 1};
+			case INDEPENDENT: {_redzoneIndi = _redzoneIndi + 1};
+		};
+	} forEach _unitsRedzone;
+
+	// check indi and opfpr numbers in core  
+	_coreIndi = 0;
+	_coreOpfor = 0;
+	{
+		switch ((side _x)) do
+		{
+			case EAST: {_coreOpfor = _coreOpfor + 1};
+			case INDEPENDENT: {_coreIndi = _coreIndi + 1};
+		};
+	} forEach _unitsCore;
+
+	// debug stats 
+	systemChat "RFCHECK2";
+	systemChat format ["TOTAL INDI: %1", _indi];
+	systemChat format ["TOTAL OPFOR: %1", _east];
+	systemChat ".....";
+	systemChat format ["REDZONE INDI: %1", _redzoneIndi];
+	systemChat format ["REDZONE OPFR: %1", _redzoneOpfor];
+	systemChat ".....";
+	systemChat format ["CORE INDI:    %1", _coreIndi];
+	systemChat format ["CORE OPFR:    %1", _coreOpfor];
+
+	if ((_cycles >= 5) && (_coreIndi > 3) && (_redzoneOpfor < 5)) then {
+		// progress mission based mainly on cycles 
 		RFCHECK2 = false;
-		systemChat "(_cycles >= 5) && (_coreIndi >=3) / cyclepush here";
+		systemChat "(_cycles >= 5) && (_coreIndi > 3) && (_redzoneOpfor < 5) / automatic cyclepush here";
 	} else {
 		_cycles = _cycles + 1;
-		systemChat format ["Cycles: %1", _cycles];
+		systemChat format ["Defence Cycles: %1", _cycles];
 
-		// total numbers 
-		_indi = independent countSide allUnits;
-		_east = east countSide allUnits;
-		
-		// get overall numbers of troops in redzone 
-		_unitsRedzone = allUnits inAreaArray "redzone";
-		_redzoneIndi = 0;
-		_redzoneOpfor = 0;
-
-		// get overall numbers of troops in obj core area 
-		_unitsCore = allUnits inAreaArray "missionCore";
-		_coreIndi = 0;
-		_coreOpfor = 0;
-
-		// check indi and opfor numbers in redzone  
-		{
-			switch ((side _x)) do
-			{
-				case EAST: {_redzoneOpfor = _redzoneOpfor + 1};
-				case INDEPENDENT: {_redzoneIndi = _redzoneIndi + 1};
-			};
-		} forEach _unitsRedzone;
-
-		// check indi and opfpr numbers in core  
-		{
-			switch ((side _x)) do
-			{
-				case EAST: {_coreOpfor = _coreOpfor + 1};
-				case INDEPENDENT: {_coreIndi = _coreIndi + 1};
-			};
-		} forEach _unitsCore;
-
-		// debug stats 
-		systemChat "RFCHECK2";
-		systemChat format ["TOTAL INDI: %1", _indi];
-		systemChat format ["TOTAL OPFOR: %1", _east];
-		systemChat ".....";
-		systemChat format ["REDZONE INDI: %1", _redzoneIndi];
-		systemChat format ["REDZONE OPFR: %1", _redzoneOpfor];
-		systemChat ".....";
-		systemChat format ["CORE INDI:    %1", _coreIndi];
-		systemChat format ["CORE OPFR:    %1", _coreOpfor];
-
+		// ORDER RF HERE
 		if (_redzoneIndi <= 5) then {
-			systemChat "note _redzoneIndi <= 5";
-			// ORDER RF HERE
+			systemChat "note _redzoneIndi <= 5 - RF ordered while in defend state ";
+			
 			[_initStartPos, _objPos] execVM "killChain\systems\spawnerSystems\createIndiforRFUnits.sqf";
 			_smoke = createVehicle ["G_40mm_smokeYELLOW", _initStartPos, [], 0, "none"]; // drop this from up high 
 
@@ -481,23 +485,15 @@ while {RFCHECK2} do {
 			execVM "sounds\welcome\rfInbound.sqf";
 		};
 
-		// check if won point and if so, move to next point  
-		// {
-		// 	switch ((side _x)) do
-		// 	{
-		// 		case EAST: {_coreOpfor = _coreOpfor + 1};
-		// 		case INDEPENDENT: {_coreIndi = _coreIndi + 1};
-		// 	};
-		// } forEach _unitsCore;
-
-		if ((_coreOpfor <= 2) && (_coreIndi >=3)) then {
+		if ((_coreOpfor <= 2) && (_coreIndi >=3) && (_redzoneOpfor < 10)) then {
 			systemChat "(_coreOpfor <= 2) && (_coreIndi >=3)";
+			systemChat "defence successful - take a breather...";
 			// regroup, healup and get prizes
 			RFCHECK2 = false;
 		};
 	};
 
-	sleep 90;
+	sleep 60;
 };
 
 // time for prizes and healing --------------------------------------------------------------------------------- 
@@ -608,6 +604,11 @@ switch (patrolPointsTaken) do {
 		systemChat "error: Patrol Point switch";
 	};
 };
+
+// pause to regroup - is this needed??
+systemChat "get Ready";
+sleep 60;
+systemChat "here we go";
 
 if (patrolPointsTaken <= 5) then {
 	[_anchor, _objPos] execVM "killChain\mission\patrolCycle.sqf";	

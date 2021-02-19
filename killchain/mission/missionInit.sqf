@@ -100,6 +100,9 @@ RGG_PatrolPoints pushBack _killchainObjFinal;
 execVM "killchain\mission\missionStart.sqf";
 systemChat "RUNNING PHASE 1";
 
+// debug
+execVM "killchain\systems\debugSystems\debug.sqf";
+
 
 
 
