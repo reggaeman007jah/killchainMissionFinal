@@ -11,6 +11,8 @@ KILLCHAINMISSIONSTART = false;
 execVM "killchain\mission\missionInit.sqf"; 
 sleep 0.5;
 
+// slingload EH 
+execVM "eventHandlers\slingLoadMonitor.sqf";
 
 // // initialise counter system 
 // execVM "killchain\systems\countingSystems\counter.sqf";
@@ -43,6 +45,24 @@ this bool is used to clear out ammo from helis on respawn - this should be with 
 REARMONSPAWN = true; 
 
 
+
+// ----- this holds any sentry units waiting to spawn in (but can't due to lack of base food) -----
+RGG_sentryQueue = []; // holds sentry respawn data 
+RGG_supplyQueue = []; // holds supply respawn data 
+RESPAWNQUEUE = false; // this tracks whether the sentry respawn system is active 
+// this holds all relevant enemy camps, by holding their position 
+RGG_potentialEnemyCamps = [];
+// this holds enemy camp positions = when 9, job is done 
+RGG_destroyedEnemyCamps = [];
+// Barracks
+RGG_Barracks_Food = 0;
+RGG_Barracks_Ammo = 0;
+RGG_Barracks_Fuel = 0;
+RGG_Barracks_Sentries = 0;
+publicVariable "RGG_Barracks_Food";
+publicVariable "RGG_Barracks_Ammo";
+publicVariable "RGG_Barracks_Fuel";
+publicVariable "RGG_Barracks_Sentries";
 
 
 

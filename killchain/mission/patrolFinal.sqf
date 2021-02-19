@@ -4,6 +4,11 @@ hint "FINAL STAGE";
 _initStartPos = _this select 0; // starting point for any new mission
 _objPos = _this select 1; // objective point for any new mission 
 
+// Base 
+_testCrate = "B_Slingload_01_Ammo_F" createVehicle _objPos; // make sure this is big and flat, to accomodate a base footprint 
+[_testCrate, "B_Slingload_01_Ammo_F"] spawn RGGb_fnc_build_bluforBarracks;
+
+
 // OBJ - patrol stage objective 
 deleteMarker "Redzone"; 
 _objective1 = createMarker ["Redzone", _objPos];
@@ -80,72 +85,48 @@ _lineTest setMarkerDir _reldirX;
 _lineTest setMarkerSize [2, _dist2];
 // to enable a colour change when the chain breaks, these lines need to be pushed back into an array 
 
-// new camp location and items 
-_randomCampLocation = _objPos findEmptyPosition [10,50,"B_Heli_Light_01_dynamicLoadout_F"];
 
-_random5 = random 5;
-_random3 = random 3;
+_endGameVics = [
+	"O_R_APC_Wheeled_02_rcws_v2_F",
+	"O_R_MRAP_02_hmg_F",
+	"O_R_MRAP_02_gmg_F",
+	"O_R_MBT_04_cannon_F"
+];
 
-// tents 
-for "_i" from 1 to 3 do {
-	_randomDir = random 359;
-	_random30 = random 30;
-	_spawnPos = _randomCampLocation getPos [_random30, _randomDir];
-	_campItem = createVehicle ["Land_TentDome_F", _spawnPos];
-	_campItem setDir _randomDir;
-	RGG_CampItems pushback _campItem;
-};
+_endGameTargetClasses = [
+	"O_R_Truck_03_fuel_F",
+	"O_R_Truck_03_repair_F",
+	"O_R_Truck_02_Ammo_F",
+	"O_R_Truck_02_F",
+	"O_R_Truck_02_cargo_F",
+	"O_R_Truck_03_ammo_F",
+	"O_R_Radar_System_02_F"
+];
 
-// to do - replace with hard cover stuff 
-// barrels and other camp stuff 
-for "_i" from 1 to 3 do {
-	_randomDir = random 359;
-	_random25 = random 25;
-	_spawnPos = _randomCampLocation getPos [_random3, _randomDir];
-	_campItem = selectRandom [
-		"Land_BarrelSand_F",
-		"Land_BarrelSand_F",
-		"Land_BarrelSand_grey_F",
-		"Land_BarrelWater_grey_F",
-		"Land_TransferSwitch_01_F",
-		"Land_TentDome_F",
-		"Land_RotorCoversBag_01_F",
-		"Land_MetalBarrel_F",
-		"Land_WaterTank_F"
-	];
-	// _spawnPos = _randomCampLocation getPos [_random25, _randomDir];
-	_campItem2 = createVehicle [_campItem, _spawnPos];
-	_campItem2 setDir _randomDir;
-	RGG_CampItems pushback _campItem2;
-};
+_endGameTurrets = [
+	"O_R_Static_AT_F",
+	"O_R_SAM_System_04_F",
+	"O_R_Mortar_01_F",
+	"O_R_GMG_01_A_F",
+	"O_R_GMG_01_F",
+	"O_R_HMG_01_high_F",
+];
 
-// crates 
-for "_i" from 1 to _random5 do {
-	_randomDir = random 359;
-	_random5 = random 5;
-	_random25 = random 25;
-	_spawnPos = _randomCampLocation getPos [_random5, _randomDir];
-	_campItem = selectRandom [
-		"Land_WoodenCrate_01_stack_x3_F",
-		"Weapon_launch_O_Vorona_brown_F",
-		"Box_T_East_Wps_F",
-		"Box_East_AmmoOrd_F",
-		"Box_East_WpsLaunch_F",
-		"Land_CratesWooden_F",
-		"Land_Pallet_MilBoxes_F",
-		"Land_MetalBarrel_F",
-		"Land_WaterTank_F"
-	];
-	// _spawnPos = _randomCampLocation getPos [_random25, _randomDir];
-	_campItem2 = createVehicle [_campItem, _spawnPos];
-	_campItem2 setDir _randomDir;
-	RGG_CampItems pushback _campItem2;
-};
+_assaultSquad = [
+	"O_R_Soldier_SL_F",
+	"O_R_RadioOperator_F",
+	"O_R_Soldier_LAT_F",
+	"O_R_soldier_M_F",
+	"O_R_Soldier_TL_F",
+	"O_R_Soldier_AR_F",
+	"O_R_Soldier_A_F",
+	"O_R_medic_F"
+];
+
+// FIND SAFE POS FOR ALL THINGS ^^
 
 sleep 2;
 
-// _initStartPos = _this select 0; // starting point for any new mission
-// _objPos = _this select 1; // objective point for any new mission 
 
 // generate defending opfor 
 _diffLevel = 2; // diff modifier i.e. number of iterations 
@@ -156,30 +137,13 @@ for "_i" from 1 to _diffLevel do {
 	systemchat format ["1st wave: %1", _rndOp1];
 
 	for "_i" from 1 to _rndOp1 do {
-		_rndtype = selectRandom [
-			"O_G_Soldier_A_F",
-			"O_G_Soldier_AR_F",
-			"O_G_medic_F",
-			"O_G_engineer_F",
-			"O_G_Soldier_exp_F",
-			"O_G_Soldier_GL_F",
-			"O_G_Soldier_M_F",
-			"O_G_officer_F",
-			"O_G_Soldier_F",
-			// "O_G_Soldier_LAT_F",
-			// "O_G_Soldier_LAT2_F",
-			"O_G_Soldier_lite_F",
-			"O_G_Sharpshooter_F",
-			"O_G_Soldier_SL_F",
-			"O_G_Soldier_TL_F",
-			// "O_G_Offroad_01_armed_F"
-		];
+		_rndtype = selectRandom _assaultSquad;
 		_pos = [_objPos, 0, 30] call BIS_fnc_findSafePos; // was 30, now 80, now 150 hopefully for better dispertion // now back to 30
 		_unit = _grp createUnit [_rndtype, _pos, [], 1, "none"]; 
 		_unit setBehaviour "COMBAT";
 		_unit doMove _initStartPos; 
 		// spawnedOpforUnit = spawnedOpforUnit + 1;
-		sleep 2;						
+		sleep 1;						
 	};
 };
 
@@ -204,49 +168,65 @@ _opforClass = [
 	"O_G_Soldier_TL_F"
 ];
 
-_rndOp1 = selectRandom [8, 10, 12, 24];
+_rndOp1 = 24;
 _grp = createGroup [east, true];
-
-// systemchat format ["op defence: %1", _rndOp1]; // debug 
 
 for "_i" from 1 to _rndOp1 do {
 	// systemchat "check perf while safePos does its work";
-	_rndtype = selectRandom _opforClass;
+	_rndtype = selectRandom _assaultSquad;
 	_pos = [_objPos, 0, 40] call BIS_fnc_findSafePos;
 	_unit = _grp createUnit [_rndtype, _pos, [], 30, "none"]; 
 	_randomDir = selectRandom [270, 290, 01, 30, 90];
 	_randomDist = random [5, 25, 50]; 
 	_endPoint = _objPos getPos [_randomDist, _randomDir];
 	_unit setBehaviour "COMBAT";
-	// _unit doMove _endPoint;
-	// spawnedOpforUnit = spawnedOpforUnit +1;
  	sleep 1;									
 };
+
+for "_i" from 1 to 3 do {
+	// create vics 	
+	_pos = [_objPos, 0, 40] call BIS_fnc_findSafePos;
+	_vic = selectRandom	_endGameVics;	
+	_opforVic = [_pos, 180, _vic, east] call BIS_fnc_spawnVehicle;				
+};
+
+for "_i" from 1 to 8 do {
+	// create trucks 
+	// todo - change direction
+	_pos = [_objPos, 30, 70] call BIS_fnc_findSafePos;
+	_vic = selectRandom	_endGameTargetClasses;	
+	_opforVic = [_pos, 180, _vic, east] call BIS_fnc_spawnVehicle;								
+};
+
+for "_i" from 1 to 5 do {
+	// create statics  								
+};
+
 
 // createGuardedPoint [east, RGG_patrol_obj, -1, objNull];
 // systemChat "guard wp set";
 
-sleep 5;
-_pos = [_objPos, 0, 40] call BIS_fnc_findSafePos;
-// enemy vics 
-_opforVic = [_pos, 180, "O_G_Offroad_01_armed_F", east] call BIS_fnc_spawnVehicle;
-_opforVic doMove _initStartPos;
+// sleep 5;
+// _pos = [_objPos, 0, 40] call BIS_fnc_findSafePos;
+// // enemy vics 
+// _opforVic = [_pos, 180, "O_G_Offroad_01_armed_F", east] call BIS_fnc_spawnVehicle;
+// _opforVic doMove _initStartPos;
 
 // move indifor to current position 
 // move remaining indifor units to next task objective 
-_moveIndi = [];
-// _holdIndi = [];
+// _moveIndi = [];
+// // _holdIndi = [];
 
-{ if ((side _x) == independent) then { _moveIndi pushBack _x; } } forEach allUnits;
+// { if ((side _x) == independent) then { _moveIndi pushBack _x; } } forEach allUnits;
 
-{
-	_randomDir = selectRandom [270, 310, 00, 50, 90];
-	_randomDist = selectRandom [20, 22, 24, 26, 28, 30];
-	// _unitDest = [_objPos, 5, 20] call BIS_fnc_findSafePos;
-	_endPoint1 = _objPos getPos [_randomDist, _randomDir];
-	_x setBehaviour "COMBAT";
-	_x doMove _endPoint1;
-} forEach _moveIndi;
+// {
+// 	_randomDir = selectRandom [270, 310, 00, 50, 90];
+// 	_randomDist = selectRandom [20, 22, 24, 26, 28, 30];
+// 	// _unitDest = [_objPos, 5, 20] call BIS_fnc_findSafePos;
+// 	_endPoint1 = _objPos getPos [_randomDist, _randomDir];
+// 	_x setBehaviour "COMBAT";
+// 	_x doMove _endPoint1;
+// } forEach _moveIndi;
 
 // try to extract injured units 
 // {
@@ -695,7 +675,7 @@ _moveIndi = [];
 
 // systemChat "op defenders spawn complete .....................";
 
-sleep 20; // changes from 5 to 20, in case this was the reasons for the logic glitching out 
+// sleep 20; // changes from 5 to 20, in case this was the reasons for the logic glitching out 
 
 // HERE WE CHECK IF BLUFOR NEED RF 
 // execVM "autoPatrolSystem\reinforcementSystems\bluforRF.sqf";
@@ -707,165 +687,103 @@ sleep 20; // changes from 5 to 20, in case this was the reasons for the logic gl
 // [_objPos] execVM "killChain\systems\insuranceSystems\indiforMovement.sqf";
 // check if this ^^ is actually still needed ??
 
-// check to see when indifor have taken patrol point, and when to trigger opfor rf 
+// attack point stage -------------------------------------------------------------------------------
+systemChat "RFCHECK starting";
+
 RFCHECK = true; 
 
 while {RFCHECK} do {
-		_unitsRedzone = allUnits inAreaArray "redzone";
-		_indiInRedzone = [];
-		_redzoneIndi = 0;
-		_unitsCore = allUnits inAreaArray "missionCore";
-		_indiInCore = [];
-		_opforInCore = [];
-		_coreIndi = 0;
-		_coreOpfor = 0;
 
-		// check whether need RF 
+	// flybys 
+	[_objPos] execVM "killchain\systems\ambientSystems\randomFlybys.sqf";
+
+	// total numbers 
+	_indi = independent countSide allUnits;
+	_east = east countSide allUnits;
+
+	// get overall numbers of troops in redzone 
+	_unitsRedzone = allUnits inAreaArray "redzone";
+	
+	// get overall numbers of troops in obj core area 
+	_unitsCore = allUnits inAreaArray "missionCore";
+
+	// Redzone stats 
+	_redzoneIndi = 0;
+	_redzoneOpfor = 0;
+	{
+		switch ((side _x)) do
 		{
-			switch ((side _x)) do
-			{
-				// case EAST: {_coreOpfor = _coreOpfor + 1};
-				case INDEPENDENT: {_coreIndi = _coreIndi + 1};
-			};
-		} forEach _indiInRedzone;
-
-		if (_redzoneIndi <= 5) then {
-			// ORDER RF HERE
+			case INDEPENDENT: {_redzoneIndi = _redzoneIndi + 1};
+			case EAST: {_redzoneOpfor = _redzoneOpfor + 1};
 		};
+	} forEach _unitsRedzone;
 
-		// check if won point and if so, move to defend 
+	// Core stats 
+	_coreIndi = 0;
+	_coreOpfor = 0;
+	{
+		switch ((side _x)) do
 		{
-			switch ((side _x)) do
-			{
-				case EAST: {_coreOpfor = _coreOpfor + 1};
-				case INDEPENDENT: {_coreIndi = _coreIndi + 1};
-			};
+			case INDEPENDENT: {_coreIndi = _coreIndi + 1};
+			case EAST: {_coreOpfor = _coreOpfor + 1};
+		};
+	} forEach _unitsCore;
+
+	// debug stats 
+	systemChat "RFCHECK1";
+	systemChat format ["TOTAL INDI: %1", _indi];
+	systemChat format ["TOTAL OPFOR: %1", _east];
+	systemChat ".....";
+	systemChat format ["REDZONE INDI: %1", _redzoneIndi];
+	systemChat format ["REDZONE OPFR: %1", _redzoneOpfor];
+	systemChat ".....";
+	systemChat format ["CORE INDI:    %1", _coreIndi];
+	systemChat format ["CORE OPFR:    %1", _coreOpfor];
+
+	// rf check 
+	if (_redzoneIndi <= 10) then {
+		// this will check before churning out new reinforcement units 
+		// systemChat "LOGIC - indifor in redzone is less than 5 now";
+		[_initStartPos, _objPos] execVM "killChain\systems\reinforcementSystems\indiforRf.sqf";
+	};
+
+	// check if won point and if so, move to defend 
+	if ((_coreOpfor < 1) && (_coreIndi >=3)) then {
+		systemChat "LOGIC - indifor in core is 3+ and opfor is 3-";
+		// move indi units to a rough defensive position around the center point - note will also attrack any opfor strags 
+		{
+			_dir = random 360;
+			_dist = selectRandom [14, 16, 18, 20, 22, 24, 30]; 
+			_defendPoint = _objPos getPos [_dist, _dir]; // moves units into a rough 360 defensive circle
+			_x setBehaviour "COMBAT";
+			_x doMove _defendPoint;
+			sleep 1;
 		} forEach _unitsCore;
+		RFCHECK = false;
+	} else {
+		// insurance move order while in attack mode 
+		systemChat "LOGIC - initiate insurance move order";
+		[_objPos] execVM "killChain\systems\insuranceSystems\indiforMovement.sqf";
+	};
 
-		if ((_coreOpfor <= 2) && (_coreIndi >=3)) then {
-			// move indi units to a rough defensive position around the center point - note will also attrack any opfor strags 
-			{
-				_dir = random 360;
-				_dist = selectRandom [14, 16, 18, 20, 22, 24]; 
-				_defendPoint = RGG_patrol_obj getPos [_dist, _dir]; // moves units into a rough 360 defensive circle
-				_x setBehaviour "COMBAT";
-				_x doMove _defendPoint;
-				sleep 1;
-			} forEach _indiInCore;
-			RFCHECK = false;
-		};
-
-	sleep 90;
+	sleep 60;
 };
 
 // at what stage should these initial defenders retreat?
 
 // pop phase-change smoke 
 _smoke = createVehicle ["G_40mm_smokeYELLOW", _objPos, [], 0, "none"]; // drop this from up high 
-
-if (!BESILENT) then {
-	// voice broadcast - prepare for retalliation 
-	execVM "media\sounds\thisIsCommand.sqf";
-	sleep 2;
-	execVM "media\sounds\prepare.sqf";
-};
+_smoke = createVehicle ["G_40mm_smokeRed", _objPos, [], 0, "none"]; // drop this from up high 
+_smoke = createVehicle ["G_40mm_smokeBlue", _objPos, [], 0, "none"]; // drop this from up high 
 
 deleteMarker "attackPoint";
-_tempMarker = createMarker ["attackPoint", _objPos];
-_tempMarker setMarkerType "hd_objective";
-_tempMarker setMarkerColor "ColorGreen";
 
-sleep 3;
-
-// point 1 rules 
-// only one direction of attack 
-// medium numbers, two waves 
-// set a timer for progrssion regardless _objPos
 
 _mainAnchor = RGG_PatrolPoints select 2;
 _anchor1 = [_mainAnchor, 10, 150] call BIS_fnc_findSafePos; 
 
 deleteMarker "Point 1"; 
-_objective1 = createMarker ["Point 2", _anchor1];
-_objective1 setMarkerShape "ELLIPSE";
-_objective1 setMarkerColor "ColorRed";
-_objective1 setMarkerSize [50, 50];
-_objective1 setMarkerAlpha 0.2;
 
-// unit creation 
-for "_i" from 1 to 3 do {
-	for "_i" from 1 to 6 do {
-		_opforGroup = createGroup [east, true];
-		_anchor1a = [_anchor1, 1, 50, 3, 0] call BIS_fnc_findSafePos;
-		_opforTeam = [];
-
-		for "_i" from 1 to _groupSize do {
-			_unit = selectRandom _opforClass;
-			_unit1 = _opforGroup createUnit [_unit, _anchor1a, [], 0.1, "none"];
-			_opforTeam pushBack _unit1;
-		};
-
-		sleep 0.7;
-
-		// move orders 
-		_ranDist = random 30;
-		_ranDir = random 359;
-		_unitDest = _objPos getPos [_ranDist, _ranDir];
-		_opforTeam doMove _unitDest;
-	};
-	sleep 90;
-};
-
-sleep 120;
-
-RFCHECK2 = true; 
-_cycles = 0;
-
-while {RFCHECK2} do {
-
-	if (_cycles >= 5) then {
-		// move forward anyways 
-	} else {
-		_cycles = _cycles + 1;
-		_unitsRedzone = allUnits inAreaArray "redzone";
-		_indiInRedzone = [];
-		_redzoneIndi = 0;
-		_unitsCore = allUnits inAreaArray "missionCore";
-		_indiInCore = [];
-		_opforInCore = [];
-		_coreIndi = 0;
-		_coreOpfor = 0;
-
-		// check whether need RF 
-		{
-			switch ((side _x)) do
-			{
-				// case EAST: {_coreOpfor = _coreOpfor + 1};
-				case INDEPENDENT: {_coreIndi = _coreIndi + 1};
-			};
-		} forEach _indiInRedzone;
-
-		if (_redzoneIndi <= 5) then {
-			// ORDER RF HERE
-		};
-
-		// check if won point and if so, move to next point  
-		{
-			switch ((side _x)) do
-			{
-				case EAST: {_coreOpfor = _coreOpfor + 1};
-				case INDEPENDENT: {_coreIndi = _coreIndi + 1};
-			};
-		} forEach _unitsCore;
-
-		if ((_coreOpfor <= 2) && (_coreIndi >=3)) then {
-			// regroup, healup and get prizes
-			RFCHECK2 = false;
-		};
-	};
-
-	sleep 90;
-};
 
 // time for prizes and healing 
 
@@ -876,18 +794,12 @@ if (!BESILENT) then {
 	execVM "killchain\media\sounds\success.sqf";		
 };
 
-	
-// delete existing camp 
-{ deleteVehicle _x } forEach campItems;
-campItems = [];
+
 
 // cleanup
 [_objPos] execVM "killchain\systems\cleanUpSystems\cleanUp.sqf";
 
 // BASE REWARD :)
-_buildLocation = _objPos findEmptyPosition [10,100,"B_Heli_Light_01_dynamicLoadout_F"];
-_fobPos = _buildLocation getPos [20,180];
-_repairPos = _fobPos findEmptyPosition [10,100,"B_Heli_Light_01_dynamicLoadout_F"];
 
 hint "FLARES ...........";
 _flrObj = "F_20mm_Red" createvehicle _buildLocation;
@@ -896,21 +808,21 @@ _flrObj = "F_20mm_Red" createvehicle _fobPos;
 sleep 2;
 _flrObj = "F_20mm_Red" createvehicle _repairPos;
 sleep 15;
-_baseBuilding1 = createVehicle ["Land_MedicalTent_01_tropic_closed_F", _buildLocation, [], 30, "none"]; 
-sleep 0.6;
-_ammoSup = createVehicle ["Box_NATO_Support_F", _fobPos]; //ammmo 
-[ "AmmoboxInit", [_ammoSup, true, {true}] ] call BIS_fnc_arsenal;
-sleep 0.6;
-_quaddy = createVehicle ["I_G_Quadbike_01_F", _fobPos]; // quad
-_ammoSup = createVehicle ["B_Slingload_01_Repair_F", _repairPos]; //vehicle repair 
-_vicLocation = _objPos findEmptyPosition [10,100,"B_Heli_Light_01_dynamicLoadout_F"];
-_vic = selectRandom [
-	"I_G_Offroad_01_armed_F", 
-	"I_C_Offroad_02_LMG_F", 
-	"I_C_Offroad_02_LMG_F", 
-	"B_LSV_01_armed_F"
-	];
-_rewardSpawn = createVehicle [_vic, _vicLocation]; // reward vic 
+// _baseBuilding1 = createVehicle ["Land_MedicalTent_01_tropic_closed_F", _buildLocation, [], 30, "none"]; 
+// sleep 0.6;
+// _ammoSup = createVehicle ["Box_NATO_Support_F", _fobPos]; //ammmo 
+// [ "AmmoboxInit", [_ammoSup, true, {true}] ] call BIS_fnc_arsenal;
+// sleep 0.6;
+// _quaddy = createVehicle ["I_G_Quadbike_01_F", _fobPos]; // quad
+// _ammoSup = createVehicle ["B_Slingload_01_Repair_F", _repairPos]; //vehicle repair 
+// _vicLocation = _objPos findEmptyPosition [10,100,"B_Heli_Light_01_dynamicLoadout_F"];
+// _vic = selectRandom [
+// 	"I_G_Offroad_01_armed_F", 
+// 	"I_C_Offroad_02_LMG_F", 
+// 	"I_C_Offroad_02_LMG_F", 
+// 	"B_LSV_01_armed_F"
+// 	];
+// _rewardSpawn = createVehicle [_vic, _vicLocation]; // reward vic 
 
 // win marker 
 _float = diag_tickTime;
@@ -923,11 +835,11 @@ _tempBase setMarkerAlpha 0.8;
 _tempBase setMarkerColor "colorBlue";
 
 // create respawn points 
-_bluforSpawn = _objPos getPos [40,90];
-_indiSpawn = _objPos getPos [40,270];
-RGG_respawnStore pushBack [_bluforSpawn, _indiSpawn]; // sending to global array to enable deleting of older respawns 
-[west, _bluforSpawn, "POINT 1-BRAVO"] call BIS_fnc_addRespawnPosition; // create blu resapwn
-[independent, _indiSpawn, "POINT 1-INDIGO"] call BIS_fnc_addRespawnPosition; // create ind resapwn
+// _bluforSpawn = _objPos getPos [40,90];
+// _indiSpawn = _objPos getPos [40,270];
+// RGG_respawnStore pushBack [_bluforSpawn, _indiSpawn]; // sending to global array to enable deleting of older respawns 
+// [west, _bluforSpawn, "POINT 1-BRAVO"] call BIS_fnc_addRespawnPosition; // create blu resapwn
+// [independent, _indiSpawn, "POINT 1-INDIGO"] call BIS_fnc_addRespawnPosition; // create ind resapwn
 
 // _cnt = count RGG_respawnStore; // check if more than one, i.e. don't process this is we only have one (1st) point 
 // if (_cnt >1) then {

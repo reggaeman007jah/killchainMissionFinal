@@ -82,7 +82,7 @@ _killchainObj3 = getMarkerPos "killchainObj3";
 _killchainObj4 = getMarkerPos "killchainObj4";
 _killchainObj5 = getMarkerPos "killchainObj5";
 _killchainObj6 = getMarkerPos "killchainObj6";
-_killchainObjFinal = getMarkerPos "killchainObjFinal";
+_killchainFinal = getMarkerPos "killchainFinal";
 RGG_PatrolPoints = [];
 RGG_PatrolPoints pushBack _killchainObj1;
 RGG_PatrolPoints pushBack _killchainObj2;
@@ -90,7 +90,7 @@ RGG_PatrolPoints pushBack _killchainObj3;
 RGG_PatrolPoints pushBack _killchainObj4;
 RGG_PatrolPoints pushBack _killchainObj5;
 RGG_PatrolPoints pushBack _killchainObj6;
-RGG_PatrolPoints pushBack _killchainObjFinal;
+RGG_PatrolPoints pushBack _killchainFinal;
 // here RGG_PatrolPoints holds 6 patrol points and 1 end point 
 
 // roamers 
@@ -101,7 +101,8 @@ execVM "killchain\mission\missionStart.sqf";
 systemChat "RUNNING PHASE 1";
 
 // debug
-execVM "killchain\systems\debugSystems\debug.sqf";
+// execVM "killchain\systems\debugSystems\debug.sqf";
+// groups seem to be in control now!
 
 
 

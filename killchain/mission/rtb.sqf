@@ -23,6 +23,6 @@ _units = allUnits inAreaArray "objective 1";
 	_randomDist = selectRandom [20, 22, 24, 26, 28, 30];
 	_endPoint1 = _initStartPos getPos [_randomDist,_randomDir];
 	sleep 2;
-	_x setBehaviour "SAFE";
+	_x setBehaviour "AWARE";
 	_x doMove _endPoint1;
 } forEach _indi;
