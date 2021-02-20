@@ -28,9 +28,11 @@ systemChat "cold-zone system activated - go to the office to start the mission";
 // execVM "killchain\systems\pickupSystems\pickUpSystems1\pickupInit.sqf";
 // execVM "killchain\systems\pickupSystems\pickUpSystems2\pickupInit.sqf";
 // execVM "killchain\systems\pickupSystems\pickUpSystems3\pickupInit.sqf";
+// note: these are triggered elsewhere to enable system without being part of Killchain mission  
 
 // // initialise para spawner script 
 // execVM "killchain\systems\spawnerSystems\spawnParas.sqf";
+// note: this triggered elsewhere to enable system without being part of Killchain mission 
 
 // voice bools 
 COMMANDSPEAKING = false;
@@ -95,62 +97,8 @@ RGG_PatrolPoints pushBack _killchainFinal;
 
 // roamers 
 // execVM "killChain\systems\randomThreatSystems\randomThreats.sqf";
+// note: Roamers are triggered during phases
 
 // commence mission 
 execVM "killchain\mission\missionStart.sqf";
 systemChat "RUNNING PHASE 1";
-
-// debug
-// execVM "killchain\systems\debugSystems\debug.sqf";
-// groups seem to be in control now!
-
-
-
-
-
-
-
-
-/*
-OLD BELOW
-This file sets up some basic mission-flow params 
-one/two/threePoint relates to states I use to determine how many directions the retalliation should psawn from 
-
-April 2020
-monitorDefence is a mission state - it needs to be declared at this early stage as it is used by an Insurance System, and needs to be declared (as false)
-in order to work - but check this is actually the case! Maybe try deleting it and see if it throws an error
-
-toDo / April 2020 / confirm why I now do not need the commented out RF trigger value below 
-*/
-
-// RGG_reinforcementTrigger = 10;
-
-// position blacklist - prevents overlapping of patrol points 
-// RGG_patrolPositionBlacklist = ["black1","black2", "black3", "black4", "black5", "black6", "black7","black8","black9","black10"];
-// RGG_patrolPositionBlacklist = ["blacklist4","blacklist3","blacklist2","blacklist1","nosouth","nowest"];
-// RGG_patrolPositionBlacklist = ["blacklist4","blacklist3","blacklist2","blacklist1","nosouth","nowest","noeast"];
-// RGG_patrolPositionBlacklist = ["blacklist4","blacklist3","blacklist2","blacklist1"];
-
-// [[500,500],[12500,450]] // bottom edge boundary 
-// [[500,12500],[12500,12450]] // top edge boundary 
-// [[500,12500],[500,550]] // right edge boundary 
-// [[12500,12500],[12550,500]] // left edge boundary
-// [[500,3300],[12500,3000]],[[500,500],[12500,450]],[[500,12500],[12500,12450]],[[500,12500],[500,550]],[[12500,12500],[12550,500]],
-// [[500,3300],[12500,3000]] // test lower third 
-
-// Manages total count of groups created 
-// RGG_totalOpforGroups = [];
-// RGG_totalIndiforGroups = [];
-// publicVariable "RGG_totalOpforGroups";
-// publicVariable "RGG_totalIndiforGroups";
-
-// opfor RF gen system
-// ONEPOINT = false;
-// TWOPOINT = false;
-// THREEPOINT = false;
-// these will be redundent as the points are set - so you can use patrolPointsTaken to define difficulty 
-
-
-
-
-
