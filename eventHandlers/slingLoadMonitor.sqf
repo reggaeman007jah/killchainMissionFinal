@@ -12,6 +12,7 @@ https://community.bistudio.com/wiki/setVariable
 */
 
 /*
+DELETE ^^ TO SEE CODE 
 
 // this detects the thing you have deployed via slingload, and takes relevant follow on action 
 bigHeli1 addEventHandler ["RopeBreak", {
