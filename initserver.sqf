@@ -28,6 +28,9 @@ execVM "killchain\systems\pickupSystems\pickupSystems3\pickupInit.sqf";
 // initialise para spawner script 
 execVM "killchain\systems\spawnerSystems\spawnParas.sqf";
 
+// enables HK Team as default 
+HUNTERKILLER = true;
+
 /*
 This system needs improvement
 */

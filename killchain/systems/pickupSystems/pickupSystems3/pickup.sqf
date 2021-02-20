@@ -118,7 +118,7 @@ while {deploymentMission3} do {
     dropoff3 = false;
     complete3 = false;
     deleteMarker "extract3"; // belt and braces
-    execVM "killchain\systems\pickupSystems\pickupSystems3\pickup.sqf";
+    execVM "killchain\systems\pickupSystems\pickupSystems3\pickupInit.sqf";
     systemChat "shutting down pickup system";
   };
   // alt check
@@ -148,7 +148,7 @@ while {deploymentMission3} do {
 			{
 				_x assignAsCargo _myHeli;
         _squaddieGrp = group _x;
-        _x setUnitPos "MIDDLE";
+        _x setUnitPos "AUTO";
         HKSQUADGP3 pushBackUnique _squaddieGrp;
 			} forEach _units;	
 			_units orderGetIn true;
