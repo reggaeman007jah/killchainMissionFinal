@@ -4,7 +4,9 @@ _objPos = _this select 0; // objective point
 
 _indi = [];
 
-{ if ((side _x) == INDEPENDENT) then {_indi pushBack _x} } forEach allUnits;
+{
+	if ((side _x) == INDEPENDENT) then {_indi pushBack _x};
+} forEach allUnits;
 
 {
 	_randomDir = selectRandom [270, 310, 00, 50, 90];

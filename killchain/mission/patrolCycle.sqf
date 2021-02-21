@@ -333,6 +333,15 @@ _tempMarker setMarkerColor "ColorGreen";
 
 sleep 3;
 
+//---------------------------------------------------------------------------------------------------------
+// Roamers 
+[_objPos, _initStartPos] execVM "killchain\systems\randomThreatSystems\randomThreats.sqf";
+systemChat "Roamers created";
+
+//---------------------------------------------------------------------------------------------------------
+// QFR Here 
+systemChat "QRF initiated";
+
 // point 1 rules 
 // only one direction of attack 
 // medium numbers, two waves 
@@ -343,59 +352,56 @@ sleep 3;
 
 // this switch will determine the next available point - qrf comes from this direction 
 private ["_mainAnchor"];
-
 switch (patrolPointsTaken) do {
-	case (0): {
-		_mainAnchor = RGG_PatrolPoints select 1;
-		// _anchor1 = [_mainAnchor, 10, 150] call BIS_fnc_findSafePos;
-	};
-	case (1): {
-		_mainAnchor = RGG_PatrolPoints select 2;
-		// _anchor1 = [_mainAnchor, 10, 150] call BIS_fnc_findSafePos;
-	};
-	case (2): {
-		_mainAnchor = RGG_PatrolPoints select 3;
-		// _anchor1 = [_mainAnchor, 10, 150] call BIS_fnc_findSafePos;
-	};
-	case (3): {
-		_mainAnchor = RGG_PatrolPoints select 4;
-		// _anchor1 = [_mainAnchor, 10, 150] call BIS_fnc_findSafePos;
-	};
-	case (4): {
-		_mainAnchor = RGG_PatrolPoints select 5;
-		// _anchor1 = [_mainAnchor, 10, 150] call BIS_fnc_findSafePos;
-	};
-	case (5): {
-		_mainAnchor = RGG_PatrolPoints select 6;
-		// _anchor1 = [_mainAnchor, 10, 150] call BIS_fnc_findSafePos;
-	};
-	default {
-		systemChat "error Patrol Point switch";
-	};
+	case (0): { _mainAnchor = RGG_PatrolPoints select 1 };
+	case (1): { _mainAnchor = RGG_PatrolPoints select 2 };
+	case (2): { _mainAnchor = RGG_PatrolPoints select 3 };
+	case (3): { _mainAnchor = RGG_PatrolPoints select 4 };
+	case (4): { _mainAnchor = RGG_PatrolPoints select 5 };
+	case (5): { _mainAnchor = RGG_PatrolPoints select 6 };
+	default { systemChat "error Patrol Point switch" };
 };
+// from the above we know where the QRF anchor is - now we need to generate a new calc for each batch of QRF 
+// each QRF team will either be on the anchor, or rel 290 or rel 110 - not quite rel East or West, 
 
-_anchor1 = [_mainAnchor, 10, 150] call BIS_fnc_findSafePos;
+// for each team, select random 3 - then switch the results 
+_anchorSelection = selectRandom [1,2,3];
+private ["_anchor1"];
+switch (_anchorSelection) do {
+	case (1): { _anchor1 = _mainAnchor };
+	case (2): { _anchor1 = [_mainAnchor, 400, 240] call BIS_fnc_relPos };
+	case (3): { _anchor1 = [_mainAnchor, 400, 130] call BIS_fnc_relPos };
+	default { systemChat "error: _anchorSelection" };
+};
+_qrfAnchor = [_anchor1, 10, 150] call BIS_fnc_findSafePos 
+// this gives us one of three positions - roughly in line but could be ahead, ahead left or ahead right relative to last taken point 
 
-
-//---------------------------------------------------------------------------------------------------------
-
-systemChat "QRF initiated";
-
-deleteMarker "Point 1"; 
-_objective1 = createMarker ["Point 1", _anchor1];
-_objective1 setMarkerShape "ELLIPSE";
-_objective1 setMarkerColor "ColorRed";
-_objective1 setMarkerSize [50, 50];
-_objective1 setMarkerAlpha 0.2;
-
-systemChat "techs and roamers created";
 // technicals 
-[_anchor1, _objPos] execVM "killChain\systems\spawnerSystems\spawnTechnicals.sqf";
-// roamers 
-[_objPos, _initStartPos] execVM "killchain\systems\randomThreatSystems\randomThreats.sqf";
+[_qrfAnchor, _objPos] execVM "killChain\systems\spawnerSystems\spawnTechnicals.sqf";
+systemChat "Technical created";
+
+
 
 // unit creation 
 for "_i" from 1 to 2 do {
+
+	_anchorSelection = selectRandom [1,2,3];
+	private ["_anchor1"];
+	switch (_anchorSelection) do {
+		case (1): { _anchor1 = _mainAnchor };
+		case (2): { _anchor1 = [_mainAnchor, 400, 240] call BIS_fnc_relPos };
+		case (3): { _anchor1 = [_mainAnchor, 400, 130] call BIS_fnc_relPos };
+		default { systemChat "error: _anchorSelection" };
+	};
+	_qrfAnchor = [_anchor1, 10, 150] call BIS_fnc_findSafePos 
+
+	// delete when we know this works 
+	deleteMarker "Point 1"; 
+	_objective1 = createMarker ["Point 1", _qrfAnchor];
+	_objective1 setMarkerShape "ELLIPSE";
+	_objective1 setMarkerColor "ColorRed";
+	_objective1 setMarkerSize [50, 50];
+
 	for "_i" from 1 to 6 do {
 		_opforGroup = createGroup [east, true];
 		_anchor1a = [_anchor1, 1, 50, 3, 0] call BIS_fnc_findSafePos;
@@ -424,12 +430,12 @@ if (patrolPointsTaken > 3) then {
 	for "_i" from 1 to 2 do {
 		for "_i" from 1 to 6 do {
 			_opforGroup = createGroup [east, true];
-			_anchor1a = [_anchor1, 1, 50, 3, 0] call BIS_fnc_findSafePos;
+			_anchor1a = [_qrfAnchor, 1, 50, 3, 0] call BIS_fnc_findSafePos;
 			_opforTeam = [];
 
 			for "_i" from 1 to 2 do {
 				_unit = selectRandom _opforClass;
-				_unit1 = _opforGroup createUnit [_unit, _anchor1a, [], 0.1, "none"];
+				_unit1 = _opforGroup createUnit [_unit, _qrfAnchor, [], 0.1, "none"];
 				_opforTeam pushBack _unit1;
 			};
 
@@ -501,7 +507,7 @@ while {RFCHECK2} do {
 	systemChat format ["CORE OPFR:    %1", _coreOpfor];
 
 	if ((_cycles >= 5) && (_coreIndi > 3) && (_redzoneOpfor < 5)) then {
-		// progress mission based mainly on cycles but also needs indi on point 
+		// progress mission based mainly on cycles but also needs indi on point and low numbers of opfor in redzone 
 		RFCHECK2 = false;
 		systemChat "(_cycles >= 5) && (_coreIndi > 3) && (_redzoneOpfor < 5)";
 		systemChat "auto-cycle-push";
@@ -521,6 +527,20 @@ while {RFCHECK2} do {
 			sleep 3;
 			execVM "sounds\welcome\rfInbound.sqf";
 		};
+
+		// OPFOR to push forward as a group if they took back control of point and there is no indifor on it 
+		if (_coreIndi < 1) && (_redzoneOpfor > 25)) then {
+			hint "THEY ARE RUSHING! PREPARE YOUR DEFENSES!!";
+			{
+				_randomDir = selectRandom [270, 310, 00, 50, 90];
+				_randomDist = selectRandom [20, 22, 24, 26, 28, 30];
+				_endPoint1 = _initStartPos getPos [_randomDist,_randomDir];
+				sleep 2;
+				_x setBehaviour "COMBAT";
+				_x doMove _endPoint1;
+			} forEach _unitsRedzone;
+		};
+		// this system is a proof of concept for a bigger more push/pull scenario 
 
 		// STAGE WIN LOGIC 
 		if ((_coreOpfor < 1) && (_coreIndi >=7) && (_redzoneOpfor < 10) && (_east < 10)) then {
@@ -675,6 +695,22 @@ _indi = [];
 	_x setBehaviour "COMBAT";
 	_x doMove _endPoint1;
 } forEach _indi;
+
+// catchall opfor move at end of cycle - might lead to pincer attacks unexpectedly ;)
+_opfor = [];
+
+{
+	if ((side _x) == EAST) then {_opfor pushBack _x};
+} forEach allUnits;
+
+{
+	_randomDir = selectRandom [270, 310, 00, 50, 90];
+	_randomDist = selectRandom [20, 22, 24, 26, 28, 30];
+	_endPoint1 = _objPos getPos [_randomDist,_randomDir];
+	sleep 2;
+	_x setBehaviour "COMBAT";
+	_x doMove _endPoint1;
+} forEach _opfor;
 
 // cleanup
 { deleteVehicle _x } forEach allDead;

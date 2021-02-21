@@ -25,46 +25,155 @@ Each spawned team has:
 1 marksman
 */
 
-_spawnPos = _this select 0; // position parsed to this script on execution
-_destPos = _this select 1; // where they are sent to 
+_spawnPos = _this select 0; // given position where we want to spawn RF
+_destPos = _this select 1; // where RF are sent to 
 
-// _numberOfCycles = _this select 1; // number of times we run this // 4 = 4 fire teams  
-_numberOfCycles = 3; // placeholder var  
-_area = 60; // distribution of units on spawn  // I am making this much smaller 
+_numberOfCycles = 3; // placeholder var - 3 groups of 5 
+_area = 60; // distribution of units on spawn  
 _timer = 0.3; // spawn cycle gap  
 
-for "_i" from 1 to _numberOfCycles do {
-	_indiGroup = createGroup [independent, true];
-	_pos = [_spawnPos, 20, _area] call BIS_fnc_findSafePos;
-	// _pos1 = _pos getPos [1,180];
-	// _pos2 = _pos getPos [2,180];
-	// _pos3 = _pos getPos [3,180];
-	// _pos4 = _pos getPos [4,180];
-	// _pos5 = _pos getPos [5,180];
-	// the above might be used for better staging before move orders 
-	_fireTeam = [];
-	_unit1 = _indiGroup createUnit ["I_soldier_F", _pos, [], 0.1, "none"]; 
-	_unit2 = _indiGroup createUnit ["I_support_MG_F", _pos, [], 0.1, "none"]; 
-	_unit3 = _indiGroup createUnit ["I_Soldier_GL_F", _pos, [], 0.1, "none"]; 
-	_unit4 = _indiGroup createUnit ["I_Soldier_M_F", _pos, [], 0.1, "none"]; 
-	_unit5 = _indiGroup createUnit ["I_medic_F", _pos, [], 0.1, "none"]; 
-	_fireTeam pushBack _unit1;
-	_fireTeam pushBack _unit2;
-	_fireTeam pushBack _unit3;
-	_fireTeam pushBack _unit4;
-	_fireTeam pushBack _unit5;
-	systemChat str _fireTeam;
+/*
+Here we need to:
+	first, check how many points we have, as if 0, then rf will always just happen
+	get pos of preferred spawn point 
+	create a marker to enable check of opfor 
+	if opfor found, find next ideal point - the one before 
+	exit and re-run with new preferred point (i.e. we might fail again although unlikely)
+	if no opfor found, then go ahead as per normal 
+*/
 
-	sleep _timer;
-	// move orders 
-	_randomDir = selectRandom [270, 310, 00, 50, 90];
-	_randomDist = selectRandom [20, 22, 24, 26, 28, 30];
-	// _unitDest = [_destPos, 5, 20] call BIS_fnc_findSafePos;
-	_endPoint1 = _destPos getPos [_randomDist,_randomDir];
-	_fireTeam doMove _endPoint1;
+if (patrolPointsTaken > 0) then {
+	deleteMarker "rfZone"; // does this need to go somewhere else?
+	_rfZone = createMarker ["rfZone", _spawnPos];
+	_rfZone setMarkerShape "ELLIPSE";
+	_rfZone setMarkerColor "ColorRed";
+	_rfZone setMarkerSize [50, 50];
+	_rfZone setMarkerAlpha 0.2;
 	
-	// spawnedIndiUnit = spawnedIndiUnit +5;
+	// get overall numbers of troops in rf area 
+	_unitsCore = allUnits inAreaArray "rfZone";
+
+	// check indi and opfpr numbers in core  
+	_coreIndi = 0;
+	_coreOpfor = 0;
+	{
+		switch ((side _x)) do
+		{
+			case EAST: {_coreOpfor = _coreOpfor + 1};
+			case INDEPENDENT: {_coreIndi = _coreIndi + 1};
+		};
+	} forEach _unitsCore;
+
+	if (_coreOpfor > 0) then {
+		systemChat "cannot use this spawn area as it is occupied by opfor troops";
+		systemChat "DEBUG - check that RF is spawning at the base prior";
+		// how to make this more obvious to players?
+
+		private ["_mainAnchor"];
+		switch (patrolPointsTaken) do {
+			case (1): {
+				_mainAnchor = RGG_PatrolPoints select 0;
+			};
+			case (2): {
+				_mainAnchor = RGG_PatrolPoints select 1;
+			};
+			case (3): {
+				_mainAnchor = RGG_PatrolPoints select 2;
+			};
+			case (4): {
+				_mainAnchor = RGG_PatrolPoints select 3;
+			};
+			case (5): {
+				_mainAnchor = RGG_PatrolPoints select 4;
+			};
+			case (6): {
+				_mainAnchor = RGG_PatrolPoints select 4;
+			};
+			default {
+				systemChat "error: RF switch - point not correct";
+			};
+		};
+		[_mainAnchor, _objPos] execVM "killChain\systems\spawnerSystems\createIndiforRFUnits.sqf";
+		// this should re-run this script with a spawn pos that is one previous 
+	} else {
+		// deliver RF as per expected 
+		for "_i" from 1 to _numberOfCycles do {
+			_indiGroup = createGroup [independent, true];
+			_pos = [_spawnPos, 20, _area] call BIS_fnc_findSafePos;
+			// _pos1 = _pos getPos [1,180];
+			// _pos2 = _pos getPos [2,180];
+			// _pos3 = _pos getPos [3,180];
+			// _pos4 = _pos getPos [4,180];
+			// _pos5 = _pos getPos [5,180];
+			// the above might be used for better staging before move orders 
+			_fireTeam = [];
+			_unit1 = _indiGroup createUnit ["I_soldier_F", _pos, [], 0.1, "none"]; 
+			_unit2 = _indiGroup createUnit ["I_support_MG_F", _pos, [], 0.1, "none"]; 
+			_unit3 = _indiGroup createUnit ["I_Soldier_GL_F", _pos, [], 0.1, "none"]; 
+			_unit4 = _indiGroup createUnit ["I_Soldier_M_F", _pos, [], 0.1, "none"]; 
+			_unit5 = _indiGroup createUnit ["I_medic_F", _pos, [], 0.1, "none"]; 
+			_fireTeam pushBack _unit1;
+			_fireTeam pushBack _unit2;
+			_fireTeam pushBack _unit3;
+			_fireTeam pushBack _unit4;
+			_fireTeam pushBack _unit5;
+			systemChat str _fireTeam;
+
+			sleep _timer;
+			// move orders 
+			_randomDir = selectRandom [270, 310, 00, 50, 90];
+			_randomDist = selectRandom [20, 22, 24, 26, 28, 30];
+			// _unitDest = [_destPos, 5, 20] call BIS_fnc_findSafePos;
+			_endPoint1 = _destPos getPos [_randomDist,_randomDir];
+			_fireTeam doMove _endPoint1;
+			
+			// spawnedIndiUnit = spawnedIndiUnit +5;
+		};	
+	};
+} else {
+	// this means that RF will just happen as planned, from FOB Pathfinder 
+	// note this is duplication as the same coe is uded in the above block - so ..
+	// we need to use a function here !!
+	for "_i" from 1 to _numberOfCycles do {
+		_indiGroup = createGroup [independent, true];
+		_pos = [_spawnPos, 20, _area] call BIS_fnc_findSafePos;
+		// _pos1 = _pos getPos [1,180];
+		// _pos2 = _pos getPos [2,180];
+		// _pos3 = _pos getPos [3,180];
+		// _pos4 = _pos getPos [4,180];
+		// _pos5 = _pos getPos [5,180];
+		// the above might be used for better staging before move orders 
+		_fireTeam = [];
+		_unit1 = _indiGroup createUnit ["I_soldier_F", _pos, [], 0.1, "none"]; 
+		_unit2 = _indiGroup createUnit ["I_support_MG_F", _pos, [], 0.1, "none"]; 
+		_unit3 = _indiGroup createUnit ["I_Soldier_GL_F", _pos, [], 0.1, "none"]; 
+		_unit4 = _indiGroup createUnit ["I_Soldier_M_F", _pos, [], 0.1, "none"]; 
+		_unit5 = _indiGroup createUnit ["I_medic_F", _pos, [], 0.1, "none"]; 
+		_fireTeam pushBack _unit1;
+		_fireTeam pushBack _unit2;
+		_fireTeam pushBack _unit3;
+		_fireTeam pushBack _unit4;
+		_fireTeam pushBack _unit5;
+		systemChat str _fireTeam;
+
+		sleep _timer;
+		// move orders 
+		_randomDir = selectRandom [270, 310, 00, 50, 90];
+		_randomDist = selectRandom [20, 22, 24, 26, 28, 30];
+		// _unitDest = [_destPos, 5, 20] call BIS_fnc_findSafePos;
+		_endPoint1 = _destPos getPos [_randomDist,_randomDir];
+		_fireTeam doMove _endPoint1;
+		
+		// spawnedIndiUnit = spawnedIndiUnit +5;
+	};
 };
+
+
+
+
+
+
+
 
 /*
 // rifleman

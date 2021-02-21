@@ -40,3 +40,49 @@ You can play alongside the ground forces (sniper, DMR, medic etc), or you can fl
 ## Note for mission makers
 
 You need to move the 7 markers around, to define the flow of the mission - make sure the numbers reflect the sequence
+
+## To-Do
+
+Reset mission bool after success .. enabling the mission to be restarted in the office
+
+Add a system to enable storing of three different patrol routes - to be random but never the same as the last
+
+Make a smoke system that works
+
+Make burning vics work
+
+Add statics and mortars in increasing numbers as players progress
+
+Implement a medivac side mission
+
+Add auto-medic system (on insertion)
+
+Add a supply and rearm system - AI auto rearm on deployed crate
+
+Make injured units hang back and not attack a point
+
+Think about a limiting system for RF
+
+Improve ambient aircraft system
+
+Add a way to win the mission better than just killing everyone - MVP kill?
+
+Make the mission able to run forever - but only on demand
+
+MAke an admin menu that enables more control of mission params
+
+Make a padre system that adds mission-specific tasks to raptors
+
+Make a stats system, including how many cycles over 5 there were
+
+## DONE / UNTESTED
+
+Add catch-all opfor insurance move at stage switch
+
+Ensure OPFOR will push to previous point (QRF stage) when there is a lot of them there
+
+Prevent RF from happening if a point has opfor near it - making RF appear at the next available point
+
+Improve spacing of QRF attack vectors
+
+## DONE / TESTED
