@@ -325,6 +325,7 @@ if (!BESILENT) then {
 	execVM "media\sounds\prepare.sqf";
 };
 
+// change marker colour to signify change from attack to defend - consider changing marker type (image) here 
 deleteMarker "attackPoint";
 _tempMarker = createMarker ["attackPoint", _objPos];
 _tempMarker setMarkerType "hd_objective";
@@ -521,9 +522,10 @@ while {RFCHECK2} do {
 			execVM "sounds\welcome\rfInbound.sqf";
 		};
 
-		if ((_coreOpfor < 1) && (_coreIndi >=7) && (_redzoneOpfor < 10)) then {
-			systemChat "(_coreOpfor <= 2) && (_coreIndi >=3)";
-			systemChat "defence successful - take a breather...";
+		// STAGE WIN LOGIC 
+		if ((_coreOpfor < 1) && (_coreIndi >=7) && (_redzoneOpfor < 10) && (_east < 10)) then {
+			systemChat "(_coreOpfor < 1) && (_coreIndi >=7) && (_redzoneOpfor < 10) && (_east < 10)";
+			systemChat "defence successful - take a breather... get heals and ammo, and get ready for next assault";
 			// regroup, healup and get prizes
 			RFCHECK2 = false;
 		};
@@ -646,12 +648,14 @@ systemChat "get Ready";
 sleep 60;
 systemChat "here we go";
 
+// determine whether another camp obj or final obj 
 if (patrolPointsTaken <= 5) then {
 	[_anchor, _objPos] execVM "killChain\mission\patrolCycle.sqf";	
 } else {
 	[_anchor, _objPos] execVM "killChain\mission\patrolFinal.sqf";	
 };
 
+// blanket move order here 
 _units = allUnits inAreaArray "redzone";
 _indi = [];
 
