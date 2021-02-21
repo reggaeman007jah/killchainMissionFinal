@@ -7,197 +7,196 @@ This function manages all ambient flybys - Jets
 // _fobBaseLocation = param[0]; // focus point for flybys 
 // ** imports 
 
-_fobBaseLocation = getPos player;
+// _fobBaseLocation = getPos player;
+// note: this should be objective point 
 
-while {true} do {
-	// _sleep = selectRandom [30, 60, 90, 120, 180, 240, 300]; // determines how long between each batch of ambients 
-	// sleep _sleep; // random sleep between spawn batches 
+_hub = _this select 0;
 
-	// manual low sleep for testing 
-	_sleep = 5;
 
-	// set number of ambients per spawn 
-	// _number = selectRandom [1,2,3,4,5,6]; 
-	_number = selectRandom [1,5]; 
-	// _number = 5;
+// _sleep = selectRandom [30, 60, 90, 120, 180, 240, 300]; // determines how long between each batch of ambients 
+// sleep _sleep; // random sleep between spawn batches 
 
-	// confirmed type of ambient 
-	// _type = selectRandom ["B_Plane_CAS_01_dynamicLoadout_F", "B_Heli_Transport_01_F", "B_Heli_Transport_03_F", "B_Heli_Light_01_dynamicLoadout_F"]; 
-	_type = selectRandom ["B_Plane_CAS_01_dynamicLoadout_F"]; 
-	// note: 4 types, each batch is always the same type - you wont get a jet and an MH6 together 
+// set number of ambients per spawn 
+// _number = selectRandom [1,2,3,4,5,6]; 
+_number = selectRandom [1,5]; 
+// _number = 5;
 
-	// local vars declared 
-	private ["_n","_ne","_s","_se","_s","_sw","_w","_nw","_ambientOrigin","_ambientDestination"];
+// confirmed type of ambient 
+// _type = selectRandom ["B_Plane_CAS_01_dynamicLoadout_F", "B_Heli_Transport_01_F", "B_Heli_Transport_03_F", "B_Heli_Light_01_dynamicLoadout_F"]; 
+_type = selectRandom ["B_Plane_CAS_01_dynamicLoadout_F"]; 
+// note: 4 types, each batch is always the same type - you wont get a jet and an MH6 together 
 
-	// determine origin (heading)
-	// _origin = selectRandom [1,2,3,4,5,6,7,8]; // 1=n 2=ne 3=e 4=se 5=s 6=sw 7=w 8=nw 
-	_origin = selectRandom [1]; // 1=n 2=ne 3=e 4=se 5=s 6=sw 7=w 8=nw 
+// local vars declared 
+private ["_n","_ne","_s","_se","_s","_sw","_w","_nw","_ambientOrigin","_ambientDestination"];
 
-	// determines start and end headings for ambient flight paths - disabled for now, to enable testing - currently everything goes from north to south 
-	switch (_origin) do {
-		case 1: 	{ _ambientOrigin = 0, _ambientDestination = 180 };
-		case 2: 	{ _ambientOrigin = 45, _ambientDestination = 225 };
-		case 3: 	{ _ambientOrigin = 90, _ambientDestination = 270 };
-		case 4: 	{ _ambientOrigin = 135, _ambientDestination = 315 };
-		case 5: 	{ _ambientOrigin = 180, _ambientDestination = 0 };
-		case 6: 	{ _ambientOrigin = 225, _ambientDestination = 45 };
-		case 7: 	{ _ambientOrigin = 270, _ambientDestination = 90 };
-		case 8: 	{ _ambientOrigin = 315, _ambientDestination = 135 };
-		default 	{ systemChat "error: ambient flight paths broken / _origin / _ambientOrigin / switch" };
-	};
+// determine origin (heading)
+// _origin = selectRandom [1,2,3,4,5,6,7,8]; // 1=n 2=ne 3=e 4=se 5=s 6=sw 7=w 8=nw 
+_origin = selectRandom [1]; // 1=n 2=ne 3=e 4=se 5=s 6=sw 7=w 8=nw 
 
-	// calculates ambient start and end points to fly over FOB 
-	_startPos = _fobBaseLocation getPos [1000, _ambientOrigin]; 
-	_endPos = _fobBaseLocation getPos [2500, _ambientDestination]; 
-
-	// set ambient height 
-	// _height = selectRandom [100,300,500];
-	_height = selectRandom [300];
-
-	// declare vars 
-	private ["_formationType","_singleAmbient","_line","_echelon","_vee","_wedge","_parallel"];
-
-	// determine formation 
-	switch (_number) do {
-		case 1: { _formationType = selectRandom ["_singleAmbient"] }; 
-		case 2: { _formationType = selectRandom ["_line", "_echelon"] };
-		// case 3: { _formationType = selectRandom [_line, _echelon, _vee, _wedge] };
-		case 3: { _formationType = selectRandom ["_line", "_echelon", "_wedge"] };
-		// case 4: { _formationType = selectRandom [_line, _echelon, _parallel] };
-		case 4: { _formationType = selectRandom ["_line", "_echelon"] };
-		// case 5: { _formationType = selectRandom [_line, _echelon, _vee, _wedge] };
-		case 5: { _formationType = selectRandom ["_wedge"] }; // testDelete - just testing echelon 
-		// case 5: { _formationType = selectRandom ["_line", "_echelon", "_wedge"] };
-		// case 6: { _formationType = selectRandom [_line, _echelon, _parallel] };
-		case 6: { _formationType = selectRandom ["_line", "_echelon"] };
-		default { systemChat "error: ambient formation selection broken / _origin / _formationType / switch" };
-	};
-
-	// spawn formation 
-	switch (_formationType) do {
-
-		// single ambient 
-		case "_singleAmbient": { [_startPos, _endPos, _height, "FULL", _type, west] call BIS_fnc_ambientFlyby; };
-
-		// 2 - 6 ambients - Line formation 
-		case "_line": {
-			_spacerDist = 5; // test this to ensure echelon looks nice - too small and it just looks like a line formation
-			_spacerTime = 1; // test this to ensure echelon looks nice - too small and it just looks like a line formation 
-
-			for "_i" from 1 to _number do {
-				[_startPos, _endPos, _height, "FULL", _type, west] call BIS_fnc_ambientFlyby;
-
-				sleep 5; // spacer sleep between each iteration to prevent spawn overlaps 	
-			};
-		};
-
-		// 2 - 6 ambients - echelon formation 
-		case "_echelon": {
-			_spacerDist = 50; // test this to ensure echelon looks nice - too small and it just looks like a line formation
-			_spacerTime = 1; // test this to ensure echelon looks nice - too small and it just looks like a line formation 
-			
-			for "_i" from 1 to _number do {
-				[_startPos, _endPos, _height, "FULL", _type, west] call BIS_fnc_ambientFlyby;
-				switch (_origin) do {
-					case 1: { _startPos = _startPos getPos [_spacerDist, 90]; _endPos = _endPos getPos [_spacerDist, 90] };
-					case 2: { _startPos = _startPos getPos [_spacerDist, 135]; _endPos = _endPos getPos [_spacerDist, 135] };
-					case 3: { _startPos = _startPos getPos [_spacerDist, 180]; _endPos = _endPos getPos [_spacerDist, 180] };
-					case 4: { _startPos = _startPos getPos [_spacerDist, 225]; _endPos = _endPos getPos [_spacerDist, 225] };
-					case 5: { _startPos = _startPos getPos [_spacerDist, 270]; _endPos = _endPos getPos [_spacerDist, 270] };
-					case 6: { _startPos = _startPos getPos [_spacerDist, 315]; _endPos = _endPos getPos [_spacerDist, 315] };
-					case 7: { _startPos = _startPos getPos [_spacerDist, 0]; _endPos = _endPos getPos [_spacerDist, 0] };
-					case 8: { _startPos = _startPos getPos [_spacerDist, 45]; _endPos = _endPos getPos [_spacerDist, 45] };
-					default { systemChat "error: ambient echelon formation selection broken / _origin / _startPos / switch" };
-				};
-
-				sleep _spacerTime; // spacer sleep between each iteration to prevent spawn overlaps 	
-			};
-		};
-
-		// 3 or 5 ambients - vee formation - to do 
-		// case _vee: {
-		// 	if (_number == 5) then {
-		// 		// 
-		// 	} else {
-		// 	};
-		// };
-
-		// 3 or 5 ambients - wedge formation 
-		case "_wedge": {
-
-			// declare vars 
-			private ["_startPosLeft","_endPosLeft","_startPosRight","_endPosRight"];
-
-			systemChat "ambient spawning";
-
-			_spacerDist = 10; // test this to ensure echelon looks nice - too small and it just looks like a line formation
-			_spacerTime = 0.5; // test this to ensure echelon looks nice - too small and it just looks like a line formation 
-			_height = 300; // used to assist with initial (and end) spawn points (z-axis)
-
-			// lead heli 
-			_ambi1StartPos = _startPos;
-			// _ambi1StartPos set [2, _height]; // forces reset of z-axis
-			// first line formation
-			_ambi2StartPos = _startPos getPos [150, 90];  
-			// _ambi2StartPos set [2, _height]; // forces reset of z-axis
-			_ambi3StartPos = _startPos getPos [150, 270]; 
-			// _ambi3StartPos set [2, _height]; // forces reset of z-axis					
-			// second line formation
-			// _ambi4StartPos = _startPos getPos [100, 45]; // 100m 90 degrees away 
-			// _ambi4StartPos set [2, _height]; // forces reset of z-axis						
-			// _ambi5StartPos = _startPos getPos [100, 315]; 
-			// _ambi5StartPos set [2, _height]; // forces reset of z-axis	
-
-			_ambi1EndPos = _endPos;
-			_ambi2EndPos = _endPos getPos [150, 90]; 
-			_ambi3EndPos = _endPos getPos [150, 270];
-			// _ambi4EndPos = _endPos getPos [100, 45]; 
-			// _ambi5EndPos = _endPos getPos [100, 315]; 	
-			
-
-			sleep 10;
-
-			// lead ambient 
-			[_ambi1StartPos, _ambi1EndPos, _height, "FULL", _type, west] call BIS_fnc_ambientFlyby; 
-			sleep 1;
-			[_ambi2StartPos, _ambi2EndPos, _height, "FULL", _type, west] call BIS_fnc_ambientFlyby; 
-			[_ambi3StartPos, _ambi3EndPos, _height, "FULL", _type, west] call BIS_fnc_ambientFlyby; 
-			// sleep _spacerTime;
-			// [_ambi4StartPos, _ambi4EndPos, _height, "FULL", _type, west] call BIS_fnc_ambientFlyby; 
-			// [_ambi5StartPos, _ambi5EndPos, _height, "FULL", _type, west] call BIS_fnc_ambientFlyby; 
-			
-
-			// pair ambients - pos creation
-			// for "_i" from 1 to (_number -1) do {
-			// 	switch (_origin) do {
-			// 		case 1: { _startPosLeft = _startPos getPos [_spacerDist, 90]; _endPosLeft = _endPos getPos [_spacerDist, 90]; _startPosRight = _startPos getPos [_spacerDist, 270]; _endPosRight = _endPos getPos [_spacerDist, 270]; };
-			// 		case 2: { _startPosLeft = _startPos getPos [_spacerDist, 135]; _endPosLeft = _endPos getPos [_spacerDist, 135]; _startPosRight = _startPos getPos [_spacerDist, 315]; _endPosRight = _endPos getPos [_spacerDist, 315]; };
-			// 		case 3: { _startPosLeft = _startPos getPos [_spacerDist, 180]; _endPosLeft = _endPos getPos [_spacerDist, 180]; _startPosRight = _startPos getPos [_spacerDist, 0]; _endPosRight = _endPos getPos [_spacerDist, 0]; };
-			// 		case 4: { _startPosLeft = _startPos getPos [_spacerDist, 225]; _endPosLeft = _endPos getPos [_spacerDist, 225]; _startPosRight = _startPos getPos [_spacerDist, 45]; _endPosRight = _endPos getPos [_spacerDist, 45]; };
-			// 		case 5: { _startPosLeft = _startPos getPos [_spacerDist, 270]; _endPosLeft = _endPos getPos [_spacerDist, 270]; _startPosRight = _startPos getPos [_spacerDist, 90]; _endPosRight = _endPos getPos [_spacerDist, 90]; };
-			// 		case 6: { _startPosLeft = _startPos getPos [_spacerDist, 315]; _endPosLeft = _endPos getPos [_spacerDist, 315]; _startPosRight = _startPos getPos [_spacerDist, 135]; _endPosRight = _endPos getPos [_spacerDist, 135]; };
-			// 		case 7: { _startPosLeft = _startPos getPos [_spacerDist, 0]; _endPosLeft = _endPos getPos [_spacerDist, 0]; _startPosRight = _startPos getPos [_spacerDist, 180]; _endPosRight = _endPos getPos [_spacerDist, 180]; };
-			// 		case 8: { _startPosLeft = _startPos getPos [_spacerDist, 45]; _endPosLeft = _endPos getPos [_spacerDist, 45]; _startPosRight = _startPos getPos [_spacerDist, 225]; _endPosRight = _endPos getPos [_spacerDist, 225]; };
-			// 		default { systemChat "error: ambient wedge formation selection broken / _origin / _startPosleft / _startPosRight / switch" };
-			// 	};
-
-			// 	// pair ambients - spawn 
-			// 	[_startPosLeft, _endPosLeft, _height, "FULL", _type, west] call BIS_fnc_ambientFlyby; // left ambient 
-			// 	[_startPosRight, _endPosRight, _height, "FULL", _type, west] call BIS_fnc_ambientFlyby; // right ambient 
-
-			// 	// spacer sleep
-			// 	sleep _spacerTime; 	
-			// };
-		};
-
-		// 4 or 6 ambients - parallel formation - to do
-		// case _parallel: {
-		// };
-		// default 	{ hint "default" };
-	};
-
-	sleep 10;
+// determines start and end headings for ambient flight paths - disabled for now, to enable testing - currently everything goes from north to south 
+switch (_origin) do {
+	case 1: 	{ _ambientOrigin = 0, _ambientDestination = 180 };
+	case 2: 	{ _ambientOrigin = 45, _ambientDestination = 225 };
+	case 3: 	{ _ambientOrigin = 90, _ambientDestination = 270 };
+	case 4: 	{ _ambientOrigin = 135, _ambientDestination = 315 };
+	case 5: 	{ _ambientOrigin = 180, _ambientDestination = 0 };
+	case 6: 	{ _ambientOrigin = 225, _ambientDestination = 45 };
+	case 7: 	{ _ambientOrigin = 270, _ambientDestination = 90 };
+	case 8: 	{ _ambientOrigin = 315, _ambientDestination = 135 };
+	default 	{ systemChat "error: ambient flight paths broken / _origin / _ambientOrigin / switch" };
 };
+
+// calculates ambient start and end points to fly over FOB 
+_startPos = _fobBaseLocation getPos [1000, _ambientOrigin]; 
+_endPos = _fobBaseLocation getPos [2500, _ambientDestination]; 
+
+// set ambient height 
+// _height = selectRandom [100,300,500];
+_height = selectRandom [300];
+
+// declare vars 
+private ["_formationType","_singleAmbient","_line","_echelon","_vee","_wedge","_parallel"];
+
+// determine formation 
+switch (_number) do {
+	case 1: { _formationType = selectRandom ["_singleAmbient"] }; 
+	case 2: { _formationType = selectRandom ["_line", "_echelon"] };
+	// case 3: { _formationType = selectRandom [_line, _echelon, _vee, _wedge] };
+	case 3: { _formationType = selectRandom ["_line", "_echelon", "_wedge"] };
+	// case 4: { _formationType = selectRandom [_line, _echelon, _parallel] };
+	case 4: { _formationType = selectRandom ["_line", "_echelon"] };
+	// case 5: { _formationType = selectRandom [_line, _echelon, _vee, _wedge] };
+	case 5: { _formationType = selectRandom ["_wedge"] }; // testDelete - just testing echelon 
+	// case 5: { _formationType = selectRandom ["_line", "_echelon", "_wedge"] };
+	// case 6: { _formationType = selectRandom [_line, _echelon, _parallel] };
+	case 6: { _formationType = selectRandom ["_line", "_echelon"] };
+	default { systemChat "error: ambient formation selection broken / _origin / _formationType / switch" };
+};
+
+// spawn formation 
+switch (_formationType) do {
+
+	// single ambient 
+	case "_singleAmbient": { [_startPos, _endPos, _height, "FULL", _type, west] call BIS_fnc_ambientFlyby; };
+
+	// 2 - 6 ambients - Line formation 
+	case "_line": {
+		_spacerDist = 5; // test this to ensure echelon looks nice - too small and it just looks like a line formation
+		_spacerTime = 1; // test this to ensure echelon looks nice - too small and it just looks like a line formation 
+
+		for "_i" from 1 to _number do {
+			[_startPos, _endPos, _height, "FULL", _type, west] call BIS_fnc_ambientFlyby;
+
+			sleep 5; // spacer sleep between each iteration to prevent spawn overlaps 	
+		};
+	};
+
+	// 2 - 6 ambients - echelon formation 
+	case "_echelon": {
+		_spacerDist = 50; // test this to ensure echelon looks nice - too small and it just looks like a line formation
+		_spacerTime = 1; // test this to ensure echelon looks nice - too small and it just looks like a line formation 
+		
+		for "_i" from 1 to _number do {
+			[_startPos, _endPos, _height, "FULL", _type, west] call BIS_fnc_ambientFlyby;
+			switch (_origin) do {
+				case 1: { _startPos = _startPos getPos [_spacerDist, 90]; _endPos = _endPos getPos [_spacerDist, 90] };
+				case 2: { _startPos = _startPos getPos [_spacerDist, 135]; _endPos = _endPos getPos [_spacerDist, 135] };
+				case 3: { _startPos = _startPos getPos [_spacerDist, 180]; _endPos = _endPos getPos [_spacerDist, 180] };
+				case 4: { _startPos = _startPos getPos [_spacerDist, 225]; _endPos = _endPos getPos [_spacerDist, 225] };
+				case 5: { _startPos = _startPos getPos [_spacerDist, 270]; _endPos = _endPos getPos [_spacerDist, 270] };
+				case 6: { _startPos = _startPos getPos [_spacerDist, 315]; _endPos = _endPos getPos [_spacerDist, 315] };
+				case 7: { _startPos = _startPos getPos [_spacerDist, 0]; _endPos = _endPos getPos [_spacerDist, 0] };
+				case 8: { _startPos = _startPos getPos [_spacerDist, 45]; _endPos = _endPos getPos [_spacerDist, 45] };
+				default { systemChat "error: ambient echelon formation selection broken / _origin / _startPos / switch" };
+			};
+
+			sleep _spacerTime; // spacer sleep between each iteration to prevent spawn overlaps 	
+		};
+	};
+
+	// 3 or 5 ambients - vee formation - to do 
+	// case _vee: {
+	// 	if (_number == 5) then {
+	// 		// 
+	// 	} else {
+	// 	};
+	// };
+
+	// 3 or 5 ambients - wedge formation 
+	case "_wedge": {
+
+		// declare vars 
+		private ["_startPosLeft","_endPosLeft","_startPosRight","_endPosRight"];
+
+		systemChat "ambient spawning";
+
+		_spacerDist = 10; // test this to ensure echelon looks nice - too small and it just looks like a line formation
+		_spacerTime = 0.5; // test this to ensure echelon looks nice - too small and it just looks like a line formation 
+		_height = 300; // used to assist with initial (and end) spawn points (z-axis)
+
+		// lead heli 
+		_ambi1StartPos = _startPos;
+		// _ambi1StartPos set [2, _height]; // forces reset of z-axis
+		// first line formation
+		_ambi2StartPos = _startPos getPos [150, 90];  
+		// _ambi2StartPos set [2, _height]; // forces reset of z-axis
+		_ambi3StartPos = _startPos getPos [150, 270]; 
+		// _ambi3StartPos set [2, _height]; // forces reset of z-axis					
+		// second line formation
+		// _ambi4StartPos = _startPos getPos [100, 45]; // 100m 90 degrees away 
+		// _ambi4StartPos set [2, _height]; // forces reset of z-axis						
+		// _ambi5StartPos = _startPos getPos [100, 315]; 
+		// _ambi5StartPos set [2, _height]; // forces reset of z-axis	
+
+		_ambi1EndPos = _endPos;
+		_ambi2EndPos = _endPos getPos [150, 90]; 
+		_ambi3EndPos = _endPos getPos [150, 270];
+		// _ambi4EndPos = _endPos getPos [100, 45]; 
+		// _ambi5EndPos = _endPos getPos [100, 315]; 	
+		
+
+		sleep 10;
+
+		// lead ambient 
+		[_ambi1StartPos, _ambi1EndPos, _height, "FULL", _type, west] call BIS_fnc_ambientFlyby; 
+		sleep 1;
+		[_ambi2StartPos, _ambi2EndPos, _height, "FULL", _type, west] call BIS_fnc_ambientFlyby; 
+		[_ambi3StartPos, _ambi3EndPos, _height, "FULL", _type, west] call BIS_fnc_ambientFlyby; 
+		// sleep _spacerTime;
+		// [_ambi4StartPos, _ambi4EndPos, _height, "FULL", _type, west] call BIS_fnc_ambientFlyby; 
+		// [_ambi5StartPos, _ambi5EndPos, _height, "FULL", _type, west] call BIS_fnc_ambientFlyby; 
+		
+
+		// pair ambients - pos creation
+		// for "_i" from 1 to (_number -1) do {
+		// 	switch (_origin) do {
+		// 		case 1: { _startPosLeft = _startPos getPos [_spacerDist, 90]; _endPosLeft = _endPos getPos [_spacerDist, 90]; _startPosRight = _startPos getPos [_spacerDist, 270]; _endPosRight = _endPos getPos [_spacerDist, 270]; };
+		// 		case 2: { _startPosLeft = _startPos getPos [_spacerDist, 135]; _endPosLeft = _endPos getPos [_spacerDist, 135]; _startPosRight = _startPos getPos [_spacerDist, 315]; _endPosRight = _endPos getPos [_spacerDist, 315]; };
+		// 		case 3: { _startPosLeft = _startPos getPos [_spacerDist, 180]; _endPosLeft = _endPos getPos [_spacerDist, 180]; _startPosRight = _startPos getPos [_spacerDist, 0]; _endPosRight = _endPos getPos [_spacerDist, 0]; };
+		// 		case 4: { _startPosLeft = _startPos getPos [_spacerDist, 225]; _endPosLeft = _endPos getPos [_spacerDist, 225]; _startPosRight = _startPos getPos [_spacerDist, 45]; _endPosRight = _endPos getPos [_spacerDist, 45]; };
+		// 		case 5: { _startPosLeft = _startPos getPos [_spacerDist, 270]; _endPosLeft = _endPos getPos [_spacerDist, 270]; _startPosRight = _startPos getPos [_spacerDist, 90]; _endPosRight = _endPos getPos [_spacerDist, 90]; };
+		// 		case 6: { _startPosLeft = _startPos getPos [_spacerDist, 315]; _endPosLeft = _endPos getPos [_spacerDist, 315]; _startPosRight = _startPos getPos [_spacerDist, 135]; _endPosRight = _endPos getPos [_spacerDist, 135]; };
+		// 		case 7: { _startPosLeft = _startPos getPos [_spacerDist, 0]; _endPosLeft = _endPos getPos [_spacerDist, 0]; _startPosRight = _startPos getPos [_spacerDist, 180]; _endPosRight = _endPos getPos [_spacerDist, 180]; };
+		// 		case 8: { _startPosLeft = _startPos getPos [_spacerDist, 45]; _endPosLeft = _endPos getPos [_spacerDist, 45]; _startPosRight = _startPos getPos [_spacerDist, 225]; _endPosRight = _endPos getPos [_spacerDist, 225]; };
+		// 		default { systemChat "error: ambient wedge formation selection broken / _origin / _startPosleft / _startPosRight / switch" };
+		// 	};
+
+		// 	// pair ambients - spawn 
+		// 	[_startPosLeft, _endPosLeft, _height, "FULL", _type, west] call BIS_fnc_ambientFlyby; // left ambient 
+		// 	[_startPosRight, _endPosRight, _height, "FULL", _type, west] call BIS_fnc_ambientFlyby; // right ambient 
+
+		// 	// spacer sleep
+		// 	sleep _spacerTime; 	
+		// };
+	};
+
+	// 4 or 6 ambients - parallel formation - to do
+	// case _parallel: {
+	// };
+	// default 	{ hint "default" };
+};
+
+
 
 
 

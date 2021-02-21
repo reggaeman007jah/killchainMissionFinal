@@ -3,10 +3,64 @@ This function manages creation of ambient burning wrecks
 */
 
 // ** imports 
-private ["_battleZone", "_burningVics"];
-_battleZone = param[0]; // main battlezone pos
-_burningVics = param[1]; // number of vics to burn
+// private ["_battleZone", "_burningVics"];
+// _battleZone = param[0]; // main battlezone pos
+// _burningVics = param[1]; // number of vics to burn
 // ** imports 
 
 // decide on when they should be burning - what triggers the spawn and fire?
 // to do: spawn vics, then reduce damage so they burn 
+
+/*
+take the obj point ahead of the current one 
+if you are at end stage - do not do this 
+get an anchor .. spawn vic and set heavy damage .. 
+vic should be spawned 300-500m away from anchor and away from current pos  
+to do this .. get relative heading from next to current 
+so, if current obj is directly south of anchor, then get random heading from 270 - 90 degrees 
+
+big question .. how do you make current obj relatve south?
+Find position 100 metres away at player's 3 o'clock:
+_relpos = player getRelPos [100, 90];
+*/
+
+private ["_mainAnchor"];
+
+switch (patrolPointsTaken) do {
+	case (0): {
+		_mainAnchor = RGG_PatrolPoints select 1;
+		// _anchor1 = [_mainAnchor, 10, 150] call BIS_fnc_findSafePos;
+	};
+	case (1): {
+		_mainAnchor = RGG_PatrolPoints select 2;
+		// _anchor1 = [_mainAnchor, 10, 150] call BIS_fnc_findSafePos;
+	};
+	case (2): {
+		_mainAnchor = RGG_PatrolPoints select 3;
+		// _anchor1 = [_mainAnchor, 10, 150] call BIS_fnc_findSafePos;
+	};
+	case (3): {
+		_mainAnchor = RGG_PatrolPoints select 4;
+		// _anchor1 = [_mainAnchor, 10, 150] call BIS_fnc_findSafePos;
+	};
+	case (4): {
+		_mainAnchor = RGG_PatrolPoints select 5;
+		// _anchor1 = [_mainAnchor, 10, 150] call BIS_fnc_findSafePos;
+	};
+	case (5): {
+		_mainAnchor = RGG_PatrolPoints select 6;
+		// _anchor1 = [_mainAnchor, 10, 150] call BIS_fnc_findSafePos;
+	};
+	default {
+		systemChat "error Patrol Point switch";
+	};
+};
+
+// get rel dir 
+_dir = selectRandom [270, 0, 90];
+
+_relpos = _mainAnchor getRelPos [100, _dir];
+
+_jeep = "Jeep" createVehicle _relpos;
+_jeep setDamage 0.9;
+systemChat "burning vic system run";

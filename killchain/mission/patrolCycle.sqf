@@ -3,6 +3,9 @@ _initStartPos = _this select 0; // starting point for any new mission
 _objPos = _this select 1; // objective point for any new mission 
 systemChat format ["Patrol Points Taken: %1", patrolPointsTaken];
 
+// burning vics
+spawn RGGc_fnc_count_bluforBaseSupplies;
+
 // roamers 
 [_objPos, _initStartPos] execVM "killchain\systems\randomThreatSystems\randomThreats.sqf";
 
