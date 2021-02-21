@@ -8,17 +8,17 @@ this script manages smoke actions while in heli
 
 transport1a addEventHandler ["getInMan", {
 	params ["_unit", "_role", "_vehicle", "_turret"];
-	[_unit] execVM "killchain\systems\smokeSystems.sqf";
+	[_unit] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
 }];
 
 transport2a addEventHandler ["getInMan", {
 	params ["_unit", "_role", "_vehicle", "_turret"];
-	[_unit] execVM "killchain\systems\smokeSystems.sqf";
+	[_unit] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
 }];
 
 transport3a addEventHandler ["getInMan", {
 	params ["_unit", "_role", "_vehicle", "_turret"];
-	[_unit] execVM "killchain\systems\smokeSystems.sqf";
+	[_unit] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
 }];
 
 
