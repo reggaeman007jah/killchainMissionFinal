@@ -531,6 +531,10 @@ while {RFCHECK2} do {
 		};
 	};
 
+	// insurance move order while in attack mode 
+	systemChat "LOGIC - initiate insurance move order";
+	[_objPos] execVM "killChain\systems\insuranceSystems\indiforMovement.sqf";
+
 	sleep 60;
 };
 
