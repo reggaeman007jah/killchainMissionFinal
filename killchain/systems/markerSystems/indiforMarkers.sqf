@@ -27,7 +27,8 @@ if (KILLCHAINISLIVE) then {
 
 		_indiGroups = count RGG_indiforGroups;
 
-		systemChat format ["There are %1 known indifor Groups right now", _indiGroups];
+		// systemChat format ["There are %1 known indifor Groups right now", _indiGroups];
+		// might be useful later 
 
 		{
 			_size = count units _x; 
@@ -48,6 +49,7 @@ if (KILLCHAINISLIVE) then {
 				systemChat "indifor MARKER DELETED";
 				systemChat format ["Indifor Group Deleted: %1", _x];
 			};
+			sleep 1;
 		} forEach RGG_indiforGroups;
 
 		{
@@ -72,6 +74,7 @@ if (KILLCHAINISLIVE) then {
 				systemChat "blufor MARKER DELETED";
 				systemChat format ["Blufor Group Deleted: %1", _x];
 			};
+			sleep 1;
 		} forEach RGG_bluforGroups;
 
 
@@ -89,6 +92,6 @@ if (KILLCHAINISLIVE) then {
 
 		// RGG_distanceStore = []; // storage to manage distance data 
 
-		sleep 30;
+		sleep 60;
 	};
 };

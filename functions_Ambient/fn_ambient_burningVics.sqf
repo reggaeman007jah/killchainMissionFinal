@@ -69,7 +69,15 @@ _relpos = _jeep getRelPos [100, _dir];
 _jeep = "Jeep" createVehicle _relpos;
 _jeep setDamage 0.9;
 systemChat "burning vic system run successfully";
-
+// OBJ - patrol stage objective 
+deleteMarker "car"; 
+_objective1 = createMarker ["car", _relpos];
+_objective1 setMarkerShape "ELLIPSE";
+_objective1 setMarkerColor "ColorRed";
+_objective1 setMarkerSize [100, 100];
+sleep 20;
+deleteMarker "car"; 
+systemChat "vic marker deleted";
 // _relpos = _mainAnchor getRelPos [100, _dir];
 
 
