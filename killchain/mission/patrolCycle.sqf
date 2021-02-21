@@ -3,6 +3,9 @@ _initStartPos = _this select 0; // starting point for any new mission
 _objPos = _this select 1; // objective point for any new mission 
 systemChat format ["Patrol Points Taken: %1", patrolPointsTaken];
 
+// burning vics
+spawn RGGc_fnc_count_bluforBaseSupplies;
+
 // roamers 
 [_objPos, _initStartPos] execVM "killchain\systems\randomThreatSystems\randomThreats.sqf";
 
@@ -48,7 +51,7 @@ sleep 0.1;
 _base setMarkerSize [40, 40];
 _base setMarkerAlpha 0.6;
 sleep 0.1;
-_base setMarkerSize [50, 50];
+_base setMarkerSize [60, 60];
 _base setMarkerAlpha 0.7;
 
 // add icon 
@@ -81,7 +84,6 @@ _lineTest setMarkerDir _reldirX;
 _lineTest setMarkerSize [2, _dist2];
 // to enable a colour change when the chain breaks, these lines need to be pushed back into an array 
 systemChat "markers done"; 
-
 
 // new camp location and items 
 _randomCampLocation = _objPos findEmptyPosition [10,50,"B_Heli_Light_01_dynamicLoadout_F"];
@@ -231,6 +233,9 @@ RFCHECK = true;
 
 while {RFCHECK} do {
 
+	// cycle debug 
+	systemChat "Cycle - RFCHECK";
+
 	// flybys 
 	[_objPos] execVM "killchain\systems\ambientSystems\randomFlybys.sqf";
 
@@ -286,7 +291,7 @@ while {RFCHECK} do {
 
 	// check if won point and if so, move to defend 
 	if ((_coreOpfor <= 3) && (_coreIndi >=3)) then {
-		systemChat "LOGIC - indifor in core is 3+ and opfor is 3-";
+		systemChat "LOGIC - POINT IS WON - indifor in core is 3+ and opfor is 3-";
 		// move indi units to a rough defensive position around the center point - note will also attrack any opfor strags 
 		{
 			_dir = random 360;
@@ -299,7 +304,7 @@ while {RFCHECK} do {
 		RFCHECK = false;
 	} else {
 		// insurance move order while in attack mode 
-		systemChat "LOGIC - initiate insurance movce order";
+		systemChat "LOGIC - initiate insurance move order";
 		[_objPos] execVM "killChain\systems\insuranceSystems\indiforMovement.sqf";
 	};
 
@@ -333,6 +338,7 @@ sleep 3;
 // _mainAnchor = RGG_PatrolPoints select 1;
 // _anchor1 = [_mainAnchor, 10, 150] call BIS_fnc_findSafePos; 
 
+// this switch will determine the next available point - qrf comes from this direction 
 private ["_mainAnchor"];
 
 switch (patrolPointsTaken) do {
@@ -379,6 +385,12 @@ _objective1 setMarkerColor "ColorRed";
 _objective1 setMarkerSize [50, 50];
 _objective1 setMarkerAlpha 0.2;
 
+systemChat "techs and roamers created";
+// technicals 
+[_anchor1, _objPos] execVM "killChain\systems\spawnerSystems\spawnTechnicals.sqf";
+// roamers 
+[_objPos, _initStartPos] execVM "killchain\systems\randomThreatSystems\randomThreats.sqf";
+
 // unit creation 
 for "_i" from 1 to 2 do {
 	for "_i" from 1 to 6 do {
@@ -400,14 +412,35 @@ for "_i" from 1 to 2 do {
 		_unitDest = _objPos getPos [_ranDist, _ranDir];
 		_opforTeam doMove _unitDest;
 	};
-	sleep 180;
 };
 
-systemChat "techs and roamers created";
-// technicals 
-[_anchor1, _objPos] execVM "killChain\systems\spawnerSystems\spawnTechnicals.sqf";
-// roamers 
-[_objPos, _initStartPos] execVM "killchain\systems\randomThreatSystems\randomThreats.sqf";
+// here we add more incoming if later on in mission 
+if (RGG_PatrolPoints > 3) then {
+	// unit creation 
+	sleep 120;
+	for "_i" from 1 to 2 do {
+		for "_i" from 1 to 6 do {
+			_opforGroup = createGroup [east, true];
+			_anchor1a = [_anchor1, 1, 50, 3, 0] call BIS_fnc_findSafePos;
+			_opforTeam = [];
+
+			for "_i" from 1 to 2 do {
+				_unit = selectRandom _opforClass;
+				_unit1 = _opforGroup createUnit [_unit, _anchor1a, [], 0.1, "none"];
+				_opforTeam pushBack _unit1;
+			};
+
+			sleep 0.7;
+
+			// move orders 
+			_ranDist = random 100;
+			_ranDir = random 359;
+			_unitDest = _objPos getPos [_ranDist, _ranDir];
+			_opforTeam doMove _unitDest;
+		};
+	};
+};
+
 
 // defend point stage -------------------------------------------------------------------------------
 _cycles = 0;
@@ -465,15 +498,16 @@ while {RFCHECK2} do {
 	systemChat format ["CORE OPFR:    %1", _coreOpfor];
 
 	if ((_cycles >= 5) && (_coreIndi > 3) && (_redzoneOpfor < 5)) then {
-		// progress mission based mainly on cycles 
+		// progress mission based mainly on cycles but also needs indi on point 
 		RFCHECK2 = false;
-		systemChat "(_cycles >= 5) && (_coreIndi > 3) && (_redzoneOpfor < 5) / automatic cyclepush here";
+		systemChat "(_cycles >= 5) && (_coreIndi > 3) && (_redzoneOpfor < 5)";
+		systemChat "auto-cycle-push";
 	} else {
 		_cycles = _cycles + 1;
 		systemChat format ["Defence Cycles: %1", _cycles];
 
-		// ORDER RF HERE
-		if (_redzoneIndi <= 5) then {
+		// ORDER RF HERE IF NEEDED 
+		if (_redzoneIndi <= 8) then {
 			systemChat "note _redzoneIndi <= 5 - RF ordered while in defend state ";
 			
 			[_initStartPos, _objPos] execVM "killChain\systems\spawnerSystems\createIndiforRFUnits.sqf";
@@ -485,7 +519,7 @@ while {RFCHECK2} do {
 			execVM "sounds\welcome\rfInbound.sqf";
 		};
 
-		if ((_coreOpfor <= 2) && (_coreIndi >=3) && (_redzoneOpfor < 10)) then {
+		if ((_coreOpfor < 1) && (_coreIndi >=7) && (_redzoneOpfor < 10)) then {
 			systemChat "(_coreOpfor <= 2) && (_coreIndi >=3)";
 			systemChat "defence successful - take a breather...";
 			// regroup, healup and get prizes
@@ -508,10 +542,6 @@ if (!BESILENT) then {
 // delete existing camp 
 { deleteVehicle _x } forEach RGG_CampItems;
 RGG_CampItems = [];
-
-// cleanup
-[_objPos] execVM "killchain\systems\cleanUpSystems\cleanUp.sqf";
-systemChat "CLEANUP - delete when tested";
 
 // BASE REWARD :)
 _buildLocation = _objPos findEmptyPosition [10,100,"B_Heli_Light_01_dynamicLoadout_F"];
@@ -538,8 +568,12 @@ _vic = selectRandom [
 	"I_C_Offroad_02_LMG_F", 
 	"I_C_Offroad_02_LMG_F", 
 	"B_LSV_01_armed_F"
-	];
+];
 _rewardSpawn = createVehicle [_vic, _vicLocation]; // reward vic 
+
+/*
+To do - create nicer rewards at FOR Pathfinder, to be slingloaded into AO 
+*/
 
 // win marker 
 _float = diag_tickTime;
@@ -634,8 +668,11 @@ _indi = [];
 
 // cleanup
 { deleteVehicle _x } forEach allDead;
-systemChat "RUNNING CLEANUP";
+systemChat "RUNNING CLEANUP - check works from Cycle Script ";
 
+
+// cleanup
+// [_objPos] execVM "killchain\systems\cleanUpSystems\cleanUp.sqf";
 
 // switch (patrolPointsTaken) do {
 // 	case 1: {

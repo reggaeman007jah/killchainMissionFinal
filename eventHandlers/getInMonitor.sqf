@@ -1,20 +1,29 @@
 /*
-This EH manages the actions following the dropping off of a sling load item 
-B_Slingload_01_Medevac_F = creates med-base 
-B_Slingload_01_Ammo_F = creates barracks 
-I_supplyCrate_F = adds supplies score to a base 
-CargoNet_01_barrels_F = adds fuel score to a base 
-I_CargoNet_01_ammo_F = adds ammo score to a base 
-
-Currently I remove and then reattach the EH, to prevent the function from being called four times (one for each rope) 
-setVariable is a batter way - explore this!
-https://community.bistudio.com/wiki/setVariable
+this script manages smoke actions while in heli 
 */
 
-/*
-DELETE ^^ TO SEE CODE 
+// this addEventHandler ["GetInMan", {
+// 	params ["_unit", "_role", "_vehicle", "_turret"];
+// }];
 
-// this detects the thing you have deployed via slingload, and takes relevant follow on action 
+transport1a addEventHandler ["getInMan", {
+	params ["_unit", "_role", "_vehicle", "_turret"];
+	[_unit] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
+}];
+
+transport2a addEventHandler ["getInMan", {
+	params ["_unit", "_role", "_vehicle", "_turret"];
+	[_unit] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
+}];
+
+transport3a addEventHandler ["getInMan", {
+	params ["_unit", "_role", "_vehicle", "_turret"];
+	[_unit] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
+}];
+
+
+
+/*
 bigHeli1 addEventHandler ["RopeBreak", {
 	params ["_object1", "_rope", "_object2"];
 	
@@ -120,38 +129,3 @@ bigHeli1 addEventHandler ["RopeBreak", {
 	};
 
 }];
-
-// this detects when supplies are picked up from the depot, and reduces score accorindgly 
-// heli1 addEventHandler ["RopeAttach", {
-// 	params ["_object1", "_rope", "_object2"];
-
-// 	// food 
-// 	if (typeOf _object2 == "I_supplyCrate_F") then { 
-// 		systemChat "Supplies Loaded"; 
-// 		RGG_Supply_Food = RGG_Supply_Food - 10;
-// 		publicVariable "RGG_Supply_Food";
-// 		// if (true) exitWith {};
-		
-// 		heli1 removeEventHandler ["RopeAttach", 0]; // otherwise this triggers 4 times!
-// 		// execVM "eventHandlers\slingLoadMonitor.sqf"; // reloads EH to the designated heli - currently "heli1"
-// 	};
-	
-// 	// fuel 
-// 	if (typeOf _object2 == "CargoNet_01_barrels_F") then { 
-// 		systemChat "Fuel Loaded"; 
-// 		RGG_Supply_Fuel = RGG_Supply_Fuel - 10;
-// 		publicVariable "RGG_Supply_Fuel";
-// 		heli1 removeEventHandler ["RopeAttach", 0]; // otherwise this triggers 4 times!
-// 		execVM "eventHandlers\slingLoadMonitor.sqf"; // reloads EH to the designated heli - currently "heli1"
-// 	};
-
-// 	// ammo 
-// 	if (typeOf _object2 == "I_CargoNet_01_ammo_F") then { 
-// 		systemChat "Ammo Loaded"; 
-// 		RGG_Supply_Ammo = RGG_Supply_Ammo - 10;
-// 		publicVariable "RGG_Supply_Ammo";
-// 		heli1 removeEventHandler ["RopeAttach", 0]; // otherwise this triggers 4 times!
-// 		execVM "eventHandlers\slingLoadMonitor.sqf"; // reloads EH to the designated heli - currently "heli1"
-// 	};
-// }];
-

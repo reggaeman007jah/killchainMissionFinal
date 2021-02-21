@@ -12,6 +12,7 @@
 // etc 
 
 hint "to do - get remaining troops RTB";
+
 _initStartPos = getPos ammo1;
 _indi = [];
 _units = allUnits inAreaArray "objective 1";

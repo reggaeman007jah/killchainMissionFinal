@@ -12,3 +12,6 @@ This function will manage all ambi-spawns
 // 	// choose random function to run 
 // 	sleep 60 + random 180;
 // };
+
+// using this as a refactor - one function for all spawnas 
+
