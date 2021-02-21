@@ -14,11 +14,16 @@ sleep 0.5;
 // slingload EH 
 execVM "eventHandlers\slingLoadMonitor.sqf";
 
+// smoke EH 
+execVM "eventHandlers\getInMonitor.sqf";
+
 // // initialise counter system 
 // execVM "killchain\systems\countingSystems\counter.sqf";
+// dont need this any more I dont think 
 
 // // initialise flybys 
 // execVM "killchain\systems\ambientSystems\randomFlybys.sqf";
+// done on cycle phases 
 
 // // initialise pickup scripts 
 execVM "killchain\systems\pickupSystems\pickupSystems1\pickupInit.sqf";
@@ -47,8 +52,6 @@ this bool is used to clear out ammo from helis on respawn - this should be with 
 // to avoid errors 
 REARMONSPAWN = true; 
 
-
-
 // ----- this holds any sentry units waiting to spawn in (but can't due to lack of base food) -----
 RGG_sentryQueue = []; // holds sentry respawn data 
 RGG_supplyQueue = []; // holds supply respawn data 
@@ -66,13 +69,3 @@ publicVariable "RGG_Barracks_Food";
 publicVariable "RGG_Barracks_Ammo";
 publicVariable "RGG_Barracks_Fuel";
 publicVariable "RGG_Barracks_Sentries";
-
-
-
-
-
-
-
-
-
-
