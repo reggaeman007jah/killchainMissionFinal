@@ -34,6 +34,9 @@ systemChat "cold-zone system activated - go to the office to start the mission";
 // execVM "killchain\systems\spawnerSystems\spawnParas.sqf";
 // note: this triggered elsewhere to enable system without being part of Killchain mission 
 
+// mission bool 
+KILLCHAINISLIVE = true;
+
 // voice bools 
 COMMANDSPEAKING = false;
 // this should ensure that second-level (random) voice alerts do not speak over mission-progression voice alerts 
@@ -98,6 +101,9 @@ RGG_PatrolPoints pushBack _killchainFinal;
 // roamers 
 // execVM "killChain\systems\randomThreatSystems\randomThreats.sqf";
 // note: Roamers are triggered during phases
+
+// trigger indifor markers 
+execVM "killchain\systems\markerSystems\indiforMarkers.sqf";
 
 // commence mission 
 execVM "killchain\mission\missionStart.sqf";

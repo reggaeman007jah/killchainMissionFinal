@@ -25,7 +25,7 @@ execVM "media\sounds\welcome.sqf";
 
 // test - remove if does not work 
 // [player, ["<t color='#FF0000'>DROP RED SMOKE</t>", {_smoke = "SmokeShellRed" createVehicle position player;},nil,0,false,true,"","true", 5]] remoteExec ["addAction"];
-player addAction ["<t color='#FF0000'>DROP RED SMOKE</t>", {_smoke = "SmokeShellRed" createVehicle position player;}];
+// player addAction ["<t color='#FF0000'>DROP RED SMOKE</t>", {_smoke = "SmokeShellRed" createVehicle position player;}];
 
 // for future 
 // execVM "voiceActivatedCoordFinder\VACF_init.sqf";

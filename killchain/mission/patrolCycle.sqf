@@ -4,7 +4,9 @@ _objPos = _this select 1; // objective point for any new mission
 systemChat format ["Patrol Points Taken: %1", patrolPointsTaken];
 
 // burning vics
-spawn RGGc_fnc_count_bluforBaseSupplies;
+[] spawn RGGa_fnc_ambient_burningVics;
+// [] spawn RGGc_fnc_count_depleteSupplies; 
+systemChat "have just spawned ambiVics";
 
 // roamers 
 [_objPos, _initStartPos] execVM "killchain\systems\randomThreatSystems\randomThreats.sqf";
@@ -415,7 +417,7 @@ for "_i" from 1 to 2 do {
 };
 
 // here we add more incoming if later on in mission 
-if (RGG_PatrolPoints > 3) then {
+if (patrolPointsTaken > 3) then {
 	// unit creation 
 	sleep 120;
 	for "_i" from 1 to 2 do {

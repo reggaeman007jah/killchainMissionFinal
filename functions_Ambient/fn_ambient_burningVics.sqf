@@ -23,7 +23,7 @@ big question .. how do you make current obj relatve south?
 Find position 100 metres away at player's 3 o'clock:
 _relpos = player getRelPos [100, 90];
 */
-
+systemChat "ambiVics running";
 private ["_mainAnchor"];
 
 switch (patrolPointsTaken) do {
@@ -56,11 +56,20 @@ switch (patrolPointsTaken) do {
 	};
 };
 
-// get rel dir 
+systemChat format ["_mainAnchor from burnVic switch is: %1", _mainAnchor];
+
+_jeep = "Jeep" createVehicle _mainAnchor;
+_firstPos = getPos _jeep;
+deleteVehicle _jeep;
+
 _dir = selectRandom [270, 0, 90];
+_relpos = _jeep getRelPos [100, _dir];
 
-_relpos = _mainAnchor getRelPos [100, _dir];
-
+// get rel dir 
 _jeep = "Jeep" createVehicle _relpos;
 _jeep setDamage 0.9;
-systemChat "burning vic system run";
+systemChat "burning vic system run successfully";
+
+// _relpos = _mainAnchor getRelPos [100, _dir];
+
+
