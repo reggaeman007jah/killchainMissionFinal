@@ -41,14 +41,14 @@ if (KILLCHAINISLIVE) then {
 				_tempMarker = createMarker [_stampToString, _leaderPos];
 				_tempMarker setMarkerType "n_inf";
 				// sleep 5;
-				systemChat "indifor marker updated";
+				// systemChat "indifor marker updated";
 			} else {
 				// delete group - to do 
 				_stampToString = str _x;
 				deleteMarker _stampToString;
 				deleteGroup _x;
-				systemChat "indifor MARKER DELETED";
-				systemChat format ["Indifor Group Deleted: %1", _x];
+				// systemChat "indifor MARKER DELETED";
+				// systemChat format ["Indifor Group Deleted: %1", _x];
 			};
 			sleep 1;
 		} forEach RGG_indiforGroups;
@@ -90,15 +90,15 @@ if (KILLCHAINISLIVE) then {
 				_tempMarker = createMarker [_stampToString, _leaderPos];
 				_tempMarker setMarkerType "o_inf";
 				// sleep 5;
-				systemChat "opfor marker updated";
+				// systemChat "opfor marker updated";
 				};			
 			} else {
 				// delete group - to do 
 				_stampToString = str _x;
 				deleteMarker _stampToString;
 				deleteGroup _x;
-				systemChat "opfor MARKER DELETED";
-				systemChat format ["opfor Group Deleted: %1", _x];
+				// systemChat "opfor MARKER DELETED";
+				// systemChat format ["opfor Group Deleted: %1", _x];
 			};
 			sleep 1;
 		} forEach RGG_opforGroups;

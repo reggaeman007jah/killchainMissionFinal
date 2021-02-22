@@ -25,6 +25,9 @@ Each spawned team has:
 1 marksman
 */
 
+sleep 2;
+systemChat "running createIndiforRfUnits.sqf here";
+
 _spawnPos = _this select 0; // given position where we want to spawn RF
 _destPos = _this select 1; // where RF are sent to 
 
@@ -42,7 +45,7 @@ Here we need to:
 	if no opfor found, then go ahead as per normal 
 */
 
-if (patrolPointsTaken > 0) then {
+if (patrolPointsTaken > 1) then {
 	deleteMarker "rfZone"; // does this need to go somewhere else?
 	_rfZone = createMarker ["rfZone", _spawnPos];
 	_rfZone setMarkerShape "ELLIPSE";
@@ -71,20 +74,20 @@ if (patrolPointsTaken > 0) then {
 
 		private ["_mainAnchor"];
 		switch (patrolPointsTaken) do {
-			case (1): {
+			// case (1): {
+			// 	_mainAnchor = RGG_PatrolPoints select 0;
+			// };
+			case (2): {
 				_mainAnchor = RGG_PatrolPoints select 0;
 			};
-			case (2): {
+			case (3): {
 				_mainAnchor = RGG_PatrolPoints select 1;
 			};
-			case (3): {
+			case (4): {
 				_mainAnchor = RGG_PatrolPoints select 2;
 			};
-			case (4): {
-				_mainAnchor = RGG_PatrolPoints select 3;
-			};
 			case (5): {
-				_mainAnchor = RGG_PatrolPoints select 4;
+				_mainAnchor = RGG_PatrolPoints select 3;
 			};
 			case (6): {
 				_mainAnchor = RGG_PatrolPoints select 4;
@@ -93,7 +96,16 @@ if (patrolPointsTaken > 0) then {
 				systemChat "error: RF switch - point not correct";
 			};
 		};
-		[_mainAnchor, _destPos] execVM "killChain\systems\spawnerSystems\createIndiforRFUnits.sqf";
+		
+		// check overall indifor units before kicking this off more than once 
+		// only issue RF is overall indiFor units in game is under 25 
+		_indi = independent countSide allUnits;
+		if (_indi < 25) then {	
+			[_mainAnchor, _destPos] execVM "killChain\systems\spawnerSystems\createIndiforRFUnits.sqf";
+		} else {
+			systemChat "no RF .. you have enough indifor in game already";
+		};
+		
 		// this should re-run this script with a spawn pos that is one previous 
 	} else {
 		// deliver RF as per expected 

@@ -527,9 +527,9 @@ while {RFCHECK2} do {
 			_smoke = createVehicle ["G_40mm_smokeYELLOW", _initStartPos, [], 0, "none"]; // drop this from up high 
 
 			// voice broadcasts
-			execVM "sounds\welcome\thisIsCommand.sqf";
+			execVM "media\sounds\thisIsCommand.sqf";
 			sleep 3;
-			execVM "sounds\welcome\rfInbound.sqf";
+			execVM "media\sounds\rfInbound.sqf";
 		};
 
 		// OPFOR to push forward as a group if they took back control of point and there is no indifor on it 

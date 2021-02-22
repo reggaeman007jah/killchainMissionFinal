@@ -12,7 +12,7 @@ _testCrate = "B_Slingload_01_Ammo_F" createVehicle _objPos; // make sure this is
 There are issues with the creation of the base in MP .. so we much give it time to build up before progressing the script 
 */
 
-sleep 30; 
+sleep 60; 
 
 // OBJ - patrol stage objective 
 deleteMarker "Redzone"; 
@@ -140,7 +140,7 @@ for "_i" from 1 to _diffLevel do {
 
 	for "_i" from 1 to _rndOp1 do {
 		_rndtype = selectRandom _assaultSquad;
-		_pos = [_objPos, 0, 30] call BIS_fnc_findSafePos; // was 30, now 80, now 150 hopefully for better dispertion // now back to 30
+		_pos = [_objPos, 50, 80] call BIS_fnc_findSafePos; // was 30, now 80, now 150 hopefully for better dispertion // now back to 30
 		_unit = _grp createUnit [_rndtype, _pos, [], 1, "none"]; 
 		_unit setBehaviour "COMBAT";
 		_unit doMove _initStartPos; 
@@ -156,7 +156,7 @@ _grp = createGroup [east, true];
 
 for "_i" from 1 to _rndOp1 do {
 	_rndtype = selectRandom _assaultSquad;
-	_pos = [_objPos, 0, 40] call BIS_fnc_findSafePos;
+	_pos = [_objPos, 50, 80] call BIS_fnc_findSafePos;
 	_unit = _grp createUnit [_rndtype, _pos, [], 30, "none"]; 
 	_randomDir = selectRandom [270, 290, 01, 30, 90];
 	_randomDist = random [5, 25, 50]; 
@@ -167,7 +167,7 @@ for "_i" from 1 to _rndOp1 do {
 
 for "_i" from 1 to 3 do {
 	// create vics 	
-	_pos = [_objPos, 0, 40] call BIS_fnc_findSafePos;
+	_pos = [_objPos, 5, 80] call BIS_fnc_findSafePos;
 	_vic = selectRandom	_endGameVics;	
 	_opforVic = [_pos, 180, _vic, east] call BIS_fnc_spawnVehicle;				
 };
@@ -175,7 +175,7 @@ for "_i" from 1 to 3 do {
 for "_i" from 1 to 8 do {
 	// create trucks 
 	// todo - change direction
-	_pos = [_objPos, 30, 70] call BIS_fnc_findSafePos;
+	_pos = [_objPos, 50, 80] call BIS_fnc_findSafePos;
 	_vic = selectRandom	_endGameTargetClasses;	
 	_opforVic = [_pos, 180, _vic, east] call BIS_fnc_spawnVehicle;								
 };
