@@ -53,31 +53,6 @@ if (KILLCHAINISLIVE) then {
 			sleep 1;
 		} forEach RGG_indiforGroups;
 
-		// {
-		// 	_size = count units _x; 
-		// 	if (_size >0) then {
-		// 		_leader = leader _x;
-		// 		_leaderPos = getPos _leader;
-		// 		_zPos = _leaderPos select 2;
-		// 		if (_zPos < 10) then {
-		// 			_stampToString = str _x;
-		// 		deleteMarker _stampToString;
-		// 		_tempMarker = createMarker [_stampToString, _leaderPos];
-		// 		_tempMarker setMarkerType "b_inf";
-		// 		// sleep 5;
-		// 		systemChat "blufor marker updated";
-		// 		};			
-		// 	} else {
-		// 		// delete group - to do 
-		// 		_stampToString = str _x;
-		// 		deleteMarker _stampToString;
-		// 		deleteGroup _x;
-		// 		systemChat "blufor MARKER DELETED";
-		// 		systemChat format ["Blufor Group Deleted: %1", _x];
-		// 	};
-		// 	sleep 1;
-		// } forEach RGG_bluforGroups;
-
 		{
 			_size = count units _x; 
 			if (_size >0) then {
@@ -88,20 +63,47 @@ if (KILLCHAINISLIVE) then {
 					_stampToString = str _x;
 				deleteMarker _stampToString;
 				_tempMarker = createMarker [_stampToString, _leaderPos];
-				_tempMarker setMarkerType "o_inf";
+				_tempMarker setMarkerType "b_inf";
 				// sleep 5;
-				// systemChat "opfor marker updated";
+				// systemChat "blufor marker updated";
 				};			
 			} else {
 				// delete group - to do 
 				_stampToString = str _x;
 				deleteMarker _stampToString;
 				deleteGroup _x;
-				// systemChat "opfor MARKER DELETED";
-				// systemChat format ["opfor Group Deleted: %1", _x];
+				// systemChat "blufor MARKER DELETED";
+				// systemChat format ["Blufor Group Deleted: %1", _x];
 			};
 			sleep 1;
-		} forEach RGG_opforGroups;
+		} forEach RGG_bluforGroups;
+
+		// {
+		// 	_size = count units _x; 
+		// 	if (_size >0) then {
+		// 		_leader = leader _x;
+		// 		_leaderPos = getPos _leader;
+		// 		_zPos = _leaderPos select 2;
+		// 		if (_zPos < 10) then {
+		// 			_stampToString = str _x;
+		// 		deleteMarker _stampToString;
+		// 		_tempMarker = createMarker [_stampToString, _leaderPos];
+		// 		_tempMarker setMarkerType "o_inf";
+		// 		// sleep 5;
+		// 		// systemChat "opfor marker updated";
+		// 		};			
+		// 	} else {
+		// 		// delete group - to do 
+		// 		_stampToString = str _x;
+		// 		deleteMarker _stampToString;
+		// 		deleteGroup _x;
+		// 		// systemChat "opfor MARKER DELETED";
+		// 		// systemChat format ["opfor Group Deleted: %1", _x];
+		// 	};
+		// 	sleep 1;
+		// } forEach RGG_opforGroups;
+
+
 	// {
 	// 	_leader = leader _x; // get group leader 
 	// 	_leaderPos = getPos _leader; 
