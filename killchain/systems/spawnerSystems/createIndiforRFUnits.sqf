@@ -93,7 +93,7 @@ if (patrolPointsTaken > 0) then {
 				systemChat "error: RF switch - point not correct";
 			};
 		};
-		[_mainAnchor, _objPos] execVM "killChain\systems\spawnerSystems\createIndiforRFUnits.sqf";
+		[_mainAnchor, _destPos] execVM "killChain\systems\spawnerSystems\createIndiforRFUnits.sqf";
 		// this should re-run this script with a spawn pos that is one previous 
 	} else {
 		// deliver RF as per expected 

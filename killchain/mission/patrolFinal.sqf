@@ -279,9 +279,9 @@ deleteMarker "Point 1";
 
 if (!BESILENT) then {
 	// voice broadcast to formalise success 
-	execVM "killchain\media\sounds\thisIsCommand.sqf";
+	execVM "media\sounds\thisIsCommand.sqf";
 	sleep 2;
-	execVM "killchain\media\sounds\success.sqf";		
+	execVM "media\sounds\success.sqf";		
 };
 
 // cleanup

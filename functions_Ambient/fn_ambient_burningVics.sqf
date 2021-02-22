@@ -58,26 +58,29 @@ switch (patrolPointsTaken) do {
 
 systemChat format ["_mainAnchor from burnVic switch is: %1", _mainAnchor];
 
-_jeep = "Jeep" createVehicle _mainAnchor;
-_firstPos = getPos _jeep;
-deleteVehicle _jeep;
+_jeep = "O_Truck_02_covered_F" createVehicle _mainAnchor;
 
-_dir = selectRandom [270, 0, 90];
-_relpos = _jeep getRelPos [100, _dir];
-
-// get rel dir 
-_jeep = "Jeep" createVehicle _relpos;
-_jeep setDamage 0.9;
+_jeep setDammage 1;
 systemChat "burning vic system run successfully";
-// OBJ - patrol stage objective 
-deleteMarker "car"; 
-_objective1 = createMarker ["car", _relpos];
-_objective1 setMarkerShape "ELLIPSE";
-_objective1 setMarkerColor "ColorRed";
-_objective1 setMarkerSize [100, 100];
-sleep 20;
-deleteMarker "car"; 
-systemChat "vic marker deleted";
-// _relpos = _mainAnchor getRelPos [100, _dir];
+
+
+// // _firstPos = getPos _jeep;
+// _dir = selectRandom [270, 0, 90];
+// _relpos = _jeep getRelPos [100, _dir];
+// // deleteVehicle _jeep;
+
+// _objective1 = createMarker ["car", _relpos];
+// _objective1 setMarkerShape "ELLIPSE";
+// _objective1 setMarkerColor "ColorRed";
+// _objective1 setMarkerSize [100, 100];
+
+// _jeep = "O_Truck_02_covered_F" createVehicle _relpos;
+// _jeep setDammage 1;
+// systemChat "burning vic system run successfully";
+
+// sleep 20;
+// deleteMarker "car"; 
+// systemChat "vic marker deleted";
+
 
 

@@ -373,7 +373,7 @@ switch (_anchorSelection) do {
 	case (3): { _anchor1 = [_mainAnchor, 400, 130] call BIS_fnc_relPos };
 	default { systemChat "error: _anchorSelection" };
 };
-_qrfAnchor = [_anchor1, 10, 150] call BIS_fnc_findSafePos 
+_qrfAnchor = [_anchor1, 10, 150] call BIS_fnc_findSafePos; 
 // this gives us one of three positions - roughly in line but could be ahead, ahead left or ahead right relative to last taken point 
 
 // technicals 
@@ -385,6 +385,8 @@ systemChat "Technical created";
 // unit creation 
 for "_i" from 1 to 2 do {
 
+	systemChat "creating QRF here";
+
 	_anchorSelection = selectRandom [1,2,3];
 	private ["_anchor1"];
 	switch (_anchorSelection) do {
@@ -393,7 +395,7 @@ for "_i" from 1 to 2 do {
 		case (3): { _anchor1 = [_mainAnchor, 400, 130] call BIS_fnc_relPos };
 		default { systemChat "error: _anchorSelection" };
 	};
-	_qrfAnchor = [_anchor1, 10, 150] call BIS_fnc_findSafePos 
+	_qrfAnchor = [_anchor1, 10, 150] call BIS_fnc_findSafePos;
 
 	// delete when we know this works 
 	deleteMarker "Point 1"; 
@@ -421,6 +423,8 @@ for "_i" from 1 to 2 do {
 		_unitDest = _objPos getPos [_ranDist, _ranDir];
 		_opforTeam doMove _unitDest;
 	};
+
+	sleep 5;
 };
 
 // here we add more incoming if later on in mission 
@@ -529,7 +533,7 @@ while {RFCHECK2} do {
 		};
 
 		// OPFOR to push forward as a group if they took back control of point and there is no indifor on it 
-		if (_coreIndi < 1) && (_redzoneOpfor > 25)) then {
+		if ((_coreIndi < 1) && (_redzoneOpfor > 25)) then {
 			hint "THEY ARE RUSHING! PREPARE YOUR DEFENSES!!";
 			{
 				_randomDir = selectRandom [270, 310, 00, 50, 90];
@@ -562,9 +566,9 @@ while {RFCHECK2} do {
 
 // voice broadcast to formalise success
 if (!BESILENT) then { 
-	execVM "killchain\media\sounds\thisIsCommand.sqf";
+	execVM "media\sounds\thisIsCommand.sqf";
 	sleep 2;
-	execVM "killchain\media\sounds\success.sqf";		
+	execVM "media\sounds\success.sqf";		
 };
 
 // delete existing camp 
