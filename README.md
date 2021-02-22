@@ -49,8 +49,6 @@ Add a system to enable storing of three different patrol routes - to be random b
 
 Make a smoke system that works
 
-Make burning vics work
-
 Add statics and mortars in increasing numbers as players progress
 
 Implement a medivac side mission
@@ -69,13 +67,17 @@ Add a way to win the mission better than just killing everyone - MVP kill?
 
 Make the mission able to run forever - but only on demand
 
-MAke an admin menu that enables more control of mission params
+Make an admin menu that enables more control of mission params
 
 Make a padre system that adds mission-specific tasks to raptors
 
 Make a stats system, including how many cycles over 5 there were
 
 ## DONE / UNTESTED
+
+Make burning vics work
+
+## DONE / TESTED (PASSED)
 
 Add catch-all opfor insurance move at stage switch
 
@@ -84,5 +86,3 @@ Ensure OPFOR will push to previous point (QRF stage) when there is a lot of them
 Prevent RF from happening if a point has opfor near it - making RF appear at the next available point
 
 Improve spacing of QRF attack vectors
-
-## DONE / TESTED

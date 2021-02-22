@@ -401,8 +401,9 @@ for "_i" from 1 to 2 do {
 	deleteMarker "Point 1"; 
 	_objective1 = createMarker ["Point 1", _qrfAnchor];
 	_objective1 setMarkerShape "ELLIPSE";
-	_objective1 setMarkerColor "ColorRed";
+	// _objective1 setMarkerColor "ColorRed";
 	_objective1 setMarkerSize [50, 50];
+	_objective1 setMarkerAlpha 0.1;
 
 	for "_i" from 1 to 6 do {
 		_opforGroup = createGroup [east, true];
@@ -454,6 +455,7 @@ if (patrolPointsTaken > 3) then {
 	};
 };
 
+// deleteMarker "Point 1"; // untested
 
 // defend point stage -------------------------------------------------------------------------------
 _cycles = 0;
