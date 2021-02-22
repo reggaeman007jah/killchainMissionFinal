@@ -73,6 +73,8 @@ Make a padre system that adds mission-specific tasks to raptors
 
 Make a stats system, including how many cycles over 5 there were
 
+Prevent things from spawning on roads
+
 ## DONE / UNTESTED
 
 Make burning vics work

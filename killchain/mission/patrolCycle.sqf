@@ -285,7 +285,7 @@ while {RFCHECK} do {
 	systemChat format ["CORE OPFR:    %1", _coreOpfor];
 
 	// rf check 
-	if (_redzoneIndi <= 8) then {
+	if ((_redzoneIndi <= 8) && (_indi < 20)) then {
 		// this will check before churning out new reinforcement units 
 		systemChat "LOGIC - indifor in redzone is less than 5 now";
 		[_initStartPos, _objPos] execVM "killChain\systems\reinforcementSystems\indiforRf.sqf";
@@ -522,7 +522,7 @@ while {RFCHECK2} do {
 		systemChat format ["Defence Cycles: %1", _cycles];
 
 		// ORDER RF HERE IF NEEDED 
-		if (_redzoneIndi <= 8) then {
+		if ((_redzoneIndi <= 8) && (_indi < 20)) then {
 			systemChat "note _redzoneIndi <= 5 - RF ordered while in defend state ";
 			
 			[_initStartPos, _objPos] execVM "killChain\systems\spawnerSystems\createIndiforRFUnits.sqf";
