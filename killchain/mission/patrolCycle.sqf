@@ -1,12 +1,12 @@
 
 _initStartPos = _this select 0; // starting point for any new mission
 _objPos = _this select 1; // objective point for any new mission 
-systemChat format ["Patrol Points Taken: %1", patrolPointsTaken];
+systemChat format ["debug - Patrol Points Taken: %1", patrolPointsTaken];
 
 // burning vics
 [] spawn RGGa_fnc_ambient_burningVics;
 // [] spawn RGGc_fnc_count_depleteSupplies; 
-systemChat "have just spawned ambiVics";
+systemChat "debug - have just spawned ambiVics";
 
 // roamers 
 [_objPos, _initStartPos] execVM "killchain\systems\randomThreatSystems\randomThreats.sqf";
@@ -85,7 +85,7 @@ _lineTest setMarkerColor "ColorBlack";
 _lineTest setMarkerDir _reldirX;
 _lineTest setMarkerSize [2, _dist2];
 // to enable a colour change when the chain breaks, these lines need to be pushed back into an array 
-systemChat "markers done"; 
+systemChat "debug - markers done"; 
 
 // new camp location and items 
 _randomCampLocation = _objPos findEmptyPosition [10,50,"B_Heli_Light_01_dynamicLoadout_F"];
@@ -145,7 +145,7 @@ for "_i" from 1 to _random5 do {
 	_campItem2 setDir _randomDir;
 	RGG_CampItems pushback _campItem2;
 };
-systemChat "Campsite made";
+systemChat "debug - Campsite made";
 
 sleep 2;
 
@@ -154,8 +154,8 @@ _diffLevel = 2; // diff modifier i.e. number of iterations // tbc add patrolPoin
 
 for "_i" from 1 to _diffLevel do {
 	_grp = createGroup [east, true];
-	_rndOp1 = selectRandom [0, 3, 4, 5, 6];
-	systemchat format ["1st wave: %1", _rndOp1];
+	_rndOp1 = selectRandom [3, 4, 5, 6];
+	systemchat format ["debug - 1st wave: %1", _rndOp1];
 
 	for "_i" from 1 to _rndOp1 do {
 		_rndtype = selectRandom [
@@ -184,7 +184,7 @@ for "_i" from 1 to _diffLevel do {
 		sleep 2;						
 	};
 };
-systemChat "opfor welcome party done";
+systemChat "debug - opfor welcome party done";
 
 sleep 1;
 
@@ -209,7 +209,7 @@ _opforClass = [
 
 _rndOp1 = selectRandom [8, 10, 12, 24];
 _grp = createGroup [east, true];
-systemchat format ["opfor camp defence: %1", _rndOp1]; // debug 
+systemchat format ["debug - opfor camp defence: %1", _rndOp1]; // debug 
 
 for "_i" from 1 to _rndOp1 do {
 	_rndtype = selectRandom _opforClass;
@@ -224,7 +224,7 @@ for "_i" from 1 to _rndOp1 do {
  	sleep 1;									
 };
 
-systemChat "opfor defenders done";
+systemChat "debug - opfor defenders done";
 
 sleep 2;
 
@@ -292,7 +292,7 @@ while {RFCHECK} do {
 	};
 
 	// check if won point and if so, move to defend 
-	if ((_coreOpfor <= 3) && (_coreIndi >=3)) then {
+	if ((_coreOpfor <= 2) && (_coreIndi >=3)) then {
 		systemChat "LOGIC - POINT IS WON - indifor in core is 3+ and opfor is 3-";
 		// move indi units to a rough defensive position around the center point - note will also attrack any opfor strags 
 		{
@@ -340,7 +340,7 @@ systemChat "Roamers created";
 
 //---------------------------------------------------------------------------------------------------------
 // QFR Here 
-systemChat "QRF initiated";
+systemChat "debug - QRF initiated";
 
 // point 1 rules 
 // only one direction of attack 
@@ -378,14 +378,12 @@ _qrfAnchor = [_anchor1, 10, 150] call BIS_fnc_findSafePos;
 
 // technicals 
 [_qrfAnchor, _objPos] execVM "killChain\systems\spawnerSystems\spawnTechnicals.sqf";
-systemChat "Technical created";
-
-
+systemChat "debug - Technical created";
 
 // unit creation 
 for "_i" from 1 to 2 do {
 
-	systemChat "creating QRF here";
+	systemChat "debug - creating QRF here";
 
 	_anchorSelection = selectRandom [1,2,3];
 	private ["_anchor1"];

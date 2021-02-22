@@ -80,27 +80,13 @@ publicVariable "MISSIONTASK";
 // there are a few different stages of the mission, these states will track the current task 
 // to do - confirm what purpose MISSIONTASK does 
 
-// gather all patrol point position data from mission 
-_killchainObj1 = getMarkerPos "killchainObj1";
-_killchainObj2 = getMarkerPos "killchainObj2";
-_killchainObj3 = getMarkerPos "killchainObj3";
-_killchainObj4 = getMarkerPos "killchainObj4";
-_killchainObj5 = getMarkerPos "killchainObj5";
-_killchainObj6 = getMarkerPos "killchainObj6";
-_killchainFinal = getMarkerPos "killchainFinal";
+// gather all patrol point position data from mission markers 
 RGG_PatrolPoints = [];
-RGG_PatrolPoints pushBack _killchainObj1;
-RGG_PatrolPoints pushBack _killchainObj2;
-RGG_PatrolPoints pushBack _killchainObj3;
-RGG_PatrolPoints pushBack _killchainObj4;
-RGG_PatrolPoints pushBack _killchainObj5;
-RGG_PatrolPoints pushBack _killchainObj6;
-RGG_PatrolPoints pushBack _killchainFinal;
-// here RGG_PatrolPoints holds 6 patrol points and 1 end point 
-
-// roamers 
-// execVM "killChain\systems\randomThreatSystems\randomThreats.sqf";
-// note: Roamers are triggered during phases
+for [{private _i = 1}, {_i < 7}, {_i = _i + 1}] do {
+    private _marker = format ["killchainObj%1", _i];
+	RGG_PatrolPoints pushBack (getMarkerPos _marker);
+};
+RGG_PatrolPoints pushBack (getMarkerPos "killchainFinal");
 
 // trigger indifor markers 
 execVM "killchain\systems\markerSystems\indiforMarkers.sqf";
@@ -108,3 +94,26 @@ execVM "killchain\systems\markerSystems\indiforMarkers.sqf";
 // commence mission 
 execVM "killchain\mission\missionStart.sqf";
 systemChat "RUNNING PHASE 1";
+
+
+// _killchainObj1 = getMarkerPos "killchainObj1";
+// _killchainObj2 = getMarkerPos "killchainObj2";
+// _killchainObj3 = getMarkerPos "killchainObj3";
+// _killchainObj4 = getMarkerPos "killchainObj4";
+// _killchainObj5 = getMarkerPos "killchainObj5";
+// _killchainObj6 = getMarkerPos "killchainObj6";
+// _killchainFinal = getMarkerPos "killchainFinal";
+// RGG_PatrolPoints = [];
+// RGG_PatrolPoints pushBack _killchainObj1;
+// RGG_PatrolPoints pushBack _killchainObj2;
+// RGG_PatrolPoints pushBack _killchainObj3;
+// RGG_PatrolPoints pushBack _killchainObj4;
+// RGG_PatrolPoints pushBack _killchainObj5;
+// RGG_PatrolPoints pushBack _killchainObj6;
+// RGG_PatrolPoints pushBack _killchainFinal;
+// here RGG_PatrolPoints holds 6 patrol points and 1 end point 
+
+// roamers 
+// execVM "killChain\systems\randomThreatSystems\randomThreats.sqf";
+// note: Roamers are triggered during phases
+

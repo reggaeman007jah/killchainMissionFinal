@@ -2,12 +2,10 @@
 // Voice Activation Global Declaration - is this needed for jtac and voice markers?
 VAA_Activate = true;
 
-sleep 10;
-
 // this manages the start of the mission
 KILLCHAINMISSIONSTART = false;
 
-// initialise APS
+// initialise killchain 
 execVM "killchain\mission\missionInit.sqf"; 
 sleep 0.5;
 
