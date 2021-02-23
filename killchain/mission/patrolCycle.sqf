@@ -625,12 +625,12 @@ RGG_respawnStore pushBack [_bluforSpawn, _indiSpawn]; // sending to global array
 // define right name for spawn point  
 private ["_spawnPointName"];
 switch (patrolPointsTaken) do {
-	case 1: { _spawnPointName = "POINT 1-BRAVO" };
-	case 2: { _spawnPointName = "POINT 2-BRAVO" };
-	case 3: { _spawnPointName = "POINT 3-BRAVO" };
-	case 4: { _spawnPointName = "POINT 4-BRAVO" };
-	case 5: { _spawnPointName = "POINT 5-BRAVO" };
-	case 6: { _spawnPointName = "POINT 6-BRAVO" };
+	case 0: { _spawnPointName = "POINT 1-BRAVO" };
+	case 1: { _spawnPointName = "POINT 2-BRAVO" };
+	case 2: { _spawnPointName = "POINT 3-BRAVO" };
+	case 3: { _spawnPointName = "POINT 4-BRAVO" };
+	case 4: { _spawnPointName = "POINT 5-BRAVO" };
+	case 5: { _spawnPointName = "POINT 6-BRAVO" };
 	default { systemChat "error: Patrol Point switch" };
 };
 [west, _bluforSpawn, _spawnPointName] call BIS_fnc_addRespawnPosition; // create blu resapwn

@@ -156,7 +156,7 @@ _grp = createGroup [east, true];
 
 for "_i" from 1 to _rndOp1 do {
 	_rndtype = selectRandom _assaultSquad;
-	_pos = [_objPos, 50, 80] call BIS_fnc_findSafePos;
+	_pos = [_objPos, 100, 150] call BIS_fnc_findSafePos;
 	_unit = _grp createUnit [_rndtype, _pos, [], 30, "none"]; 
 	_randomDir = selectRandom [270, 290, 01, 30, 90];
 	_randomDist = random [5, 25, 50]; 
@@ -165,19 +165,25 @@ for "_i" from 1 to _rndOp1 do {
  	sleep 1;									
 };
 
+sleep 2;
+
 for "_i" from 1 to 3 do {
 	// create vics 	
-	_pos = [_objPos, 5, 80] call BIS_fnc_findSafePos;
+	_pos = [_objPos, 100, 150] call BIS_fnc_findSafePos;
 	_vic = selectRandom	_endGameVics;	
-	_opforVic = [_pos, 180, _vic, east] call BIS_fnc_spawnVehicle;				
+	_opforVic = [_pos, 180, _vic, east] call BIS_fnc_spawnVehicle;	
+	sleep 1;			
 };
+
+sleep 2;
 
 for "_i" from 1 to 8 do {
 	// create trucks 
 	// todo - change direction
-	_pos = [_objPos, 50, 80] call BIS_fnc_findSafePos;
+	_pos = [_objPos, 100, 150] call BIS_fnc_findSafePos;
 	_vic = selectRandom	_endGameTargetClasses;	
-	_opforVic = [_pos, 180, _vic, east] call BIS_fnc_spawnVehicle;								
+	_opforVic = [_pos, 180, _vic, east] call BIS_fnc_spawnVehicle;
+	sleep 1;								
 };
 
 for "_i" from 1 to 5 do {
@@ -245,7 +251,7 @@ while {RFCHECK} do {
 
 	// check if won point - must kill all in core to win 
 	if ((_coreOpfor < 1) && (_coreIndi >=3)) then {
-		systemChat "LOGIC - indifor in core is 3+ and opfor is 3-";
+		systemChat "LOGIC - (_coreOpfor < 1) && (_coreIndi >=3)";
 		// move indi units to a rough defensive position around the center point - note will also attrack any opfor strags 
 		{
 			_dir = random 360;
