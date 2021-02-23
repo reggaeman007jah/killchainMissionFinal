@@ -621,8 +621,20 @@ _tempBase setMarkerColor "colorBlue";
 _bluforSpawn = _objPos getPos [40,90];
 _indiSpawn = _objPos getPos [40,270];
 RGG_respawnStore pushBack [_bluforSpawn, _indiSpawn]; // sending to global array to enable deleting of older respawns 
-[west, _bluforSpawn, "POINT 1-BRAVO"] call BIS_fnc_addRespawnPosition; // create blu resapwn
-[independent, _indiSpawn, "POINT 1-INDIGO"] call BIS_fnc_addRespawnPosition; // create ind resapwn
+
+// define right name for spawn point  
+private ["_spawnPointName"];
+switch (patrolPointsTaken) do {
+	case 1: { _spawnPointName = "POINT 1-BRAVO" };
+	case 2: { _spawnPointName = "POINT 2-BRAVO" };
+	case 3: { _spawnPointName = "POINT 3-BRAVO" };
+	case 4: { _spawnPointName = "POINT 4-BRAVO" };
+	case 5: { _spawnPointName = "POINT 5-BRAVO" };
+	case 6: { _spawnPointName = "POINT 6-BRAVO" };
+	default { systemChat "error: Patrol Point switch" };
+};
+[west, _bluforSpawn, _spawnPointName] call BIS_fnc_addRespawnPosition; // create blu resapwn
+[independent, _indiSpawn, "GENERIC INDI RESPAWN POINT"] call BIS_fnc_addRespawnPosition; // create ind resapwn
 
 // _cnt = count RGG_respawnStore; // check if more than one, i.e. don't process this is we only have one (1st) point 
 // if (_cnt >1) then {
