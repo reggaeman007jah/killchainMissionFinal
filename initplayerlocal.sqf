@@ -5,9 +5,7 @@ To do: reinstall JTAC and Voice Marker System here
 
 sleep 1;
 
-// flag and image tests - remove if does not work 
-customFlag setFlagTexture "media\images\flag1.jpg";
-customFlag2 setObjectTexture [0,"media\images\flag1.jpg"];
+
 
 // remove stamina 
 player enableStamina FALSE;
