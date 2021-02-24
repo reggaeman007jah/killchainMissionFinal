@@ -1,4 +1,6 @@
 
+dontForget setObjectTextureGlobal [0, "media\images\reloadImage.jpg"];
+
 // Voice Activation Global Declaration - is this needed for jtac and voice markers?
 VAA_Activate = true;
 
@@ -48,7 +50,7 @@ This system needs improvement
 this bool is used to clear out ammo from helis on respawn - this should be with the other param settings 
 */
 // to avoid errors 
-REARMONSPAWN = true; 
+REARMONSPAWN = true; // switch this to false to turn off the 'no-ammo on respawn' system 
 
 // ----- this holds any sentry units waiting to spawn in (but can't due to lack of base food) -----
 RGG_sentryQueue = []; // holds sentry respawn data 
