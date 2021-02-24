@@ -16,10 +16,11 @@ System with more simple system
 
 */
 
+systemChat "cold-zone system activated - go to the office to start the mission";
+
 // this is to enable player-controlled mission start 
 waitUntil { (KILLCHAINMISSIONSTART == true) };
 
-systemChat "cold-zone system activated - go to the office to start the mission";
 
 // initialise counter system 
 // execVM "killchain\systems\countingSystems\counter.sqf";
