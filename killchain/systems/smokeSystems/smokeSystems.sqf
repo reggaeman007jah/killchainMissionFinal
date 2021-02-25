@@ -1,11 +1,4 @@
 _heli = _this select 0;
-// is actually player, not heli 
-
-sleep 2; 
-
-// REARMONSPAWN = true; // switch this to turn off the no-ammo system on respawn 
-
-// _heli = _this select 0;
 
 [_heli, ["<t color='#FF0000'>DROP RED SMOKE</t>", {_smoke = "SmokeShellRed" createVehicle position (_this select 0);},nil,0,false,true,"","true", 5]] remoteExec ["addAction"];
 [_heli, ["<t color='#00FF00'>DROP GREEN SMOKE</t>", {_smoke = "SmokeShellGreen" createVehicle position (_this select 0);},nil,0,false,true,"","true", 5]] remoteExec ["addAction"];
@@ -20,3 +13,4 @@ sleep 2;
 // 	_heli setVehicleAmmo 0;
 
 // };
+// note - no rearm on respwn now done via separate system 

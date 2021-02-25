@@ -5,11 +5,11 @@ fobPathfinder setObjectTextureGlobal [0, "media\images\pathfinderImage.jpg"];
 customFlag setObjectTextureGlobal [0, "media\images\flag1.jpg"];
 customFlag2 setObjectTextureGlobal [0, "media\images\flag1.jpg"];
 whiteBoard setObjectTextureGlobal [0, "media\images\whiteBoard2.jpg"];
-
-
-// flag and image tests - remove if does not work 
 customFlag setFlagTexture "media\images\flag1.jpg";
 customFlag2 setObjectTexture [0,"media\images\flag1.jpg"];
+
+// blufor marker system 
+execVM "killchain\systems\markerSystems\bluforMarkers.sqf"; // will run even if Killchain does not run 
 
 // Voice Activation Global Declaration - is this needed for jtac and voice markers?
 VAA_Activate = true;

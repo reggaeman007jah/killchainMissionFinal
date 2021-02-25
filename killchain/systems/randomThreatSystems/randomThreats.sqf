@@ -1,8 +1,8 @@
 /*
 From: initServer.sqf 
 
-this will not run always, rather be triggered during one or both of the bool loops 
-takes next point as anchor point 
+this will not run always, rather be triggered during one or both of the stage loops 
+it takes next available point as anchor point 
 does not run during endGame 
 
 The _anchor is the next patrol point .. to avoid a boring train of incoming from roughly the same dir, we need 
@@ -68,10 +68,3 @@ if (patrolPointsTaken > 0 ) then {
 
 	// TODO - WORK OUT HOW TO MAKE DIAMOND FORMATION
 };
-
-
-
-
-
-
-
