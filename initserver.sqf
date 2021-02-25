@@ -79,3 +79,5 @@ publicVariable "RGG_Barracks_Food";
 publicVariable "RGG_Barracks_Ammo";
 publicVariable "RGG_Barracks_Fuel";
 publicVariable "RGG_Barracks_Sentries";
+
+

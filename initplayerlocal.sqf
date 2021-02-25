@@ -30,3 +30,13 @@ execVM "media\sounds\welcome.sqf";
 // execVM "voiceActivatedDataStore\VADS_init.sqf";
 // execVM "voiceActivatedDataManager\VADM_init.sqf";
 // execVM "voiceActivatedSyncShot\VASS_init.sqf";
+
+// test keyDown EH 
+// execVM "eventHandlers\keyDown.sqf";
+
+
+[RGG_heli1a] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
+[RGG_heli2a] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
+[RGG_heli3] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
+[RGG_heli4] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
+
