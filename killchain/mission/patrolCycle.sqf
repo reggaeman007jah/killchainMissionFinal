@@ -224,6 +224,23 @@ for "_i" from 1 to _rndOp1 do {
  	sleep 1;									
 };
 
+// statics
+
+if (patrolPointsTaken > 2) then {
+	_random = selectRandom [2,3];
+	for "_i" from 1 to _random do {
+		[_objPos] execVM "killchain\systems\spawnerSystems\spawnEnemyStatics.sqf";  								
+	};
+};
+
+if (patrolPointsTaken > 4) then {
+	_random = selectRandom [2,3];
+	for "_i" from 1 to _random do {
+		[_objPos] execVM "killchain\systems\spawnerSystems\spawnEnemyMortars.sqf";  								
+	};
+};
+
+
 systemChat "debug - opfor defenders done";
 
 sleep 2;

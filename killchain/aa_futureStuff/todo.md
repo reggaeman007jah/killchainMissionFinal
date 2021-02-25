@@ -656,6 +656,15 @@ sleep 20; // changes from 5 to 20, in case this was the reasons for the logic gl
 [RGG_Heli7] execVM "autoPatrolSystem\heliSystems\smokedrop.sqf";
 
 ============================================================================
+
+heli1 addAction ["<t color='#FF0000'>Enable Damage</t>", {
+heli1 setDamage true;
+}];
+
+heli1 addAction ["<t color='#FF0000'>Disable Damage</t>", {
+heli1 setDamage false;
+}];
+
 heli1 addAction ["<t color='#FF0000'>Kill Engine</t>", {
 private "_gas";
 _gas = fuel heli1;

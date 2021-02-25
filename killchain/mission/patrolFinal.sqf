@@ -186,8 +186,12 @@ for "_i" from 1 to 8 do {
 	sleep 1;								
 };
 
-for "_i" from 1 to 5 do {
-	// TO DO create statics  								
+for "_i" from 1 to 4 do {
+	[_objPos] execVM "killchain\systems\spawnerSystems\spawnEnemyStatics.sqf";  								
+};
+
+for "_i" from 1 to 2 do {
+	[_objPos] execVM "killchain\systems\spawnerSystems\spawnEnemyMortars.sqf";  								
 };
 
 // attack point stage -------------------------------------------------------------------------------
