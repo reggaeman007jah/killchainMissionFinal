@@ -592,39 +592,32 @@ if (!BESILENT) then {
 { deleteVehicle _x } forEach RGG_CampItems;
 RGG_CampItems = [];
 
-// BASE REWARD :)
-_buildLocation = _objPos findEmptyPosition [10,100,"B_Heli_Light_01_dynamicLoadout_F"]; // medic tent pos 
-sleep 1;
-_fobPos = _objPos findEmptyPosition [10,100,"B_Heli_Light_01_dynamicLoadout_F"]; // ammo box pos 
-sleep 1;
-_repairPos = _objPos findEmptyPosition [10,100,"B_Heli_Light_01_dynamicLoadout_F"]; // repair container pos 
-
-// _fobPos = _buildLocation getPos [20,180];
-// _repairPos = _fobPos findEmptyPosition [10,100,"B_Heli_Light_01_dynamicLoadout_F"];
-
-// hint "debug - FLARES ...........";
-_flrObj = "F_20mm_Red" createvehicle _buildLocation;
-sleep 2;
-_flrObj = "F_20mm_Red" createvehicle _fobPos;
-sleep 2;
-_flrObj = "F_20mm_Red" createvehicle _repairPos;
-sleep 8;
+// BASE REWARDS HERE :)
 
 // create medic tent 
+_buildLocation = _objPos findEmptyPosition [10,100,"B_Heli_Light_01_dynamicLoadout_F"]; 
+_flrObj = "F_20mm_Red" createvehicle _buildLocation;
+sleep 5;
 _baseBuilding1 = createVehicle ["Land_MedicalTent_01_tropic_closed_F", _buildLocation, [], 30, "none"]; 
-sleep 0.6;
+sleep 1;
 
 // create ammo box 
-_fobPos1 = createVehicle ["Box_NATO_Support_F", _fobPos]; //ammmo 
-[ "AmmoboxInit", [_ammoSup, true, {true}] ] call BIS_fnc_arsenal;
-sleep 0.6;
+_fobPos = _buildLocation findEmptyPosition [10,100,"B_Heli_Light_01_dynamicLoadout_F"]; 
+_flrObj = "F_20mm_Red" createvehicle _fobPos;
+sleep 5;
+_fobPos1 = createVehicle ["Box_NATO_Support_F", _fobPos]; 
+[ "AmmoboxInit", [_fobPos, true, {true}] ] call BIS_fnc_arsenal;
+sleep 1;
 
 // create repair container 
+_repairPos = _buildLocation findEmptyPosition [10,100,"B_Heli_Light_01_dynamicLoadout_F"]; 
+_flrObj = "F_20mm_Red" createvehicle _repairPos;
+sleep 5;
 _repairPos1 = createVehicle ["B_Slingload_01_Repair_F", _repairPos]; //vehicle repair 
 sleep 0.6;
 
 // create vics and vic rewards 
-_vicLocation = _objPos findEmptyPosition [10,100,"B_Heli_Light_01_dynamicLoadout_F"];
+_vicLocation = _buildLocation findEmptyPosition [10,100,"B_Heli_Light_01_dynamicLoadout_F"];
 _quaddy = createVehicle ["I_G_Quadbike_01_F", _vicLocation]; // quad
 sleep 1;
 _vic = selectRandom [
@@ -634,6 +627,10 @@ _vic = selectRandom [
 	"B_LSV_01_armed_F"
 ];
 _rewardSpawn = createVehicle [_vic, _vicLocation]; // reward vic 
+
+// to do - choose better patrol vics 
+
+// ------------------------------------------------------------------------------------------------------------------
 
 // create win marker 
 _float = diag_tickTime;
