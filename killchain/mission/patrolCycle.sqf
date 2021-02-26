@@ -61,8 +61,28 @@ deleteMarker "attackPoint";
 _tempMarker = createMarker ["attackPoint", _objPos];
 _tempMarker setMarkerType "hd_objective";
 _tempMarker setMarkerColor "ColorRed";
-
+_tempMarker setMarkerAlpha 0.3;
+sleep 0.1;
+_tempMarker setMarkerAlpha 0.4;
+sleep 0.1;
+_tempMarker setMarkerAlpha 0.5;
+sleep 0.1;
+_tempMarker setMarkerAlpha 0.6;
+sleep 0.1;
+_tempMarker setMarkerAlpha 0.7;
 sleep 1;
+_tempMarker setMarkerAlpha 0.1;
+sleep 1;
+_tempMarker setMarkerAlpha 0.7;
+sleep 1;
+_tempMarker setMarkerAlpha 0.1;
+sleep 1;
+_tempMarker setMarkerAlpha 0.7;
+sleep 1;
+_tempMarker setMarkerAlpha 0.1;
+sleep 1;
+_tempMarker setMarkerAlpha 0.7;
+
 
 // generate path marker/lines between marker points 
 // generate random number and make into string 
