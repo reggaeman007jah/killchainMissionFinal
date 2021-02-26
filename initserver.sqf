@@ -5,7 +5,7 @@ fobPathfinder setObjectTextureGlobal [0, "media\images\pathfinderImage.jpg"];
 customFlag setObjectTextureGlobal [0, "media\images\flag1.jpg"];
 customFlag2 setObjectTextureGlobal [0, "media\images\flag1.jpg"];
 whiteBoard setObjectTextureGlobal [0, "media\images\whiteBoard2.jpg"];
-customFlag setFlagTexture "media\images\flag1.jpg";
+customFlag setObjectTexture [0,"media\images\flag1.jpg"];
 customFlag2 setObjectTexture [0,"media\images\flag1.jpg"];
 
 // blufor marker system 

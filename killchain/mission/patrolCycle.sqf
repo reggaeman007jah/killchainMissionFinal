@@ -626,7 +626,7 @@ _fobPos = _buildLocation findEmptyPosition [10,100,"B_Heli_Light_01_dynamicLoado
 _flrObj = "F_20mm_Red" createvehicle _fobPos;
 sleep 5;
 _fobPos1 = createVehicle ["Box_NATO_Support_F", _fobPos]; 
-[ "AmmoboxInit", [_fobPos, true, {true}] ] call BIS_fnc_arsenal;
+[ "AmmoboxInit", [_fobPos1, true, {true}] ] call BIS_fnc_arsenal;
 sleep 1;
 
 // create repair container 
