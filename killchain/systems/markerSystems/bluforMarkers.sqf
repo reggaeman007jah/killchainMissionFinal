@@ -10,6 +10,10 @@ be running in times where we are not in killchain, so this way seems lighter.
 sleep 20;
 systemChat " DEBUG - BLUFOR MARKER SYSTEM RUNNING";
 
+/*
+THIS IS BROKEN !!!
+*/
+
 while {TRUE} do {
 
 	_groups = allGroups; // gets all known game groups 
