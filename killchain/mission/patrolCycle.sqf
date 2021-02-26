@@ -593,25 +593,40 @@ if (!BESILENT) then {
 RGG_CampItems = [];
 
 // BASE REWARD :)
-_buildLocation = _objPos findEmptyPosition [10,100,"B_Heli_Light_01_dynamicLoadout_F"];
-_fobPos = _buildLocation getPos [20,180];
-_repairPos = _fobPos findEmptyPosition [10,100,"B_Heli_Light_01_dynamicLoadout_F"];
+_buildLocation = _objPos findEmptyPosition [10,100,"B_Heli_Light_01_dynamicLoadout_F"]; // medic tent pos 
+sleep 1;
+_fobPos = _objPos findEmptyPosition [10,100,"B_Heli_Light_01_dynamicLoadout_F"]; // ammo box pos 
+sleep 1;
+_repairPos = _objPos findEmptyPosition [10,100,"B_Heli_Light_01_dynamicLoadout_F"]; // repair container pos 
 
-hint "FLARES ...........";
+// _fobPos = _buildLocation getPos [20,180];
+// _repairPos = _fobPos findEmptyPosition [10,100,"B_Heli_Light_01_dynamicLoadout_F"];
+
+// hint "debug - FLARES ...........";
 _flrObj = "F_20mm_Red" createvehicle _buildLocation;
 sleep 2;
 _flrObj = "F_20mm_Red" createvehicle _fobPos;
 sleep 2;
 _flrObj = "F_20mm_Red" createvehicle _repairPos;
-sleep 15;
+sleep 8;
+
+// create medic tent 
 _baseBuilding1 = createVehicle ["Land_MedicalTent_01_tropic_closed_F", _buildLocation, [], 30, "none"]; 
 sleep 0.6;
-_ammoSup = createVehicle ["Box_NATO_Support_F", _fobPos]; //ammmo 
+
+// create ammo box 
+_fobPos1 = createVehicle ["Box_NATO_Support_F", _fobPos]; //ammmo 
 [ "AmmoboxInit", [_ammoSup, true, {true}] ] call BIS_fnc_arsenal;
 sleep 0.6;
-_quaddy = createVehicle ["I_G_Quadbike_01_F", _fobPos]; // quad
-_ammoSup = createVehicle ["B_Slingload_01_Repair_F", _repairPos]; //vehicle repair 
+
+// create repair container 
+_repairPos1 = createVehicle ["B_Slingload_01_Repair_F", _repairPos]; //vehicle repair 
+sleep 0.6;
+
+// create vics and vic rewards 
 _vicLocation = _objPos findEmptyPosition [10,100,"B_Heli_Light_01_dynamicLoadout_F"];
+_quaddy = createVehicle ["I_G_Quadbike_01_F", _vicLocation]; // quad
+sleep 1;
 _vic = selectRandom [
 	"I_G_Offroad_01_armed_F", 
 	"I_C_Offroad_02_LMG_F", 
@@ -620,11 +635,7 @@ _vic = selectRandom [
 ];
 _rewardSpawn = createVehicle [_vic, _vicLocation]; // reward vic 
 
-/*
-To do - create nicer rewards at FOR Pathfinder, to be slingloaded into AO 
-*/
-
-// win marker 
+// create win marker 
 _float = diag_tickTime;
 _stampToString = str _float;
 
@@ -701,9 +712,9 @@ switch (patrolPointsTaken) do {
 };
 
 // pause to regroup - is this needed??
-systemChat "get Ready";
+systemChat "debug - get Ready - 60 seconds";
 sleep 60;
-systemChat "here we go";
+systemChat "debug - here we go";
 
 // determine whether another camp obj or final obj 
 if (patrolPointsTaken <= 5) then {
@@ -750,123 +761,10 @@ _opfor = [];
 systemChat "RUNNING CLEANUP - check works from Cycle Script ";
 
 
-// cleanup
-// [_objPos] execVM "killchain\systems\cleanUpSystems\cleanUp.sqf";
-
-// switch (patrolPointsTaken) do {
-// 	case 1: {
-// 		_objPos = RGG_PatrolPoints select 1;
-// 		[_anchor, _objPos] execVM "killChain\mission\patrolCycle.sqf";
-// 		_indi = [];
-// 		_units = allUnits inAreaArray "redzone";
-// 		{if ((side _x) == INDEPENDENT) then {_indi pushBack _x}} forEach _units;
-// 		{
-// 			_randomDir = selectRandom [270, 310, 00, 50, 90];
-// 			_randomDist = selectRandom [20, 22, 24, 26, 28, 30];
-// 			_endPoint1 = _objPos getPos [_randomDist,_randomDir];
-// 			sleep 1;
-// 			_x setBehaviour "COMBAT";
-// 			_x doMove _endPoint1;
-// 		} forEach _indi;
-// 		systemChat "RUNNING PHASE 2";
-// 	};
-// 	case 2: {
-// 		_objPos = RGG_PatrolPoints select 2;
-// 		[_anchor, _objPos] execVM "killChain\mission\objPoint1.sqf";
-// 		_indi = [];
-// 		_units = allUnits inAreaArray "redzone";
-// 		{if ((side _x) == INDEPENDENT) then {_indi pushBack _x}} forEach _units;
-// 		{
-// 			_randomDir = selectRandom [270, 310, 00, 50, 90];
-// 			_randomDist = selectRandom [20, 22, 24, 26, 28, 30];
-// 			_endPoint1 = _objPos getPos [_randomDist,_randomDir];
-// 			sleep 1;
-// 			_x setBehaviour "COMBAT";
-// 			_x doMove _endPoint1;
-// 		} forEach _indi;
-// 		systemChat "RUNNING PHASE 3";
-// 	};
-// 	case 3: {
-// 		_objPos = RGG_PatrolPoints select 3;
-// 		[_anchor, _objPos] execVM "killChain\mission\objPoint1.sqf";
-// 		_indi = [];
-// 		_units = allUnits inAreaArray "redzone";
-// 		{if ((side _x) == INDEPENDENT) then {_indi pushBack _x}} forEach _units;
-// 		{
-// 			_randomDir = selectRandom [270, 310, 00, 50, 90];
-// 			_randomDist = selectRandom [20, 22, 24, 26, 28, 30];
-// 			_endPoint1 = _objPos getPos [_randomDist,_randomDir];
-// 			sleep 1;
-// 			_x setBehaviour "COMBAT";
-// 			_x doMove _endPoint1;
-// 		} forEach _indi;
-// 		systemChat "RUNNING PHASE 4";
-// 	};
-// 	case 4: {
-// 		_objPos = RGG_PatrolPoints select 4;
-// 		[_anchor, _objPos] execVM "killChain\mission\objPoint1.sqf";
-// 		_indi = [];
-// 		_units = allUnits inAreaArray "redzone";
-// 		{if ((side _x) == INDEPENDENT) then {_indi pushBack _x}} forEach _units;
-// 		{
-// 			_randomDir = selectRandom [270, 310, 00, 50, 90];
-// 			_randomDist = selectRandom [20, 22, 24, 26, 28, 30];
-// 			_endPoint1 = _objPos getPos [_randomDist,_randomDir];
-// 			sleep 1;
-// 			_x setBehaviour "COMBAT";
-// 			_x doMove _endPoint1;
-// 		} forEach _indi;
-// 		systemChat "RUNNING PHASE 5";
-// 	};
-// 	case 5: {
-// 		_objPos = RGG_PatrolPoints select 5;
-// 		[_anchor, _objPos] execVM "killChain\mission\objPoint1.sqf";
-// 		_indi = [];
-// 		_units = allUnits inAreaArray "redzone";
-// 		{if ((side _x) == INDEPENDENT) then {_indi pushBack _x}} forEach _units;
-// 		{
-// 			_randomDir = selectRandom [270, 310, 00, 50, 90];
-// 			_randomDist = selectRandom [20, 22, 24, 26, 28, 30];
-// 			_endPoint1 = _objPos getPos [_randomDist,_randomDir];
-// 			sleep 1;
-// 			_x setBehaviour "COMBAT";
-// 			_x doMove _endPoint1;
-// 		} forEach _indi;
-// 		systemChat "RUNNING PHASE 6";
-// 	};
-// 	case 6: {
-// 		_objPos = RGG_PatrolPoints select 6;
-// 		[_anchor, _objPos] execVM "killChain\mission\patrolCycle.sqf";
-// 		_indi = [];
-// 		_units = allUnits inAreaArray "redzone";
-// 		{if ((side _x) == INDEPENDENT) then {_indi pushBack _x}} forEach _units;
-// 		{
-// 			_randomDir = selectRandom [270, 310, 00, 50, 90];
-// 			_randomDist = selectRandom [20, 22, 24, 26, 28, 30];
-// 			_endPoint1 = _objPos getPos [_randomDist,_randomDir];
-// 			sleep 1;
-// 			_x setBehaviour "COMBAT";
-// 			_x doMove _endPoint1;
-// 		} forEach _indi;
-// 		systemChat "RUNNING ENDGAME";
-// 	};
-// 	default {
-// 		systemChat "error Patrol Point switch";
-// 	};
-// };
 
 
 
 
-
-
-// get second objective 
-// _anchor = _objPos;
-// _objPos = RGG_PatrolPoints select 1;
-
-
-
-// init Point 1 Obj  
 
 
 
