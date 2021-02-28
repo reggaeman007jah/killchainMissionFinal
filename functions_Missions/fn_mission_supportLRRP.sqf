@@ -52,7 +52,7 @@ _opforBase = [_missionPos, 750, 1000, 40, 0, 1, 0] call BIS_fnc_findSafePos;
 
 // systemChat "DEBUG - Marker 2 made";
 
-for "_i" from 1 to 20 do {
+for "_i" from 1 to 30 do {
 	_group = createGroup west;
 	_unit = _group createUnit ["B_A_Soldier_A_F", _missionPos, [], 0.1, "none"]; 
 	_randomMovePos = [ ["BATTLEZONE"] ] call BIS_fnc_randomPos;
@@ -66,7 +66,7 @@ for "_i" from 1 to 20 do {
 };
 systemChat "DEBUG - sleeping for 30";
 // enable time to get into position  
-sleep 30;
+sleep 10;
 
 // freeze blufor unit behaviour 
 _allUnits = allUnits inAreaArray "BATTLEZONE";
@@ -77,7 +77,7 @@ _allUnits = allUnits inAreaArray "BATTLEZONE";
 systemChat "DEBUG - disabled blufor AI";
 
 // create welecome party 
-for "_i" from 1 to 20 do {
+for "_i" from 1 to 10 do {
 	_group = createGroup east;
 	_dist = selectRandom [150, 160, 170];
 	_dir = random 359;
@@ -117,34 +117,57 @@ systemChat "DEBUG - created opfor and disabled AI";
 	// } forEach _allUnits;
 // };
 
+attackNow = false;
 
 _trg = createTrigger ["EmptyDetector", _missionPos];
 _trg setTriggerArea [50, 50, 0, false];
 _trg setTriggerActivation ["ANYPLAYER", "PRESENT", true];
 _trg setTriggerStatements ["this", "
 	systemChat 'DEBUG - created trigger activator';
-	_allUnits = allUnits inAreaArray 'BATTLEZONE';
+	_allUnitsX = allUnits inAreaArray 'BATTLEZONE';
 	{
-		_x enableAI 'AUTOTARGET';
 		_x enableAI 'MOVE';
 		_x setBehaviour 'COMBAT';
-		_x setUnitPos 'UP';
 		_x setCaptive false;
 		_x setUnitPos 'AUTO';
-	} forEach _allUnits;
-
-	_opfor = [];
-	{
-		if ((side _x) == EAST) then {_opfor pushBack _x};
-	} forEach _allUnits;
-
-	{
-		_randomDir = selectRandom [270, 310, 00, 50, 90];
-		_randomDist = selectRandom [10, 15, 20];
-		_endPoint1 = _missionPos getPos [_randomDist,_randomDir];
-		_x doMove _endPoint1;
-	} forEach _opfor;
+	} forEach _allUnitsX;
+	attackNow = true;
 ", "systemChat 'no player near'"];
+
+waitUntil { attackNow; };
+
+
+_allUnitsX = allUnits inAreaArray 'BATTLEZONE';
+_opfor = [];
+_blufor = [];
+{
+	if ((side _x) == EAST) then {
+		_opfor pushBack _x;
+	}; 
+	if ((side _x) == WEST) then {
+		_blufor pushBack _x;
+	}; 
+} forEach _allUnitsX;
+
+systemChat str _opfor;
+{
+	_randomDir = selectRandom [270, 310, 00, 50, 90];
+	_randomDist = selectRandom [10, 15, 20];
+	_endPoint1 = _missionPos getPos [_randomDist,_randomDir];
+	_x doMove _endPoint1;
+	systemChat "a do move happened";
+} forEach _opfor;
+
+sleep 1;
+
+systemChat str _blufor;
+{
+	_randomDir = random 359;
+	_randomDist = selectRandom [20, 25, 30, 35];
+	_endPoint1 = _missionPos getPos [_randomDist,_randomDir];
+	_x doMove _endPoint1;
+	systemChat "a blufor do move happened";
+} forEach _blufor;
 
 
 // checkpoint - does this all work so far?
