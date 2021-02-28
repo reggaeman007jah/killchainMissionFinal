@@ -59,6 +59,15 @@ _areaCenter = _this select 0;
 
 _extractPos = [_areaCenter, 1000, 3000, 40, 0, 1, 0] call BIS_fnc_findSafePos;
 
+// the welcome party switch will determine if the ambush happens on landing, on approach, or whether opfor are way further out as heli approaches 
+private "_actDist";
+switch (_welcomeParty) do {
+	case "1": { _actDist = 20 }; // waits for landing before ambush - so sets activation var to small - needs a z value here 
+	case "2": { _actDist = 100 }; // triggers an attack on close approach - so sets activation var to medium
+	case "3": { _actDist = 500 }; // triggers an attack on long approach - so sets activation var to large 
+	default { systemChat "Switch Error _trogActDist" };
+};
+
 _medevacPos = createMarker ["EXTRACT", _extractPos];
 _medevacPos setMarkerShape "ELLIPSE";
 _medevacPos setMarkerColor "ColorRed";
@@ -69,6 +78,9 @@ _medevacPos1 = createMarker ["PZ", _extractPos];
 _medevacPos1 setMarkerShape "ELLIPSE";
 _medevacPos1 setMarkerColor "ColorRed";
 _medevacPos1 setMarkerSize [5, 5];
+
+MEDEVAC = true; // for marker system 
+["MEDEVAC", _extractPos, "hd_pickup", "MEDEVAC_Marker", "colorRed"] spawn RGGe_fnc_effects_markers;
 
 for "_i" from 1 to 10 do {
 	_indiGroup = createGroup west;
@@ -102,4 +114,36 @@ sleep 10;
 	
 } forEach _injured;
 // I do this ^^ bc when you spawn an injured unit they heal as soon as they spawn in .. so this is a hacky way around that issue 
+
+// smoke trigger 
+_trgSmk = createTrigger ["EmptyDetector", _missionPos];
+_trgSmk setTriggerArea [1000, 1000, 0, false];
+_trgSmk setTriggerActivation ["ANYPLAYER", "PRESENT", true];
+_trgSmk setTriggerStatements ["this", "
+	_smoke = createVehicle ['G_40mm_smokeYELLOW', _missionPos, [], 0, 'none']; 
+", "systemChat 'no player near'"];
+
+// attack manager 
+attackNow = false;
+
+_trg = createTrigger ["EmptyDetector", _extractPos];
+_trg setTriggerArea [_actDist, _actDist, 0, false];
+_trg setTriggerActivation ["ANYPLAYER", "PRESENT", true];
+_trg setTriggerStatements ["this", "
+	systemChat 'DEBUG - created trigger activator';
+	_allUnitsX = allUnits inAreaArray 'BATTLEZONE';
+	{
+		_x enableAI 'MOVE';
+		_x setBehaviour 'COMBAT';
+		_x setCaptive false;
+		_x setUnitPos 'AUTO';
+	} forEach _allUnitsX;
+	attackNow = true;
+", "systemChat 'no player near'"];
+
+waitUntil { attackNow; };
+
+// create attacks here 
+
+MEDEVAC = false;
 
