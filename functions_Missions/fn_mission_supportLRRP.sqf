@@ -23,6 +23,17 @@ systemChat "DEBUG - RUNNING: missions_LRRP";
 // _areaCenter = _this select 0; // should be Pathfinder, but could also be a patrol point, or any thing else 
 _welcomeParty = selectRandom [1,2,3]; // decides what is happening on approach to area and how players are welcomed 
 
+// the welcome party switch will determine if the ambush happens on landing, on approach, or whether opfor are way further out as heli approaches 
+private "_trigActDist";
+switch (_welcomeParty) do {
+	case "1": { _trigActDist = 20 }; // waits for landing before ambush - so sets activation var to small - needs a z value here 
+	case "2": { _trigActDist = 100 }; // triggers an attack on close approach - so sets activation var to medium
+	case "3": { _trigActDist = 500 }; // triggers an attack on long approach - so sets activation var to large 
+	default { systemChat "Switch Error _trogActDist" };
+};
+
+
+
 _missionPos = [5108,20058,0]; // hand picked location(s)
 
 // _missionPos = [_areaCenter, 4000, 5000, 40, 0, 1, 0] call BIS_fnc_findSafePos;
@@ -77,7 +88,7 @@ _allUnits = allUnits inAreaArray "BATTLEZONE";
 systemChat "DEBUG - disabled blufor AI";
 
 // create welecome party 
-for "_i" from 1 to 10 do {
+for "_i" from 1 to 15 do {
 	_group = createGroup east;
 	_dist = selectRandom [150, 160, 170];
 	_dir = random 359;
@@ -96,6 +107,14 @@ for "_i" from 1 to 10 do {
 	sleep 0.1;
 };
 systemChat "DEBUG - created opfor and disabled AI";
+
+// smoke trigger 
+_trgSmk = createTrigger ["EmptyDetector", _missionPos];
+_trgSmk setTriggerArea [1000, 1000, 0, false];
+_trgSmk setTriggerActivation ["ANYPLAYER", "PRESENT", true];
+_trgSmk setTriggerStatements ["this", "
+	_smoke = createVehicle ['G_40mm_smokeYELLOW', _missionPos, [], 0, 'none']; 
+", "systemChat 'no player near'"];
 
 // triggers 
 // _trg = createTrigger ["EmptyDetector", _missionPos, true];
@@ -120,7 +139,7 @@ systemChat "DEBUG - created opfor and disabled AI";
 attackNow = false;
 
 _trg = createTrigger ["EmptyDetector", _missionPos];
-_trg setTriggerArea [50, 50, 0, false];
+_trg setTriggerArea [_trigActDist, _trigActDist, 0, false];
 _trg setTriggerActivation ["ANYPLAYER", "PRESENT", true];
 _trg setTriggerStatements ["this", "
 	systemChat 'DEBUG - created trigger activator';
@@ -135,8 +154,9 @@ _trg setTriggerStatements ["this", "
 ", "systemChat 'no player near'"];
 
 waitUntil { attackNow; };
+// I do this as for some reason, having two forEach loops was not working within the trigger statement 
 
-
+// this section pushes opfor to rush the LZ, and sets up blufor into a defensive perimiter 
 _allUnitsX = allUnits inAreaArray 'BATTLEZONE';
 _opfor = [];
 _blufor = [];
@@ -149,7 +169,6 @@ _blufor = [];
 	}; 
 } forEach _allUnitsX;
 
-systemChat str _opfor;
 {
 	_randomDir = selectRandom [270, 310, 00, 50, 90];
 	_randomDist = selectRandom [10, 15, 20];
@@ -158,7 +177,7 @@ systemChat str _opfor;
 	systemChat "a do move happened";
 } forEach _opfor;
 
-sleep 1;
+sleep 5;
 
 systemChat str _blufor;
 {
@@ -170,7 +189,7 @@ systemChat str _blufor;
 } forEach _blufor;
 
 
-// checkpoint - does this all work so far?
+// wait until all opfor are killed, and then move out 
 
 // build camp 
 [_opforBase] call RGG_fnc_2_build_opforCamp;
