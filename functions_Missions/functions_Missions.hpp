@@ -17,5 +17,8 @@ class RGGm {
 			Description = "This function will create a mission to pick up and then deploy a tank or APC";
 		}; 
 
+		class mission_supportLRRP {
+			Description = "This function will create a mission to support a long range patrol";
+		}; 
 	};
 };

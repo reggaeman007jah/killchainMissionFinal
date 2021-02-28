@@ -21,6 +21,11 @@ KILLCHAINMISSIONSTART = false;
 execVM "killchain\mission\missionInit.sqf"; 
 sleep 0.5;
 
+// initialise LRRP Mission 
+// _pos = getPos ammo1;
+// [_pos] spawn RGGm_fnc_mission_supportLRRP;
+[] spawn RGGm_fnc_mission_supportLRRP;
+
 // slingload EH 
 execVM "eventHandlers\slingLoadMonitor.sqf";
 

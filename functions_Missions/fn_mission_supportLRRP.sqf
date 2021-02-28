@@ -18,17 +18,20 @@ make it so that fire can be in full effect on close prox, or totally quiet - and
 so, three outcomes here 
 
 */
-systemChat "DEBUG - RUNNING: missions_extractInjured";
+systemChat "DEBUG - RUNNING: missions_LRRP";
 
-_areaCenter = _this select 0; // should be Pathfinder, but could also be a patrol point, or any thing else 
+// _areaCenter = _this select 0; // should be Pathfinder, but could also be a patrol point, or any thing else 
 _welcomeParty = selectRandom [1,2,3]; // decides what is happening on approach to area and how players are welcomed 
 
-_missionPos = [_areaCenter, 4000, 5000, 40, 0, 1, 0] call BIS_fnc_findSafePos;
+_missionPos = [5108,20058,0]; // hand picked location(s)
+
+// _missionPos = [_areaCenter, 4000, 5000, 40, 0, 1, 0] call BIS_fnc_findSafePos;
 
 _pos1 = createMarker ["BATTLEZONE", _missionPos];
 _pos1 setMarkerShape "ELLIPSE";
 _pos1 setMarkerColor "ColorRed";
-_pos1 setMarkerSize [50, 50];
+_pos1 setMarkerSize [250, 250];
+systemChat "DEBUG - Marker 1 made";
 // replace this with voice markers  
 
 // _pos2 = createMarker ["PZ", _extractPos];
@@ -42,70 +45,114 @@ _pos1 setMarkerSize [50, 50];
 _opforBase = [_missionPos, 750, 1000, 40, 0, 1, 0] call BIS_fnc_findSafePos;
 
 // debug marker 
-_pos3 = createMarker ["ENEMYBASE", _missionPos];
-_pos3 setMarkerShape "ELLIPSE";
-_pos3 setMarkerColor "ColorRed";
-_pos3 setMarkerSize [50, 50];
+// _pos3 = createMarker ["ENEMYBASE", _missionPos];
+// _pos3 setMarkerShape "ELLIPSE";
+// _pos3 setMarkerColor "ColorRed";
+// _pos3 setMarkerSize [250, 250];
+
+// systemChat "DEBUG - Marker 2 made";
 
 for "_i" from 1 to 20 do {
 	_group = createGroup west;
-	_unit = _group createUnit ["I_soldier_F", _pos1, [], 0.1, "none"]; 
+	_unit = _group createUnit ["B_A_Soldier_A_F", _missionPos, [], 0.1, "none"]; 
 	_randomMovePos = [ ["BATTLEZONE"] ] call BIS_fnc_randomPos;
 	_unit doMove _randomMovePos;
 	_stance = selectRandom ["up", "middle", "down"];
 	_unit setUnitPos _stance;
-
+	_unit setUnitCombatMode "BLUE";
+	_unit setCaptive true;
 	systemChat "blufor unit created";
 	sleep 1;
 };
-
+systemChat "DEBUG - sleeping for 30";
 // enable time to get into position  
 sleep 30;
 
 // freeze blufor unit behaviour 
 _allUnits = allUnits inAreaArray "BATTLEZONE";
 {
-	_x disableAI "AUTOTARGET";
+	// _x disableAI "AUTOTARGET";
 	_x disableAI "MOVE";
 } forEach _allUnits;
+systemChat "DEBUG - disabled blufor AI";
 
 // create welecome party 
 for "_i" from 1 to 20 do {
 	_group = createGroup east;
-	_dist = 200;
+	_dist = selectRandom [150, 160, 170];
 	_dir = random 359;
 	_spawnPos = _missionPos getPos [_dist, _dir];
-
-	_unit = _group createUnit ["I_soldier_F", _spawnPos, [], 0.1, "none"]; 
-	_unit disableAI "AUTOTARGET"; // this assumes ambush setting is on 
+	
+	_unit = _group createUnit ["O_G_Soldier_A_F", _spawnPos, [], 0.1, "none"]; 
+	_unit setCaptive true;
+	// _unit disableAI "AUTOTARGET"; // this assumes ambush setting is on 
 	_unit setUnitPos "DOWN";
-	_unit disableAI "MOVE"; 
+	// _unit disableAI "MOVE"; 
+	// _unit setUnitCombatMode "BLUE";
+
+	// _unit setDir [_unit, _missionPos] call BIS_fnc_dirTo;
 
 	systemChat "opfor unit created";
-	sleep 1;
+	sleep 0.1;
 };
+systemChat "DEBUG - created opfor and disabled AI";
 
-// https://community.bistudio.com/wiki/setTriggerActivation
-_trg = createTrigger ["EmptyDetector", _missionPos, true];
-// _trg setTriggerArea [5, 5, 0, false];
-_trg setTriggerActivation ["ANYPLAYER", "PRESENT", false]; // one-off 
+// triggers 
+// _trg = createTrigger ["EmptyDetector", _missionPos, true];
+// _trg setTriggerArea [50, 50, 0, false];
 
-if (triggerActivated _trg) then {
-	// kick off firefight 
-	_allUnits = allUnits inAreaArray "BATTLEZONE";
+// _trg setTriggerActivation ["ANYPLAYER", "PRESENT", false]; // i.e. one-off 
+// systemChat "DEBUG - created trigger";
+
+// if (triggerActivated _trg) then {
+// 	// kick off firefight 
+	// systemChat "DEBUG - created trigger activator";
+	// _allUnits = allUnits inAreaArray "BATTLEZONE";
+	// {
+	// 	_x enableAI "AUTOTARGET";
+	// 	_x enableAI "MOVE";
+	// 	_x setBehaviour "COMBAT";
+	// 	_x setUnitPos "AUTO";
+	// 	_x setCaptive false;
+	// } forEach _allUnits;
+// };
+
+
+_trg = createTrigger ["EmptyDetector", _missionPos];
+_trg setTriggerArea [50, 50, 0, false];
+_trg setTriggerActivation ["ANYPLAYER", "PRESENT", true];
+_trg setTriggerStatements ["this", "
+	systemChat 'DEBUG - created trigger activator';
+	_allUnits = allUnits inAreaArray 'BATTLEZONE';
 	{
-		_x enableAI "AUTOTARGET";
-		_x enableAI "MOVE";
-		_x setBehaviour "COMBAT";
-		_x setUnitPos "AUTO";
+		_x enableAI 'AUTOTARGET';
+		_x enableAI 'MOVE';
+		_x setBehaviour 'COMBAT';
+		_x setUnitPos 'UP';
+		_x setCaptive false;
+		_x setUnitPos 'AUTO';
 	} forEach _allUnits;
-};
+
+	_opfor = [];
+	{
+		if ((side _x) == EAST) then {_opfor pushBack _x};
+	} forEach _allUnits;
+
+	{
+		_randomDir = selectRandom [270, 310, 00, 50, 90];
+		_randomDist = selectRandom [10, 15, 20];
+		_endPoint1 = _missionPos getPos [_randomDist,_randomDir];
+		_x doMove _endPoint1;
+	} forEach _opfor;
+", "systemChat 'no player near'"];
+
 
 // checkpoint - does this all work so far?
 
 // build camp 
 [_opforBase] call RGG_fnc_2_build_opforCamp;
-
+systemChat "DEBUG - called opfor camp fnc";
 // check - does base appear ok ?
 
 // to-do ... spawn and send in troops while base is alive 
+
