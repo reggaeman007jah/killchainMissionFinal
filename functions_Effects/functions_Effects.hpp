@@ -13,6 +13,9 @@ class RGGe {
 			Description = "This function will sink blocks or obkects into the ground";
 		};
 
+		class effects_markers {
+			Description = "This function will make markers flash";
+		};
 	};
 };
 

@@ -17,6 +17,13 @@ set up bigger marker to declare - in voice - how many opfor are "in the wire"
 make it so that fire can be in full effect on close prox, or totally quiet - and if quiet, either kicks off on landing full scale, or remains quiet 
 so, three outcomes here 
 
+_loop = _this select 0; // bool that controls how long the marker lives / shows 
+_pos = _this select 1; // position of marker 
+_type = _this select 2; // type of marker 
+_name = _this select 3; // name of marker 
+_col = _this select 4; // colour of marker 
+["LRRP", POS, "ATTACK", "LRRP_Marker", "colorRed"] spawn fn_effects_markers
+
 */
 systemChat "DEBUG - RUNNING: missions_LRRP";
 
@@ -24,17 +31,17 @@ systemChat "DEBUG - RUNNING: missions_LRRP";
 _welcomeParty = selectRandom [1,2,3]; // decides what is happening on approach to area and how players are welcomed 
 
 // the welcome party switch will determine if the ambush happens on landing, on approach, or whether opfor are way further out as heli approaches 
-private "_trigActDist";
+private "_actDist";
 switch (_welcomeParty) do {
-	case "1": { _trigActDist = 20 }; // waits for landing before ambush - so sets activation var to small - needs a z value here 
-	case "2": { _trigActDist = 100 }; // triggers an attack on close approach - so sets activation var to medium
-	case "3": { _trigActDist = 500 }; // triggers an attack on long approach - so sets activation var to large 
+	case "1": { _actDist = 20 }; // waits for landing before ambush - so sets activation var to small - needs a z value here 
+	case "2": { _actDist = 100 }; // triggers an attack on close approach - so sets activation var to medium
+	case "3": { _actDist = 500 }; // triggers an attack on long approach - so sets activation var to large 
 	default { systemChat "Switch Error _trogActDist" };
 };
 
 
 
-_missionPos = [5108,20058,0]; // hand picked location(s)
+_missionPos = [5108,20058,0]; // hand picked location(s) for now 
 
 // _missionPos = [_areaCenter, 4000, 5000, 40, 0, 1, 0] call BIS_fnc_findSafePos;
 
@@ -51,6 +58,8 @@ systemChat "DEBUG - Marker 1 made";
 // _pos2 setMarkerSize [5, 5];
 
 // add marker icon here 
+LRRP = true; // for marker system 
+["LRRP", POS, "ATTACK", "LRRP_Marker", "colorRed"] spawn RGGe_fnc_effects_markers;
 
 // find location for opfor comms base - need to destroy this base in order to stop RF 
 _opforBase = [_missionPos, 750, 1000, 40, 0, 1, 0] call BIS_fnc_findSafePos;
@@ -139,7 +148,7 @@ _trgSmk setTriggerStatements ["this", "
 attackNow = false;
 
 _trg = createTrigger ["EmptyDetector", _missionPos];
-_trg setTriggerArea [_trigActDist, _trigActDist, 0, false];
+_trg setTriggerArea [_actDist, _actDist, 0, false];
 _trg setTriggerActivation ["ANYPLAYER", "PRESENT", true];
 _trg setTriggerStatements ["this", "
 	systemChat 'DEBUG - created trigger activator';
@@ -170,11 +179,10 @@ _blufor = [];
 } forEach _allUnitsX;
 
 {
-	_randomDir = selectRandom [270, 310, 00, 50, 90];
+	_randomDir = random 359;
 	_randomDist = selectRandom [10, 15, 20];
 	_endPoint1 = _missionPos getPos [_randomDist,_randomDir];
 	_x doMove _endPoint1;
-	systemChat "a do move happened";
 } forEach _opfor;
 
 sleep 5;
@@ -185,15 +193,17 @@ systemChat str _blufor;
 	_randomDist = selectRandom [20, 25, 30, 35];
 	_endPoint1 = _missionPos getPos [_randomDist,_randomDir];
 	_x doMove _endPoint1;
-	systemChat "a blufor do move happened";
 } forEach _blufor;
+
+LRRP = false;
+
 
 
 // wait until all opfor are killed, and then move out 
 
 // build camp 
-[_opforBase] call RGG_fnc_2_build_opforCamp;
-systemChat "DEBUG - called opfor camp fnc";
+// [_opforBase] call RGG_fnc_2_build_opforCamp;
+// systemChat "DEBUG - called opfor camp fnc";
 // check - does base appear ok ?
 
 // to-do ... spawn and send in troops while base is alive 
