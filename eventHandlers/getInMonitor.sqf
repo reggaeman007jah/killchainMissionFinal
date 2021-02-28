@@ -6,21 +6,31 @@ this script manages smoke actions while in heli
 // 	params ["_unit", "_role", "_vehicle", "_turret"];
 // }];
 
-transport1a addEventHandler ["getInMan", {
+systemChat "getIn EH Running";
+
+transport1a addEventHandler ["getIn", {
 	params ["_unit", "_role", "_vehicle", "_turret"];
 	[_unit] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
 }];
 
-transport2a addEventHandler ["getInMan", {
+transport2a addEventHandler ["getIn", {
 	params ["_unit", "_role", "_vehicle", "_turret"];
 	[_unit] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
 }];
 
-transport3a addEventHandler ["getInMan", {
-	params ["_unit", "_role", "_vehicle", "_turret"];
-	[_unit] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
+transport3a addEventHandler ["getIn", {
+	params ["_vehicle", "_role", "_unit", "_turret"];
+	systemChat format ["_unit: %1 / _role: %2 / _vehicle: %3", _unit, _role, _vehicle];
+	// [_unit] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
 }];
 
+RGG_Heli7a addEventHandler ["getIn", {
+	params ["_vehicle", "_role", "_unit", "_turret"];
+	systemchat format ["%1 just got into %2", _unit, _vehicle];
+	[_vehicle] call RGGc_fnc_count_heliSeats;
+}];
+
+systemChat "getIn EH Finished Running";
 
 
 /*

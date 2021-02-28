@@ -1,3 +1,6 @@
+_loop = true;
+
+params ["_loop", "_pos", "_type", "_name", "_col"];
 
 _loop = _this select 0; // bool that controls how long the marker lives / shows 
 _pos = _this select 1; // position of marker 

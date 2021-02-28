@@ -4,7 +4,7 @@ player enableStamina FALSE;
 player addEventHandler ['Respawn',{ player enableStamina FALSE }];
 
 // welcome message 
-execVM "media\sounds\welcome.sqf";
+// execVM "media\sounds\welcome.sqf";
 
 // initial smoke inits for helis 
 [RGG_heli1a] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";

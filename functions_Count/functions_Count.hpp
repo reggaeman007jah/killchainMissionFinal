@@ -21,6 +21,9 @@ class RGGc {
 			Description = "This function will determine whether a killed sentry can be respawned or placed in a queue";
 		};
 
+		class count_heliSeats {
+			Description = "This function will count how many cargo seats are in the heli";
+		};
 	};
 };
 

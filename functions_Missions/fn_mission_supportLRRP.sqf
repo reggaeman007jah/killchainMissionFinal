@@ -33,14 +33,13 @@ _welcomeParty = selectRandom [1,2,3]; // decides what is happening on approach t
 // the welcome party switch will determine if the ambush happens on landing, on approach, or whether opfor are way further out as heli approaches 
 private "_actDist";
 switch (_welcomeParty) do {
-	case "1": { _actDist = 20 }; // waits for landing before ambush - so sets activation var to small - needs a z value here 
-	case "2": { _actDist = 100 }; // triggers an attack on close approach - so sets activation var to medium
-	case "3": { _actDist = 500 }; // triggers an attack on long approach - so sets activation var to large 
+	case 1: { _actDist = 20 }; // waits for landing before ambush - so sets activation var to small - needs a z value here 
+	case 2: { _actDist = 100 }; // triggers an attack on close approach - so sets activation var to medium
+	case 3: { _actDist = 500 }; // triggers an attack on long approach - so sets activation var to large 
 	default { systemChat "Switch Error _trogActDist" };
 };
 
-
-
+// objective pos 
 _missionPos = [5108,20058,0]; // hand picked location(s) for now 
 
 // _missionPos = [_areaCenter, 4000, 5000, 40, 0, 1, 0] call BIS_fnc_findSafePos;
@@ -59,7 +58,7 @@ systemChat "DEBUG - Marker 1 made";
 
 // add marker icon here 
 LRRP = true; // for marker system 
-["LRRP", POS, "ATTACK", "LRRP_Marker", "colorRed"] spawn RGGe_fnc_effects_markers;
+[LRRP, _missionPos, "hd_objective", "LRRP_Marker", "colorRed"] spawn RGGe_fnc_effects_markers;
 
 // find location for opfor comms base - need to destroy this base in order to stop RF 
 _opforBase = [_missionPos, 750, 1000, 40, 0, 1, 0] call BIS_fnc_findSafePos;
@@ -81,10 +80,10 @@ for "_i" from 1 to 30 do {
 	_unit setUnitPos _stance;
 	_unit setUnitCombatMode "BLUE";
 	_unit setCaptive true;
-	systemChat "blufor unit created";
+	// systemChat "blufor unit created";
 	sleep 1;
 };
-systemChat "DEBUG - sleeping for 30";
+// systemChat "DEBUG - sleeping for 30";
 // enable time to get into position  
 sleep 10;
 
@@ -94,7 +93,7 @@ _allUnits = allUnits inAreaArray "BATTLEZONE";
 	// _x disableAI "AUTOTARGET";
 	_x disableAI "MOVE";
 } forEach _allUnits;
-systemChat "DEBUG - disabled blufor AI";
+// systemChat "DEBUG - disabled blufor AI";
 
 // create welecome party 
 for "_i" from 1 to 15 do {
@@ -112,18 +111,22 @@ for "_i" from 1 to 15 do {
 
 	// _unit setDir [_unit, _missionPos] call BIS_fnc_dirTo;
 
-	systemChat "opfor unit created";
+	// systemChat "opfor unit created";
 	sleep 0.1;
 };
-systemChat "DEBUG - created opfor and disabled AI";
+// systemChat "DEBUG - created opfor and disabled AI";
+
+systemChat "LRRP Mission Ready";
 
 // smoke trigger 
+SMOKEOUT = false;
 _trgSmk = createTrigger ["EmptyDetector", _missionPos];
-_trgSmk setTriggerArea [1000, 1000, 0, false];
+_trgSmk setTriggerArea [2200, 2200, 0, false];
 _trgSmk setTriggerActivation ["ANYPLAYER", "PRESENT", true];
-_trgSmk setTriggerStatements ["this", "
-	_smoke = createVehicle ['G_40mm_smokeYELLOW', _missionPos, [], 0, 'none']; 
-", "systemChat 'no player near'"];
+_trgSmk setTriggerStatements ["this", "SMOKEOUT = true", "systemChat 'no player near'"];
+
+waitUntil { SMOKEOUT };
+_smoke = createVehicle ['G_40mm_smokeYELLOW', _missionPos, [], 0, 'none'];
 
 // triggers 
 // _trg = createTrigger ["EmptyDetector", _missionPos, true];
@@ -145,8 +148,8 @@ _trgSmk setTriggerStatements ["this", "
 	// } forEach _allUnits;
 // };
 
+// attack trigger 
 attackNow = false;
-
 _trg = createTrigger ["EmptyDetector", _missionPos];
 _trg setTriggerArea [_actDist, _actDist, 0, false];
 _trg setTriggerActivation ["ANYPLAYER", "PRESENT", true];
@@ -162,7 +165,7 @@ _trg setTriggerStatements ["this", "
 	attackNow = true;
 ", "systemChat 'no player near'"];
 
-waitUntil { attackNow; };
+waitUntil { attackNow };
 // I do this as for some reason, having two forEach loops was not working within the trigger statement 
 
 // this section pushes opfor to rush the LZ, and sets up blufor into a defensive perimiter 

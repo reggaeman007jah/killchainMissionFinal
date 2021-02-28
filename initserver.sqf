@@ -29,7 +29,7 @@ sleep 0.5;
 // slingload EH 
 execVM "eventHandlers\slingLoadMonitor.sqf";
 
-// smoke EH 
+// event handlers 
 execVM "eventHandlers\getInMonitor.sqf";
 
 // // initialise counter system 
