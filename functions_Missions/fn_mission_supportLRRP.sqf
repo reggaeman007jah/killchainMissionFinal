@@ -48,7 +48,7 @@ _pos1 = createMarker ["BATTLEZONE", _missionPos];
 _pos1 setMarkerShape "ELLIPSE";
 _pos1 setMarkerColor "ColorRed";
 _pos1 setMarkerSize [250, 250];
-systemChat "DEBUG - Marker 1 made";
+// systemChat "DEBUG - Marker 1 made";
 // replace this with voice markers  
 
 // _pos2 = createMarker ["PZ", _extractPos];
@@ -199,6 +199,24 @@ systemChat str _blufor;
 } forEach _blufor;
 
 LRRP = false;
+systemChat "LRRP False - marker should stop flashing here";
+
+// _deleteSafe = false;
+_trg = createTrigger ["EmptyDetector", _missionPos];
+_trg setTriggerArea [1000, 1000, 0, false];
+_trg setTriggerActivation ["ANYPLAYER", "NOT PRESENT", false];
+_trg setTriggerStatements ["this", "
+	systemChat 'DEBUG - no players near - safe to delete all';
+	_pos = getMarkerPos 'BATTLEZONE';
+	[_pos] call RGGd_fnc_Delete_AllWithinArea;
+	systemChat format ['sending this: %1', _missionPos];
+", "systemChat 'players are near!'"];
+
+// waitUntil { _deleteSafe };
+// { deleteVehicle _x } forEach nearestObjects [_missionPos, ['all'], 200];
+// systemChat "check deleted ok";
+
+// here we can kick start another mission 
 
 // trigger to track when no players near - then delete all and restart mission 
 
