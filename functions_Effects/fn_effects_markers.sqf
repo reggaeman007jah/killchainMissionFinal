@@ -1,14 +1,14 @@
 _loop = true;
 
-params ["_loop", "_pos", "_type", "_name", "_col"];
+params ["_pos", "_type", "_name", "_col"];
 
-_loop = _this select 0; // bool that controls how long the marker lives / shows 
-_pos = _this select 1; // position of marker 
-_type = _this select 2; // type of marker 
-_name = _this select 3; // name of marker 
-_col = _this select 4; // colour of marker 
+// _loop = _this select 0; // bool that controls how long the marker lives / shows 
+_pos = _this select 0; // position of marker 
+_type = _this select 1; // type of marker 
+_name = _this select 2; // name of marker 
+_col = _this select 3; // colour of marker 
 
-while {_loop} do {
+while {LRRP} do {
 	_mkr = createMarker [_name, _pos];
 	_mkr setMarkerType _type;
 	_mkr setMarkerColor _col;

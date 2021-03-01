@@ -58,7 +58,7 @@ _pos1 setMarkerSize [250, 250];
 
 // add marker icon here 
 LRRP = true; // for marker system 
-[LRRP, _missionPos, "hd_objective", "LRRP_Marker", "colorRed"] spawn RGGe_fnc_effects_markers;
+[_missionPos, "hd_objective", "LRRP_Marker", "colorRed"] spawn RGGe_fnc_effects_markers;
 
 // find location for opfor comms base - need to destroy this base in order to stop RF 
 _opforBase = [_missionPos, 750, 1000, 40, 0, 1, 0] call BIS_fnc_findSafePos;
@@ -198,6 +198,48 @@ systemChat str _blufor;
 	_x doMove _endPoint1;
 } forEach _blufor;
 
+// deleteAll checks here 
+_anchorPos = getMarkerPos 'BATTLEZONE';
+_deleteCheck = true;
+while {_deleteCheck} do {
+	_dataStore = [];
+	{
+		_playerPos = getPos _x;
+		_dist = _anchorPos distance _playerPos;
+
+		if (_dist < 500) then {
+			_dataStore pushback _x;
+		};
+	} forEach allPlayers;
+
+	_cnt = count _dataStore;
+
+	if (_cnt == 0) then {
+		systemChat "no players near - safe to delete";
+		[_anchorPos] call RGGd_fnc_Delete_AllWithinArea;
+		_deleteCheck = false;
+	} else {
+		_deleteCheck = true;
+		systemChat "players are near - do not delete";
+	};
+
+	sleep 10;
+};
+
+// set up new mission 
+LRRP = false;
+systemChat "check - no marker now";
+deleteMarker "BATTLEZONE";
+
+sleep 10;
+
+systemChat "STARTING NEW MISSION";
+_pos = getPos ammo1;
+[_pos] spawn RGGm_fnc_mission_supportLRRP;
+systemChat "check - new marker only?";
+
+
+/*
 LRRP = false;
 systemChat "LRRP False - marker should stop flashing here";
 
@@ -217,7 +259,9 @@ _trg setTriggerStatements ["this", "
 // systemChat "check deleted ok";
 
 // here we can kick start another mission 
-
+_pos = getPos ammo1;
+[_pos] spawn RGGm_fnc_mission_supportLRRP;
+systemChat "STARTING NEW MISSION";
 // trigger to track when no players near - then delete all and restart mission 
 
 // wait until all opfor are killed, and then move out 
