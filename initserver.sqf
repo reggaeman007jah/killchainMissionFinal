@@ -22,9 +22,9 @@ execVM "killchain\mission\missionInit.sqf";
 sleep 0.5;
 
 // initialise LRRP Mission 
-// _pos = getPos ammo1;
-// [_pos] spawn RGGm_fnc_mission_supportLRRP;
-[] spawn RGGm_fnc_mission_supportLRRP;
+_pos = getPos ammo1;
+[_pos] spawn RGGm_fnc_mission_supportLRRP;
+// [] spawn RGGm_fnc_mission_supportLRRP;
 
 // slingload EH 
 execVM "eventHandlers\slingLoadMonitor.sqf";
@@ -44,6 +44,7 @@ execVM "eventHandlers\getInMonitor.sqf";
 execVM "killchain\systems\pickupSystems\pickupSystems1\pickupInit.sqf";
 execVM "killchain\systems\pickupSystems\pickupSystems2\pickupInit.sqf";
 execVM "killchain\systems\pickupSystems\pickupSystems3\pickupInit.sqf";
+[RGG_Heli7a] execVM "killchain\systems\pickupSystems\pickUpSystemsMaster\pickupInit.sqf";
 
 // initialise para spawner script 
 execVM "killchain\systems\spawnerSystems\spawnParas.sqf";

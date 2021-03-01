@@ -27,7 +27,7 @@ _col = _this select 4; // colour of marker
 */
 systemChat "DEBUG - RUNNING: missions_LRRP";
 
-// _areaCenter = _this select 0; // should be Pathfinder, but could also be a patrol point, or any thing else 
+_areaCenter = _this select 0; // should be Pathfinder, but could also be a patrol point, or any thing else 
 _welcomeParty = selectRandom [1,2,3]; // decides what is happening on approach to area and how players are welcomed 
 
 // the welcome party switch will determine if the ambush happens on landing, on approach, or whether opfor are way further out as heli approaches 
@@ -40,9 +40,9 @@ switch (_welcomeParty) do {
 };
 
 // objective pos 
-_missionPos = [5108,20058,0]; // hand picked location(s) for now 
+// _missionPos = [5108,20058,0]; // hand picked location(s) for now 
 
-// _missionPos = [_areaCenter, 4000, 5000, 40, 0, 1, 0] call BIS_fnc_findSafePos;
+_missionPos = [_areaCenter, 4000, 5000, 40, 0, 1, 0] call BIS_fnc_findSafePos;
 
 _pos1 = createMarker ["BATTLEZONE", _missionPos];
 _pos1 setMarkerShape "ELLIPSE";
@@ -200,7 +200,7 @@ systemChat str _blufor;
 
 LRRP = false;
 
-
+// trigger to track when no players near - then delete all and restart mission 
 
 // wait until all opfor are killed, and then move out 
 
