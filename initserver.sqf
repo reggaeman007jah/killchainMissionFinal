@@ -32,8 +32,7 @@ execVM "eventHandlers\slingLoadMonitor.sqf";
 // event handlers 
 execVM "eventHandlers\getInMonitor.sqf";
 
-// training event handler 
-execVM "eventHandlers\trainingGetInMonitor.sqf";
+
 
 // // initialise counter system 
 // execVM "killchain\systems\countingSystems\counter.sqf";

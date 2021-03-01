@@ -12,6 +12,9 @@ player addEventHandler ['Respawn',{ player enableStamina FALSE }];
 [RGG_heli3] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
 [RGG_heli4] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
 
+// training event handler 
+execVM "eventHandlers\trainingGetInMonitor.sqf";
+
 // voiceMarkerSystem 
 // execVM "voiceMarkerSystem\1_vmsInit.sqf";
 
