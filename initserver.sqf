@@ -5,7 +5,7 @@ fobPathfinder setObjectTextureGlobal [0, "media\images\pathfinderImage.jpg"];
 customFlag setObjectTextureGlobal [0, "media\images\flag1.jpg"];
 customFlag2 setObjectTextureGlobal [0, "media\images\flag1.jpg"];
 whiteBoard setObjectTextureGlobal [0, "media\images\whiteBoard2.jpg"];
-customFlag setObjectTexture [0,"media\images\flag1.jpg"];
+customFlag setObjectTexture [0,"media\images\flag1.jpg"]; // BROKEN
 customFlag2 setObjectTexture [0,"media\images\flag1.jpg"];
 
 // blufor marker system 
@@ -47,6 +47,7 @@ execVM "killchain\systems\pickupSystems\pickupSystems3\pickupInit.sqf";
 
 // initialise para spawner script 
 execVM "killchain\systems\spawnerSystems\spawnParas.sqf";
+execVM "killchain\systems\spawnerSystems\spawnParas2.sqf";
 
 // enables HK Team as default 
 HUNTERKILLER = true;

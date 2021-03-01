@@ -6,31 +6,54 @@ this script manages smoke actions while in heli
 // 	params ["_unit", "_role", "_vehicle", "_turret"];
 // }];
 
-systemChat "getIn EH Running";
+// todo - put heli names in an array and forEach them 
+
+// _smokeHelis = [transport1a,transport2a,transport3a,RGG_Heli9,RGG_Heli7a,RGG_heli1a,RGG_heli2a,RGG_Heli3,RGG_Heli4,bigLifter];
+// {
+// 	_x addEventHandler ["getIn", {
+// 	params ["_vehicle", "_role", "_unit", "_turret"];
+// 	[_vehicle] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
+// 	systemChat "someone got in";
+// 	_vehicle removeEventHandler ["getIn", _thisEventHandler];
+// } forEach _smokeHelis;
+// why not work??
+
 
 transport1a addEventHandler ["getIn", {
-	params ["_unit", "_role", "_vehicle", "_turret"];
+	params ["_vehicle", "_role", "_unit", "_turret"];
 	[_unit] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
 }];
 
 transport2a addEventHandler ["getIn", {
-	params ["_unit", "_role", "_vehicle", "_turret"];
+	params ["_vehicle", "_role", "_unit", "_turret"];
 	[_unit] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
 }];
 
 transport3a addEventHandler ["getIn", {
 	params ["_vehicle", "_role", "_unit", "_turret"];
-	systemChat format ["_unit: %1 / _role: %2 / _vehicle: %3", _unit, _role, _vehicle];
-	// [_unit] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
+	// systemChat format ["_unit: %1 / _role: %2 / _vehicle: %3", _unit, _role, _vehicle];
+	[_unit] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
 }];
+
+RGG_Heli9 addEventHandler ["getIn", {
+	params ["_vehicle", "_role", "_unit", "_turret"];
+	[_vehicle] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
+	_vehicle removeEventHandler ["getIn", _thisEventHandler];
+}];
+
+// player addEventHandler ["FiredNear", {
+// 	systemChat "This Event Handler is now removing itself!";
+// 	player removeEventHandler ["FiredNear", _thisEventHandler];
+// }];
+
 
 RGG_Heli7a addEventHandler ["getIn", {
 	params ["_vehicle", "_role", "_unit", "_turret"];
-	systemchat format ["%1 just got into %2", _unit, _vehicle];
+	// systemchat format ["%1 just got into %2", _unit, _vehicle];
 	[_vehicle] call RGGc_fnc_count_heliSeats;
 }];
 
-systemChat "getIn EH Finished Running";
+
 
 
 /*
