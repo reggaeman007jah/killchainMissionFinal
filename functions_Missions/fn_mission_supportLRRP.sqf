@@ -35,7 +35,7 @@ private "_actDist";
 switch (_welcomeParty) do {
 	case 1: { _actDist = 20 }; // waits for landing before ambush - so sets activation var to small - needs a z value here 
 	case 2: { _actDist = 100 }; // triggers an attack on close approach - so sets activation var to medium
-	case 3: { _actDist = 500 }; // triggers an attack on long approach - so sets activation var to large 
+	case 3: { _actDist = 200 }; // triggers an attack on long approach - so sets activation var to large 
 	default { systemChat "Switch Error _trogActDist" };
 };
 
@@ -96,7 +96,8 @@ _allUnits = allUnits inAreaArray "BATTLEZONE";
 // systemChat "DEBUG - disabled blufor AI";
 
 // create welecome party 
-for "_i" from 1 to 15 do {
+_size = selectRandom [15,20,25,30];
+for "_i" from 1 to _size do {
 	_group = createGroup east;
 	_dist = selectRandom [150, 160, 170];
 	_dir = random 359;
@@ -121,7 +122,7 @@ systemChat "LRRP Mission Ready";
 // smoke trigger 
 SMOKEOUT = false;
 _trgSmk = createTrigger ["EmptyDetector", _missionPos];
-_trgSmk setTriggerArea [2200, 2200, 0, false];
+_trgSmk setTriggerArea [2000, 2000, 0, false];
 _trgSmk setTriggerActivation ["ANYPLAYER", "PRESENT", true];
 _trgSmk setTriggerStatements ["this", "SMOKEOUT = true", "systemChat 'no player near'"];
 
