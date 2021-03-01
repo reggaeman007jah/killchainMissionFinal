@@ -712,7 +712,20 @@ killchain\systems\ammoSystems\noAmmo.sqf
 ============================================================================
 
 ============================================================================
+// \_heli addAction ["<t color='#FF0000'>Generate Enemy Infi 300m North</t>", {
+// \_pos = \_heli getPos [300, 0];
+// \_group1 = createGroup EAST;
+// \_unit1 = \_group1 createUnit ["O_Soldier_F", \_pos, [], 10, "NONE"];
+// }];
 
+// \_heli addAction ["<t color='#FF0000'>Generate Enemy APC 600m North</t>", {
+// \_pos = hel_helii1 getPos [600, 0];
+// \_jeep = "O_R_APC_Wheeled_02_rcws_v2_ard_F" createVehicle \_pos;
+// }];
+
+// \_heli addAction ["<t color='#0000FF'>REARM</t>", {
+// heli1 setVehicleAmmo 1;
+// }];
 ============================================================================
 
 ============================================================================
