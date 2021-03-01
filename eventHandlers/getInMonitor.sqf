@@ -35,10 +35,12 @@ transport3a addEventHandler ["getIn", {
 	[_unit] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
 }];
 
+// training heli 
 RGG_Heli9 addEventHandler ["getIn", {
 	params ["_vehicle", "_role", "_unit", "_turret"];
-	[_vehicle] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
+	[_vehicle] execVM "killchain\systems\trainingSystems\trainingControls.sqf";
 	_vehicle removeEventHandler ["getIn", _thisEventHandler];
+	systemchat format ["passing %1 to the training system", _vehicle];
 }];
 
 // player addEventHandler ["FiredNear", {
