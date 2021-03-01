@@ -2,59 +2,45 @@
 An outer regions patrol has encountered a larger enemy force and need support 
 This is a time-limited one-off situation, i.e. not a killchain mission
 
-Mission trigger will gen a position far away - no easy RF 
-spawn small indifor and much larger incoming opfor 
+Mission trigger will gen a position far away - i.e. no easy RF 
 Get support in this area quickly - either run CAS around surrounded forces, or drop off players to support 
-
-To win, you need to repell all incoming opfor 
 
 to-do:
 Sort out correct classes for mission 
-decide when to change patrol stances to auto 
-smoke on arrival - check whether any player is near to trigger 
+decide when to change patrol stances to auto - done 
+smoke on arrival - check whether any player is near to trigger - done
 set up bigger marker to declare - in voice - how many opfor are "in the wire"
 
+notes:
 make it so that fire can be in full effect on close prox, or totally quiet - and if quiet, either kicks off on landing full scale, or remains quiet 
 so, three outcomes here 
-
-_loop = _this select 0; // bool that controls how long the marker lives / shows 
-_pos = _this select 1; // position of marker 
-_type = _this select 2; // type of marker 
-_name = _this select 3; // name of marker 
-_col = _this select 4; // colour of marker 
-["LRRP", POS, "ATTACK", "LRRP_Marker", "colorRed"] spawn fn_effects_markers
+To win, you need to repell all incoming opfor?
 
 */
 systemChat "DEBUG - RUNNING: missions_LRRP";
 
-_areaCenter = _this select 0; // should be Pathfinder, but could also be a patrol point, or any thing else 
+_areaCenter = _this select 0; // currently FOB Pathfinder, but could also be a patrol point, or any thing else 
 _welcomeParty = selectRandom [1,2,3]; // decides what is happening on approach to area and how players are welcomed 
 
 // the welcome party switch will determine if the ambush happens on landing, on approach, or whether opfor are way further out as heli approaches 
 private "_actDist";
 switch (_welcomeParty) do {
 	case 1: { _actDist = 20 }; // waits for landing before ambush - so sets activation var to small - needs a z value here 
-	case 2: { _actDist = 100 }; // triggers an attack on close approach - so sets activation var to medium
-	case 3: { _actDist = 200 }; // triggers an attack on long approach - so sets activation var to large 
-	default { systemChat "Switch Error _trogActDist" };
+	case 2: { _actDist = 80 }; // triggers an attack on close approach - so sets activation var to medium
+	case 3: { _actDist = 120 }; // triggers an attack on long approach - so sets activation var to large 
+	default { systemChat "Switch Error _actDist" };
 };
 
 // objective pos 
-// _missionPos = [5108,20058,0]; // hand picked location(s) for now 
+// _missionPos = [5108,20058,0]; // hand picked location(s) for debug / testing 
 
-_missionPos = [_areaCenter, 4000, 5000, 40, 0, 1, 0] call BIS_fnc_findSafePos;
+_missionPos = [_areaCenter, 4200, 5500, 10, 0, 1, 0] call BIS_fnc_findSafePos;
 
 _pos1 = createMarker ["BATTLEZONE", _missionPos];
 _pos1 setMarkerShape "ELLIPSE";
 _pos1 setMarkerColor "ColorRed";
 _pos1 setMarkerSize [250, 250];
-// systemChat "DEBUG - Marker 1 made";
 // replace this with voice markers  
-
-// _pos2 = createMarker ["PZ", _extractPos];
-// _pos2 setMarkerShape "ELLIPSE";
-// _pos2 setMarkerColor "ColorRed";
-// _pos2 setMarkerSize [5, 5];
 
 // add marker icon here 
 LRRP = true; // for marker system 
@@ -63,15 +49,8 @@ LRRP = true; // for marker system
 // find location for opfor comms base - need to destroy this base in order to stop RF 
 _opforBase = [_missionPos, 750, 1000, 40, 0, 1, 0] call BIS_fnc_findSafePos;
 
-// debug marker 
-// _pos3 = createMarker ["ENEMYBASE", _missionPos];
-// _pos3 setMarkerShape "ELLIPSE";
-// _pos3 setMarkerColor "ColorRed";
-// _pos3 setMarkerSize [250, 250];
-
-// systemChat "DEBUG - Marker 2 made";
-
-for "_i" from 1 to 30 do {
+// create blufor 
+for "_i" from 1 to 20 do {
 	_group = createGroup west;
 	_unit = _group createUnit ["B_A_Soldier_A_F", _missionPos, [], 0.1, "none"]; 
 	_randomMovePos = [ ["BATTLEZONE"] ] call BIS_fnc_randomPos;
@@ -80,20 +59,14 @@ for "_i" from 1 to 30 do {
 	_unit setUnitPos _stance;
 	_unit setUnitCombatMode "BLUE";
 	_unit setCaptive true;
-	// systemChat "blufor unit created";
 	sleep 1;
 };
-// systemChat "DEBUG - sleeping for 30";
-// enable time to get into position  
-sleep 10;
 
 // freeze blufor unit behaviour 
 _allUnits = allUnits inAreaArray "BATTLEZONE";
 {
-	// _x disableAI "AUTOTARGET";
 	_x disableAI "MOVE";
 } forEach _allUnits;
-// systemChat "DEBUG - disabled blufor AI";
 
 // create welecome party 
 _size = selectRandom [15,20,25,30];
@@ -101,23 +74,12 @@ for "_i" from 1 to _size do {
 	_group = createGroup east;
 	_dist = selectRandom [150, 160, 170];
 	_dir = random 359;
-	_spawnPos = _missionPos getPos [_dist, _dir];
-	
+	_spawnPos = _missionPos getPos [_dist, _dir];	
 	_unit = _group createUnit ["O_G_Soldier_A_F", _spawnPos, [], 0.1, "none"]; 
 	_unit setCaptive true;
-	// _unit disableAI "AUTOTARGET"; // this assumes ambush setting is on 
 	_unit setUnitPos "DOWN";
-	// _unit disableAI "MOVE"; 
-	// _unit setUnitCombatMode "BLUE";
-
-	// _unit setDir [_unit, _missionPos] call BIS_fnc_dirTo;
-
-	// systemChat "opfor unit created";
 	sleep 0.1;
 };
-// systemChat "DEBUG - created opfor and disabled AI";
-
-systemChat "LRRP Mission Ready";
 
 // smoke trigger 
 SMOKEOUT = false;
@@ -126,28 +88,9 @@ _trgSmk setTriggerArea [2000, 2000, 0, false];
 _trgSmk setTriggerActivation ["ANYPLAYER", "PRESENT", true];
 _trgSmk setTriggerStatements ["this", "SMOKEOUT = true", "systemChat 'no player near'"];
 
+// proximity pause 
 waitUntil { SMOKEOUT };
 _smoke = createVehicle ['G_40mm_smokeYELLOW', _missionPos, [], 0, 'none'];
-
-// triggers 
-// _trg = createTrigger ["EmptyDetector", _missionPos, true];
-// _trg setTriggerArea [50, 50, 0, false];
-
-// _trg setTriggerActivation ["ANYPLAYER", "PRESENT", false]; // i.e. one-off 
-// systemChat "DEBUG - created trigger";
-
-// if (triggerActivated _trg) then {
-// 	// kick off firefight 
-	// systemChat "DEBUG - created trigger activator";
-	// _allUnits = allUnits inAreaArray "BATTLEZONE";
-	// {
-	// 	_x enableAI "AUTOTARGET";
-	// 	_x enableAI "MOVE";
-	// 	_x setBehaviour "COMBAT";
-	// 	_x setUnitPos "AUTO";
-	// 	_x setCaptive false;
-	// } forEach _allUnits;
-// };
 
 // attack trigger 
 attackNow = false;
@@ -155,7 +98,6 @@ _trg = createTrigger ["EmptyDetector", _missionPos];
 _trg setTriggerArea [_actDist, _actDist, 0, false];
 _trg setTriggerActivation ["ANYPLAYER", "PRESENT", true];
 _trg setTriggerStatements ["this", "
-	systemChat 'DEBUG - created trigger activator';
 	_allUnitsX = allUnits inAreaArray 'BATTLEZONE';
 	{
 		_x enableAI 'MOVE';
@@ -167,9 +109,9 @@ _trg setTriggerStatements ["this", "
 ", "systemChat 'no player near'"];
 
 waitUntil { attackNow };
-// I do this as for some reason, having two forEach loops was not working within the trigger statement 
+// I do this ^^ as for some reason, having two forEach loops was not working within the trigger statement 
 
-// this section pushes opfor to rush the LZ, and sets up blufor into a defensive perimiter 
+// push opfor to rush the LZ, set up blufor into a defensive perimiter 
 _allUnitsX = allUnits inAreaArray 'BATTLEZONE';
 _opfor = [];
 _blufor = [];
@@ -191,7 +133,6 @@ _blufor = [];
 
 sleep 5;
 
-systemChat str _blufor;
 {
 	_randomDir = random 359;
 	_randomDist = selectRandom [20, 25, 30, 35];
@@ -199,7 +140,7 @@ systemChat str _blufor;
 	_x doMove _endPoint1;
 } forEach _blufor;
 
-// deleteAll checks here 
+// deleteAll checks here - ensure no players near 
 _anchorPos = getMarkerPos 'BATTLEZONE';
 _deleteCheck = true;
 while {_deleteCheck} do {
@@ -224,53 +165,15 @@ while {_deleteCheck} do {
 		systemChat "players are near - do not delete";
 	};
 
-	sleep 10;
+	sleep 20; // cycle frequency 
 };
 
 // set up new mission 
 LRRP = false;
-systemChat "check - no marker now";
 deleteMarker "BATTLEZONE";
 
 sleep 10;
 
-systemChat "STARTING NEW MISSION";
-_pos = getPos ammo1;
+systemChat "STARTING NEW MISSION"; // add voice here 
+_pos = getPos ammo1; // Pathfinder
 [_pos] spawn RGGm_fnc_mission_supportLRRP;
-systemChat "check - new marker only?";
-
-
-/*
-LRRP = false;
-systemChat "LRRP False - marker should stop flashing here";
-
-// _deleteSafe = false;
-_trg = createTrigger ["EmptyDetector", _missionPos];
-_trg setTriggerArea [1000, 1000, 0, false];
-_trg setTriggerActivation ["ANYPLAYER", "NOT PRESENT", false];
-_trg setTriggerStatements ["this", "
-	systemChat 'DEBUG - no players near - safe to delete all';
-	_pos = getMarkerPos 'BATTLEZONE';
-	[_pos] call RGGd_fnc_Delete_AllWithinArea;
-	systemChat format ['sending this: %1', _missionPos];
-", "systemChat 'players are near!'"];
-
-// waitUntil { _deleteSafe };
-// { deleteVehicle _x } forEach nearestObjects [_missionPos, ['all'], 200];
-// systemChat "check deleted ok";
-
-// here we can kick start another mission 
-_pos = getPos ammo1;
-[_pos] spawn RGGm_fnc_mission_supportLRRP;
-systemChat "STARTING NEW MISSION";
-// trigger to track when no players near - then delete all and restart mission 
-
-// wait until all opfor are killed, and then move out 
-
-// build camp 
-// [_opforBase] call RGG_fnc_2_build_opforCamp;
-// systemChat "DEBUG - called opfor camp fnc";
-// check - does base appear ok ?
-
-// to-do ... spawn and send in troops while base is alive 
-
