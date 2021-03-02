@@ -55,6 +55,17 @@ _assetsInfi = [
 	"O_R_medic_ard_F"
 ];
 
+// opfor RF 
+_assetsInfiRF = [
+	"O_R_soldier_AR_ard_F",
+	"O_R_Soldier_GL_ard_F",
+	"O_R_soldier_M_ard_F",
+	"O_R_soldier_AT_ard_F",
+	"O_R_Soldier_AAT_ard_F",
+	"O_R_Soldier_A_ard_F",
+	"O_R_medic_ard_F"
+];
+
 // light armour - not used here 
 _assetsMRAP = [
 	"O_R_APC_Wheeled_02_rcws_v2_ard_F",
@@ -80,7 +91,8 @@ deleteMarker "KILLZONE";
 _pos1 = createMarker ["KILLZONE", _missionPos];
 _pos1 setMarkerShape "ELLIPSE";
 _pos1 setMarkerColor "ColorRed";
-_pos1 setMarkerSize [250, 250];
+_pos1 setMarkerAlpha 0.3;
+_pos1 setMarkerSize [2000, 2000];
 // replace this with voice markers  
 
 // add marker icon here 
@@ -97,7 +109,7 @@ while {_activateCheck} do {
 		_playerPos = getPos _x;
 		_dist = _anchorPos distance _playerPos;
 
-		if (_dist < 1500) then {
+		if (_dist < 2500) then {
 			_dataStore pushback _x;
 		};
 	} forEach allPlayers;
@@ -117,14 +129,20 @@ while {_activateCheck} do {
 
 // create items 
 systemChat "debug - creating items";
+_assetPos = [];
 {
 	_dist = random 100;
 	_dir = random 359;
 	_thingPos = _missionPos getPos [_dist, _dir];
 	_thing = _x createVehicle _thingPos;
 	_thing setDir _dir;
+	_assetPos pushBack _thingPos;
 	sleep 0.5;
 } forEach _assetsCamp;
+
+// RF anchor 
+_opforSpawnPos = _assetPos select 0;
+// _opforSpawnPos = getPos _opforBase;
 
 sleep 2;
 // create units 
@@ -241,9 +259,38 @@ while {_SADMISSION} do {
 		};
 	} forEach _unitsRedzone;
 
-	// debug stats 
-	systemChat format ["REDZONE WEST: %1", _redzoneBlufor];
-	systemChat format ["REDZONE EAST: %1", _redzoneOpfor];
+	// mid-point opfor RF 
+	if ((_redzoneOpfor < 10) && (_redzoneBlufor > 1)) then {
+		hint "opfor RF inbound";
+		// find nearest player 
+		_dataStore = [];
+		{
+			_playerPos = getPos _x;
+			_dist = _anchorPos distance _playerPos;
+
+			if (_dist < 1500) then {
+				_dataStore pushback _x;
+			};
+		} forEach allPlayers;
+
+		// make sure only happens if players are near 
+		_nearPlayers = count _dataStore;
+		if (_nearPlayers >= 1) then {
+			_rfTarget = _dataStore select 0;
+			_rfTargetPos = getPos _rfTarget;
+
+			_opGroup = createGroup [east, true];
+			{
+				_unit = _opGroup createUnit [_x, _opforSpawnPos, [], 0.1, "none"]; 
+				systemChat "creating RF unit here";
+				systemChat str _opforSpawnPos;
+				_unit doMove _rfTargetPos;
+				systemChat "moving to player pos:";
+				systemChat str _rfTargetPos;
+				sleep 10;
+			} forEach _assetsInfiRF;
+		};
+	};
 
 	// STAGE WIN LOGIC 
 	if ((_redzoneOpfor < 3) && (_redzoneBlufor > 1)) then {
@@ -251,6 +298,10 @@ while {_SADMISSION} do {
 		// regroup, healup and get prizes
 		_SADMISSION = false;
 	};
+
+	// debug stats 
+	systemChat format ["REDZONE WEST: %1", _redzoneBlufor];
+	systemChat format ["REDZONE EAST: %1", _redzoneOpfor];
 
 	sleep 10;
 };
@@ -264,7 +315,7 @@ while {_deleteCheck} do {
 		_playerPos = getPos _x;
 		_dist = _anchorPos distance _playerPos;
 
-		if (_dist < 200) then {
+		if (_dist < 1500) then {
 			_dataStore pushback _x;
 			systemChat format ["debug - pushing back based on %1 value", _dist]
 		};

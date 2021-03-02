@@ -211,23 +211,23 @@ if (_cnt == 0) exitwith {};
 	systemChat format ["_targetGroup is currently %1", _targetGroup]; // debug info
 	systemChat "cycling";
 	_cycle = _cycle + 1;
-	sleep 1;
+	sleep 0.2;
 } forEach _opforGroups;
 
 // -----------------------------------------------------------------------------------------
 
 // get markers for targets - DEBUG ONLY
-{
-	_leader = leader _x; // get group leader 
-	_leaderPos = getPos _leader; // get pos of leader 
-	_name = str _x;
-	deleteMarker _name;
-	_marker = createMarker [_name, _leaderPos];
-	_name setMarkerShape "rectangle";
-	_name setMarkerSize [5,5];
-	_name setMarkerColor "colorred";
-	_name setMarkerText _name;
-} forEach _opforGroups;
+// {
+// 	_leader = leader _x; // get group leader 
+// 	_leaderPos = getPos _leader; // get pos of leader 
+// 	_name = str _x;
+// 	deleteMarker _name;
+// 	_marker = createMarker [_name, _leaderPos];
+// 	_name setMarkerShape "rectangle";
+// 	_name setMarkerSize [5,5];
+// 	_name setMarkerColor "colorred";
+// 	_name setMarkerText _name;
+// } forEach _opforGroups;
 
 systemChat format ["target group is %1, and is %2 m away", _targetGroup, _enemyGroupDistances]; // debug info 
 systemChat format ["hunter group is %1", _hunterGroup]; // debug info 
@@ -249,7 +249,7 @@ if (_unitCount >= 1) then {
 	deleteGroup _target;
 	sleep 10;
 	if (_hkUnitCount > 0) then {
-		[_hunterGroup] execVM "hkSystemv2\runHK.sqf"; // ?????????????????????????????????????????????????????????????????????????
+		[_hunterGroup] execVM "killchain\systems\hunterKillerSystems\runHK.sqf"; // re-run 
 	};
 };
 
