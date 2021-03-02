@@ -1,4 +1,6 @@
 
+["InitializePlayer", [player, true]] call BIS_fnc_dynamicGroups;
+
 // remove stamina 
 player enableStamina FALSE;
 player addEventHandler ['Respawn',{ player enableStamina FALSE }];

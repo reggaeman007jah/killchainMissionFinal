@@ -1,4 +1,6 @@
 
+["Initialize", [true]] call BIS_fnc_dynamicGroups;
+
 // load images 
 dontForget setObjectTextureGlobal [0, "media\images\reloadImage.jpg"];
 fobPathfinder setObjectTextureGlobal [0, "media\images\pathfinderImage.jpg"];
