@@ -31,6 +31,16 @@ switch (_welcomeParty) do {
 	default { systemChat "Switch Error _actDist" };
 };
 
+// patrol ambience 
+_assets = [
+	"B_A_LSV_01_light_F",
+	"B_A_MRAP_03_gmg_F",
+	"Box_IND_AmmoVeh_F",
+	"Box_EAF_Equip_F",
+	"I_EAF_supplyCrate_F",
+	"SatelliteAntenna_01_Sand_F"
+];
+
 // objective pos 
 // _missionPos = [5108,20058,0]; // hand picked location(s) for debug / testing 
 
@@ -44,12 +54,21 @@ _pos1 setMarkerSize [250, 250];
 
 // add marker icon here 
 LRRP = true; // for marker system 
-[_missionPos, "hd_objective", "LRRP_Marker", "colorRed"] spawn RGGe_fnc_effects_markers;
+[_missionPos, "hd_pickup", "LRRP_Marker", "colorBlue"] spawn RGGe_fnc_effects_markers;
 
 // find location for opfor comms base - need to destroy this base in order to stop RF 
 _opforBase = [_missionPos, 750, 1000, 40, 0, 1, 0] call BIS_fnc_findSafePos;
 
-// create blufor 
+// create items 
+{
+	_dist = random 30;
+	_dir = random 359;
+	_thingPos = _missionPos getPos [_dist, _dir];
+	_thing = _x createVehicle _thingPos;
+	_thing setDir _dir;
+} forEach _assets;
+
+// create blufor units 
 for "_i" from 1 to 20 do {
 	_group = createGroup west;
 	_unit = _group createUnit ["B_A_Soldier_A_F", _missionPos, [], 0.1, "none"]; 

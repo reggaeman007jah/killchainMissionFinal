@@ -20,5 +20,9 @@ class RGGm {
 		class mission_supportLRRP {
 			Description = "This function will create a mission to support a long range patrol";
 		}; 
+
+		class mission_seekAndDestroy {
+			Description = "This function will create an SAD mission";
+		}; 
 	};
 };

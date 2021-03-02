@@ -14,7 +14,11 @@ class RGGe {
 		};
 
 		class effects_markers {
-			Description = "This function will make markers flash";
+			Description = "This function will make LZ markers flash";
+		};
+
+		class effects_markersSAD {
+			Description = "This function will make Destroy markers flash";
 		};
 	};
 };
