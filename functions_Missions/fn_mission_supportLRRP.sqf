@@ -41,14 +41,16 @@ _assets = [
 	"SatelliteAntenna_01_Sand_F"
 ];
 
-// objective pos 
+// objective pos cc
 // _missionPos = [5108,20058,0]; // hand picked location(s) for debug / testing 
 
 _missionPos = [_areaCenter, 4200, 5500, 10, 0, 1, 0] call BIS_fnc_findSafePos;
 
+deleteMarker "BATTLEZONE";
 _pos1 = createMarker ["BATTLEZONE", _missionPos];
 _pos1 setMarkerShape "ELLIPSE";
 _pos1 setMarkerColor "ColorRed";
+_pos1 setMarkerAlpha 0.3;
 _pos1 setMarkerSize [250, 250];
 // replace this with voice markers  
 
@@ -58,6 +60,34 @@ LRRP = true; // for marker system
 
 // find location for opfor comms base - need to destroy this base in order to stop RF 
 _opforBase = [_missionPos, 750, 1000, 40, 0, 1, 0] call BIS_fnc_findSafePos;
+
+// hold - check for player near 
+// deleteAll checks here - ensure no players near 
+_anchorPos = getMarkerPos 'BATTLEZONE';
+_activateCheck = true;
+while {_activateCheck} do {
+	_dataStore = [];
+	{
+		_playerPos = getPos _x;
+		_dist = _anchorPos distance _playerPos;
+
+		if (_dist < 2500) then {
+			_dataStore pushback _x;
+		};
+	} forEach allPlayers;
+
+	_cnt = count _dataStore;
+
+	if (_cnt >= 1) then {
+		systemChat "players are near - LZ mission activated";
+		_activateCheck = false;
+	} else {
+		_activateCheck = true;
+		systemChat "players are not near - do not delete LZ Mission";
+	};
+
+	sleep 20; // cycle frequency 
+};
 
 // create items 
 {

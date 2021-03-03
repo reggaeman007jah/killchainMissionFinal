@@ -121,7 +121,7 @@ while {_activateCheck} do {
 		_activateCheck = false;
 	} else {
 		_activateCheck = true;
-		systemChat "players are not near - do not delete";
+		systemChat "players are not near - do not delete SAD Misison";
 	};
 
 	sleep 20; // cycle frequency 
@@ -201,7 +201,7 @@ if (_medDiff) then {
 		_pos = [_missionPos, 0, 100] call BIS_fnc_findSafePos;
 		_opforVic = [_pos, 180, _rndtype, east] call BIS_fnc_spawnVehicle;
 		// _dir = random 359;
-		// _opforVic setDir _dir;
+		// _opforVic setDir _dir; cc
 		sleep 0.5;						
 	};
 };

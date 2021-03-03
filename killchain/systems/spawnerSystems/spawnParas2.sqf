@@ -5,6 +5,18 @@ Note:
 This should be improved to use waitUntil - waitUntil units inAreaArray == 0 
 This was yu can reduce the background checks, and also make the subsequent groups appear quickly - good for when there is more than one heli doing pickup 
 
+BAF classes
+"B_A_Soldier_SL_F",
+"B_A_Soldier_AR_F",
+"B_A_Soldier_GL_F",
+"B_A_soldier_M_F",
+"B_A_Soldier_AT_F",
+"B_A_Soldier_AAT_F",
+"B_A_Soldier_A_F",
+"B_A_Medic_F",
+"B_A_Soldier_AT_F",
+"B_A_Medic_F"
+
 */
 
 // this will spawn a fireteam contantly, and only respawn another team when the previous one has been removed from the "pz1" marker area 
@@ -27,43 +39,43 @@ while {true} do {
 		_stampToString = str _float;
 		_stampToString = createGroup [west, true];
 		for "_i" from 1 to 1 do { 
-			"B_W_Recon_AR_F" createUnit [_spawn, _stampToString]; 
+			"B_A_Soldier_SL_F" createUnit [_spawn, _stampToString]; 
 			sleep 0.1;
 		};
 		for "_i" from 1 to 1 do { 
-			"B_W_Recon_LAT_F" createUnit [_spawn, _stampToString]; 
+			"B_A_Soldier_AR_F" createUnit [_spawn, _stampToString]; 
 			sleep 0.1;
 		};
 		for "_i" from 1 to 1 do { 
-			"B_W_Recon_Sharpshooter_F" createUnit [_spawn, _stampToString]; 
+			"B_A_Soldier_GL_F" createUnit [_spawn, _stampToString]; 
 			sleep 0.1;
 		};
 		for "_i" from 1 to 1 do { 
-			"B_W_Recon_TL_F" createUnit [_spawn, _stampToString];  
+			"B_A_soldier_M_F" createUnit [_spawn, _stampToString];  
 			sleep 0.1;
 		};
 		for "_i" from 1 to 1 do { 
-			"B_W_Recon_TL_F" createUnit [_spawn, _stampToString];  
+			"B_A_Soldier_AT_F" createUnit [_spawn, _stampToString];  
 			sleep 0.1;
 		};
 		for "_i" from 1 to 1 do { 
-			"B_W_Recon_AR_F" createUnit [_spawn, _stampToString]; 
+			"B_A_Soldier_AAT_F" createUnit [_spawn, _stampToString]; 
 			sleep 0.1;
 		};
 		for "_i" from 1 to 1 do { 
-			"B_W_Recon_LAT_F" createUnit [_spawn, _stampToString]; 
+			"B_A_Soldier_A_F" createUnit [_spawn, _stampToString]; 
 			sleep 0.1;
 		};
 		for "_i" from 1 to 1 do { 
-			"B_W_Recon_Sharpshooter_F" createUnit [_spawn, _stampToString]; 
+			"B_A_Medic_F" createUnit [_spawn, _stampToString]; 
 			sleep 0.1;
 		};
 		for "_i" from 1 to 1 do { 
-			"B_W_Recon_TL_F" createUnit [_spawn, _stampToString];  
+			"B_A_Soldier_AT_F" createUnit [_spawn, _stampToString];  
 			sleep 0.1;
 		};
 		for "_i" from 1 to 1 do { 
-			"B_W_Recon_TL_F" createUnit [_spawn, _stampToString];  
+			"B_A_Medic_F" createUnit [_spawn, _stampToString];  
 			sleep 0.1;
 		};
 

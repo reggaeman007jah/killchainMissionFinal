@@ -126,6 +126,36 @@ while {_deploymentMission} do {
 				unassignVehicle _x;
 			} forEach crew _heli;
 
+			/*
+			We need to know how many groups are now leaving, and delete from the output any group that has a player in it 
+			so, count array content and count size of each group to test what you get 
+			*/
+			// systemChat format ["_HKSQUAD contains %1 elements: %2:", _testGroupExtract, _HKSQUADGP];
+			// {
+			// 	// count group size
+			// 	_groupSize = count units _x;
+			// 	systemChat format ["_HKSQUAD group sizes: %1:", _groupSize];
+			// } forEach _HKSQUADGP;
+			// _size = count units _group; 
+			/*
+			End of mini-test 
+			*/
+
+			// remove single unit groups from hk system 
+			_groupCount = count _HKSQUADGP;
+			for "_i" from 1 to _groupCount do {
+				_group = _HKSQUADGP select (_i -1);
+				_size = count units _group; 
+				
+				if (_size == 1) then {
+					_toRemove = _HKSQUADGP select (_i -1); 
+					systemChat format ["Deleting from HK candidates: %1:", _toRemove];
+					_HKSQUADGP deleteAt (_i -1);
+				} else {
+					systemChat format ["Iteration / Group: %1, Size: %2", _group, _size];
+				};
+			}; 
+
 			_units = allUnits inAreaArray _markerName;
 			_units orderGetIn false;
 			{
