@@ -250,6 +250,7 @@ if (_unitCount >= 1) then {
 	sleep 10;
 	if (_hkUnitCount > 0) then {
 		[_hunterGroup] execVM "killchain\systems\hunterKillerSystems\runHK.sqf"; // re-run 
+		systemChat "IMPORTANT - RERUN OF HK SYSTEM - DOES THIS WORK?";
 	};
 };
 
