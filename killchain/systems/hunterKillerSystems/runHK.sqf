@@ -257,25 +257,39 @@ if (_unitCount >= 1) then {
 _HKACTIVE = true;
 
 while {_HKACTIVE} do {
+	systemChat "running _HKACTIVE";
 	_target = _targetGroup select 0;
 	_targetDist = _enemyGroupDistances select 0;
 	_unitCount = count units _target;
 	_leader = leader _target; // get group leader 
 	_leaderPos = getPos _leader; // get pos of leader 
 
+	systemChat format ["TARGET COUNT: %1", _unitCount]; // debug info 
+
 	if (_unitCount == 0) then {
-		deleteGroup _target;
-		hint "SUCCCESS ALL DEAD";
+		// deleteGroup _target; // this should be done anyway 
+		hint "SUCCCESS ALL TANGOS DOWN";
 		_HKACTIVE = false;
 		// [] execVM "hkSystemv2\runHK.sqf";
+		systemChat "re-running HK systems";
 		[_hunterGroup] execVM "killChain\systems\hunterKillerSystems\runHK.sqf";
+		systemChat "IMPORTANT 2 - RERUN OF HK SYSTEM - DOES THIS WORK?";
 	} else {
 		_hunterGroup move _leaderPos;
+		systemChat format ["STILL HUNTING: %1", _target]; // debug info 
+		systemChat format ["TARGET COUNT: %1", _unitCount]; // debug info 
 	};
 
-	if (_hkUnitCount > 0) then {
+	// if (_hkUnitCount == 0) then {
+	// 	_HKACTIVE = false;
+	// 	systemChat "HK Team is DEAD";
+	// };
+	if (isNull _hunterGroup) then {
 		_HKACTIVE = false;
+		systemChat "HK Team is DEAD";
+		hint "HK Team is DEAD";
 	};
+	// should kill loop if HK team are dead 
 
 	sleep 30;
 	systemChat format ["HKACTIVE CHECK - Group: %1", _hunterGroup];

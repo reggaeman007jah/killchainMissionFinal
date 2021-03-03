@@ -307,7 +307,7 @@ while {_SADMISSION} do {
 };
 
 // deleteAll checks here - ensure no players near 
-_anchorPos = getMarkerPos 'KILLZONE';
+_anchorPos = getMarkerPos 'KILLZONE'; // can delete? is duplicate?
 _deleteCheck = true;
 while {_deleteCheck} do {
 	_dataStore = [];
@@ -315,7 +315,7 @@ while {_deleteCheck} do {
 		_playerPos = getPos _x;
 		_dist = _anchorPos distance _playerPos;
 
-		if (_dist < 1500) then {
+		if (_dist < 3000) then {
 			_dataStore pushback _x;
 			systemChat format ["debug - pushing back based on %1 value", _dist]
 		};
@@ -325,6 +325,7 @@ while {_deleteCheck} do {
 
 	if (_cnt == 0) then {
 		systemChat "there no players within 200m of obj - safe to delete";
+		systemChat "mission now dead through no player proximity";
 		[_anchorPos] call RGGd_fnc_Delete_AllWithinArea;
 		_deleteCheck = false;
 		// set up new mission 
@@ -338,7 +339,7 @@ while {_deleteCheck} do {
 		[_pos] spawn RGGm_fnc_mission_seekAndDestroy;
 	} else {
 		_deleteCheck = true;
-		systemChat "players are near - do not delete";
+		systemChat "players are near - do not delete KILLZONE mission";
 	};
 
 	sleep 5; // cycle frequency 

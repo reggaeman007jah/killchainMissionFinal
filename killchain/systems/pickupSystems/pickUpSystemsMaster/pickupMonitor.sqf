@@ -61,6 +61,7 @@ while {_deploymentMission} do {
 			_extractMarker setMarkerDir _dir;
 			_extractMarker setMarkerSize [15, 50];
 
+			// this bit does not work as intended!!!
   			_units = allUnits inAreaArray _markerName;
 			_candidates = [];
 			{
