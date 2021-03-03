@@ -45,11 +45,14 @@ execVM "eventHandlers\getInMonitor.sqf";
 // done on cycle phases 
 
 // // initialise pickup scripts 
-execVM "killchain\systems\pickupSystems\pickupSystems1\pickupInit.sqf";
-execVM "killchain\systems\pickupSystems\pickupSystems2\pickupInit.sqf";
-execVM "killchain\systems\pickupSystems\pickupSystems3\pickupInit.sqf";
+// execVM "killchain\systems\pickupSystems\pickupSystems1\pickupInit.sqf";
+// execVM "killchain\systems\pickupSystems\pickupSystems2\pickupInit.sqf";
+// execVM "killchain\systems\pickupSystems\pickupSystems3\pickupInit.sqf";
 [RGG_Heli7a] execVM "killchain\systems\pickupSystems\pickUpSystemsMaster\pickupInit.sqf";
 [RGG_Heli7a_1] execVM "killchain\systems\pickupSystems\pickUpSystemsMaster\pickupInit.sqf";
+[transport1a] execVM "killchain\systems\pickupSystems\pickUpSystemsMaster\pickupInit.sqf";
+[transport2a] execVM "killchain\systems\pickupSystems\pickUpSystemsMaster\pickupInit.sqf";
+[transport3a] execVM "killchain\systems\pickupSystems\pickUpSystemsMaster\pickupInit.sqf";
 
 
 

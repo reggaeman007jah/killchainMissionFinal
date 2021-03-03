@@ -5,17 +5,19 @@ Note:
 This should be improved to use waitUntil - waitUntil units inAreaArray == 0 
 This was yu can reduce the background checks, and also make the subsequent groups appear quickly - good for when there is more than one heli doing pickup 
 
-BAF classes
-"B_A_Soldier_SL_F",
-"B_A_Soldier_AR_F",
-"B_A_Soldier_GL_F",
-"B_A_soldier_M_F",
-"B_A_Soldier_AT_F",
-"B_A_Soldier_AAT_F",
-"B_A_Soldier_A_F",
-"B_A_Medic_F",
-"B_A_Soldier_AT_F",
-"B_A_Medic_F"
+_BAF_classes =[
+	"B_A_Soldier_SL_F",
+	"B_A_Soldier_AR_F",
+	"B_A_Soldier_GL_F",
+	"B_A_soldier_M_F",
+	"B_A_Soldier_AT_F",
+	"B_A_Soldier_AAT_F",
+	"B_A_Soldier_A_F",
+	"B_A_Medic_F",
+	"B_A_Soldier_AT_F",
+	"B_A_Medic_F"
+];
+
 
 */
 
@@ -28,10 +30,25 @@ systemChat "para spawner 2 activated";
 
 // todo - make this only happy when players are nearby 
 
+_target = 10;
+
+_BAF_classes =[
+	"B_A_Soldier_SL_F",
+	"B_A_Soldier_AR_F",
+	"B_A_Soldier_GL_F",
+	"B_A_soldier_M_F",
+	"B_A_Soldier_AT_F",
+	"B_A_Soldier_AAT_F",
+	"B_A_Soldier_A_F",
+	"B_A_Medic_F",
+	"B_A_Soldier_AT_F",
+	"B_A_Medic_F"
+];
+
 while {true} do {
 
-	_units = allUnits inAreaArray "pz2";
 	_spawn = [15099,17262.3,0.0992565];
+	_units = allUnits inAreaArray "pz2";
 	_unitCount2 = count _units;
 
 	if (_unitCount2 == 0) then {
@@ -85,7 +102,29 @@ while {true} do {
 		systemChat "DEBUG - recon squaddies 2 ready .............................................!";
 	};
 
-	sleep 30;
+	sleep 20;
+
+	 if (_unitCount2 > 1) then {
+		// here we fill gaps left by loiterers 
+		_toFill = _target - _unitCount2;
+
+		_float = diag_tickTime;
+		_stampToString = str _float;
+		_stampToString = createGroup [west, true];
+
+		for "_i" from 1 to _toFill do { 
+			_class = selectRandom _BAF_classes;
+			_class createUnit [_spawn, _stampToString];  
+			sleep 0.1;
+		};
+
+		_stampToString move [15137.7,17229.8,0];
+		_stampToString setFormation "DIAMOND";
+		systemChat "DEBUG - recon squaddies 2 ready gap fillers ...........!"; 
+	 };
+
+	sleep 20;
+	
 };
 
 		// for "_i" from 1 to 1 do { 
