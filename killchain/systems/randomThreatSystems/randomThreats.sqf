@@ -25,7 +25,8 @@ if (patrolPointsTaken > 0 ) then {
 	_randomEnemySpawnPos = [_anchor, 500, 600, 3, 0, 0, 0] call BIS_fnc_findSafePos; 
 
 	// voice alerts 
-	[_randomEnemySpawnPos] execVM "killchain\systems\alertSystems\roamerAlerts.sqf";
+	// [_randomEnemySpawnPos] execVM "killchain\systems\alertSystems\roamerAlerts.sqf";
+	// 05 march 2021 - removing the above alert for now 
 	systemChat format ["enemy roamers spawned: %1", _randomEnemySpawnPos]; 
 
 	// create randoms 
