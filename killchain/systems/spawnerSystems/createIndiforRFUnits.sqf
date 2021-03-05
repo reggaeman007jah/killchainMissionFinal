@@ -100,7 +100,7 @@ if (patrolPointsTaken > 1) then {
 		// check overall indifor units before kicking this off more than once 
 		// only issue RF is overall indiFor units in game is under 25 
 		_indi = independent countSide allUnits;
-		if (_indi < 25) then {	
+		if (_indi < 15) then {	
 			[_mainAnchor, _destPos] execVM "killChain\systems\spawnerSystems\createIndiforRFUnits.sqf";
 		} else {
 			systemChat "no RF .. you have enough indifor in game already";
@@ -148,7 +148,7 @@ if (patrolPointsTaken > 1) then {
 	// we need to use a function here !!
 	// also - this check should ensure we don't overload idifor numbers in earlier stages - untested!
 		_indi = independent countSide allUnits;
-		if (_indi < 25) then {	
+		if (_indi < 15) then {	
 			for "_i" from 1 to _numberOfCycles do {
 				_indiGroup = createGroup [independent, true];
 				_pos = [_spawnPos, 20, _area] call BIS_fnc_findSafePos;
