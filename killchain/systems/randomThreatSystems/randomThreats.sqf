@@ -49,8 +49,9 @@ if (patrolPointsTaken > 0 ) then {
 	];
 	_opforGroup = createGroup [east, true];
 	_opforTeam = [];
+	_base = 6;
 	_random = random 6;
-	_size = _random + 4; // consider using patrolPoints as a multiplier to number of roamers 
+	_size = _base + _random + patrolPointsTaken; // 
 
 	for "_i" from 1 to _size do {
 		_unit = selectRandom _opforClass;
