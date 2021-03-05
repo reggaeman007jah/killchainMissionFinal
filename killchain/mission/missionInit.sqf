@@ -90,7 +90,8 @@ for [{private _i = 1}, {_i < 7}, {_i = _i + 1}] do {
 RGG_PatrolPoints pushBack (getMarkerPos "killchainFinal");
 
 // trigger indifor markers 
-execVM "killchain\systems\markerSystems\indiforMarkers.sqf";
+// execVM "killchain\systems\markerSystems\indiforMarkers.sqf";
+// removed on march 05 2021
 
 // commence mission 
 execVM "killchain\mission\missionStart.sqf";
