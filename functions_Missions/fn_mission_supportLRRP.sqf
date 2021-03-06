@@ -19,7 +19,7 @@ To win, you need to repell all incoming opfor?
 */
 systemChat "DEBUG - RUNNING: missions_LRRP";
 
-_areaCenter = _this select 0; // currently FOB Pathfinder, but could also be a patrol point, or any thing else 
+_areaCenter = _this select 0; // currently FOB Pathfinder, but could also be a patrol point, or anything else 
 _welcomeParty = selectRandom [1,2,3]; // decides what is happening on approach to area and how players are welcomed 
 
 // the welcome party switch will determine if the ambush happens on landing, on approach, or whether opfor are way further out as heli approaches 
@@ -121,7 +121,7 @@ _allUnits = allUnits inAreaArray "BATTLEZONE";
 _size = selectRandom [15,20,25,30];
 for "_i" from 1 to _size do {
 	_group = createGroup east;
-	_dist = selectRandom [150, 160, 170];
+	_dist = selectRandom [150, 160, 170, 180, 190, 200];
 	_dir = random 359;
 	_spawnPos = _missionPos getPos [_dist, _dir];	
 	_unit = _group createUnit ["O_G_Soldier_A_F", _spawnPos, [], 0.1, "none"]; 
