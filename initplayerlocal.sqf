@@ -9,10 +9,10 @@ player addEventHandler ['Respawn',{ player enableStamina FALSE }];
 // execVM "media\sounds\welcome.sqf";
 
 // initial smoke inits for helis 
-[RGG_heli1a] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
-[RGG_heli2a] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
-[RGG_heli3] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
-[RGG_heli4] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
+// [RGG_heli1a] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
+// [RGG_heli2a] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
+// [RGG_heli3] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
+// [RGG_heli4] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
 
 // training event handler 
 execVM "eventHandlers\trainingGetInMonitor.sqf";
