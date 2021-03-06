@@ -109,6 +109,13 @@ if (patrolPointsTaken > 1) then {
 		// this should re-run this script with a spawn pos that is one previous 
 	} else {
 		// deliver RF as per expected 
+		
+		_smoke = createVehicle ["G_40mm_smokeYELLOW", _initStartPos, [], 0, "none"]; // drop this from up high?
+		// voice broadcasts
+		execVM "media\sounds\thisIsCommand.sqf";
+		sleep 3;
+		execVM "media\sounds\rfInbound.sqf";
+		
 		for "_i" from 1 to _numberOfCycles do {
 			_indiGroup = createGroup [independent, true];
 			_pos = [_spawnPos, 20, _area] call BIS_fnc_findSafePos;
@@ -147,43 +154,49 @@ if (patrolPointsTaken > 1) then {
 	// note this is duplication as the same coe is uded in the above block - so ..
 	// we need to use a function here !!
 	// also - this check should ensure we don't overload idifor numbers in earlier stages - untested!
-		_indi = independent countSide allUnits;
-		if (_indi < 15) then {	
-			for "_i" from 1 to _numberOfCycles do {
-				_indiGroup = createGroup [independent, true];
-				_pos = [_spawnPos, 20, _area] call BIS_fnc_findSafePos;
-				// _pos1 = _pos getPos [1,180];
-				// _pos2 = _pos getPos [2,180];
-				// _pos3 = _pos getPos [3,180];
-				// _pos4 = _pos getPos [4,180];
-				// _pos5 = _pos getPos [5,180];
-				// the above might be used for better staging before move orders 
-				_fireTeam = [];
-				_unit1 = _indiGroup createUnit ["I_soldier_F", _pos, [], 0.1, "none"]; 
-				_unit2 = _indiGroup createUnit ["I_support_MG_F", _pos, [], 0.1, "none"]; 
-				_unit3 = _indiGroup createUnit ["I_Soldier_GL_F", _pos, [], 0.1, "none"]; 
-				_unit4 = _indiGroup createUnit ["I_Soldier_M_F", _pos, [], 0.1, "none"]; 
-				_unit5 = _indiGroup createUnit ["I_medic_F", _pos, [], 0.1, "none"]; 
-				_fireTeam pushBack _unit1;
-				_fireTeam pushBack _unit2;
-				_fireTeam pushBack _unit3;
-				_fireTeam pushBack _unit4;
-				_fireTeam pushBack _unit5;
-				systemChat str _fireTeam;
+	_smoke = createVehicle ["G_40mm_smokeYELLOW", _initStartPos, [], 0, "none"]; // drop this from up high?
+	// voice broadcasts
+	execVM "media\sounds\thisIsCommand.sqf";
+	sleep 3;
+	execVM "media\sounds\rfInbound.sqf";
 
-				sleep _timer;
-				// move orders 
-				_randomDir = selectRandom [270, 310, 00, 50, 90];
-				_randomDist = selectRandom [20, 22, 24, 26, 28, 30];
-				// _unitDest = [_destPos, 5, 20] call BIS_fnc_findSafePos;
-				_endPoint1 = _destPos getPos [_randomDist,_randomDir];
-				_fireTeam doMove _endPoint1;
-				
-				// spawnedIndiUnit = spawnedIndiUnit +5;
-			};
-		} else {
-			systemChat "no RF .. you have enough indifor in game already";
+	_indi = independent countSide allUnits;
+	if (_indi < 15) then {	
+		for "_i" from 1 to _numberOfCycles do {
+			_indiGroup = createGroup [independent, true];
+			_pos = [_spawnPos, 20, _area] call BIS_fnc_findSafePos;
+			// _pos1 = _pos getPos [1,180];
+			// _pos2 = _pos getPos [2,180];
+			// _pos3 = _pos getPos [3,180];
+			// _pos4 = _pos getPos [4,180];
+			// _pos5 = _pos getPos [5,180];
+			// the above might be used for better staging before move orders 
+			_fireTeam = [];
+			_unit1 = _indiGroup createUnit ["I_soldier_F", _pos, [], 0.1, "none"]; 
+			_unit2 = _indiGroup createUnit ["I_support_MG_F", _pos, [], 0.1, "none"]; 
+			_unit3 = _indiGroup createUnit ["I_Soldier_GL_F", _pos, [], 0.1, "none"]; 
+			_unit4 = _indiGroup createUnit ["I_Soldier_M_F", _pos, [], 0.1, "none"]; 
+			_unit5 = _indiGroup createUnit ["I_medic_F", _pos, [], 0.1, "none"]; 
+			_fireTeam pushBack _unit1;
+			_fireTeam pushBack _unit2;
+			_fireTeam pushBack _unit3;
+			_fireTeam pushBack _unit4;
+			_fireTeam pushBack _unit5;
+			systemChat str _fireTeam;
+
+			sleep _timer;
+			// move orders 
+			_randomDir = selectRandom [270, 310, 00, 50, 90];
+			_randomDist = selectRandom [20, 22, 24, 26, 28, 30];
+			// _unitDest = [_destPos, 5, 20] call BIS_fnc_findSafePos;
+			_endPoint1 = _destPos getPos [_randomDist,_randomDir];
+			_fireTeam doMove _endPoint1;
+			
+			// spawnedIndiUnit = spawnedIndiUnit +5;
 		};
+	} else {
+		systemChat "no RF .. you have enough indifor in game already";
+	};
 };
 
 
