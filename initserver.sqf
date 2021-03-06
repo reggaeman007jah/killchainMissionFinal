@@ -23,7 +23,7 @@ KILLCHAINMISSIONSTART = false;
 execVM "killchain\mission\missionInit.sqf"; 
 sleep 0.5;
 
-// initialise Side Mission 
+// initialise Side Missions 
 _pos = getPos ammo1;
 [_pos] spawn RGGm_fnc_mission_supportLRRP;
 [_pos] spawn RGGm_fnc_mission_seekAndDestroy;
@@ -33,8 +33,6 @@ execVM "eventHandlers\slingLoadMonitor.sqf";
 
 // event handlers 
 execVM "eventHandlers\getInMonitor.sqf";
-
-
 
 // // initialise counter system 
 // execVM "killchain\systems\countingSystems\counter.sqf";
@@ -48,17 +46,23 @@ execVM "eventHandlers\getInMonitor.sqf";
 // execVM "killchain\systems\pickupSystems\pickupSystems1\pickupInit.sqf";
 // execVM "killchain\systems\pickupSystems\pickupSystems2\pickupInit.sqf";
 // execVM "killchain\systems\pickupSystems\pickupSystems3\pickupInit.sqf";
+
+// initiate pickup systems for blackhawks and littlebirds
 [RGG_Heli7a] execVM "killchain\systems\pickupSystems\pickUpSystemsMaster\pickupInit.sqf";
 [RGG_Heli7a_1] execVM "killchain\systems\pickupSystems\pickUpSystemsMaster\pickupInit.sqf";
 [transport1a] execVM "killchain\systems\pickupSystems\pickUpSystemsMaster\pickupInit.sqf";
 [transport2a] execVM "killchain\systems\pickupSystems\pickUpSystemsMaster\pickupInit.sqf";
 [transport3a] execVM "killchain\systems\pickupSystems\pickUpSystemsMaster\pickupInit.sqf";
 
-
-
 // initialise para spawner script 
 execVM "killchain\systems\spawnerSystems\spawnParas.sqf";
 execVM "killchain\systems\spawnerSystems\spawnParas2.sqf";
+/*
+To-do - make the spawner system better 
+make sure the renewal system works 
+add a playerNear system 
+also add a check when doing pickups NOT to change state if you lift off without passengers...
+*/
 
 // enables HK Team as default 
 HUNTERKILLER = true;
@@ -96,5 +100,3 @@ publicVariable "RGG_Barracks_Food";
 publicVariable "RGG_Barracks_Ammo";
 publicVariable "RGG_Barracks_Fuel";
 publicVariable "RGG_Barracks_Sentries";
-
-

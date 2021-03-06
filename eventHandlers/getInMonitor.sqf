@@ -1,5 +1,8 @@
 /*
 this script manages smoke actions while in heli 
+
+toDo:
+make sure smke systems work within attack helis 
 */
 
 // this addEventHandler ["GetInMan", {
