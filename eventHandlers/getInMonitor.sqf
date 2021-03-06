@@ -24,18 +24,18 @@ make sure smke systems work within attack helis
 
 transport1a addEventHandler ["getIn", {
 	params ["_vehicle", "_role", "_unit", "_turret"];
-	[_unit] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
+	[_vehicle] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
 }];
 
 transport2a addEventHandler ["getIn", {
 	params ["_vehicle", "_role", "_unit", "_turret"];
-	[_unit] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
+	[_vehicle] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
 }];
 
 transport3a addEventHandler ["getIn", {
 	params ["_vehicle", "_role", "_unit", "_turret"];
 	// systemChat format ["_unit: %1 / _role: %2 / _vehicle: %3", _unit, _role, _vehicle];
-	[_unit] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
+	[_vehicle] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
 }];
 
 
