@@ -49,8 +49,8 @@ if (patrolPointsTaken > 0 ) then {
 	];
 	_opforGroup = createGroup [east, true];
 	_opforTeam = [];
-	_base = 6;
-	_random = random 6;
+	_base = 10;
+	_random = random 10;
 	_size = _base + _random + patrolPointsTaken; // 
 
 	for "_i" from 1 to _size do {
