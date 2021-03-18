@@ -167,7 +167,16 @@ while {_deploymentMission} do {
 				sleep 10;
 				{
 					[_x] execVM "killChain\systems\hunterKillerSystems\runHK.sqf";
-					systemChat format ["sending this: %1", _x];
+					systemChat format ["debug - sending this: %1", _x];
+				} forEach _HKSQUADGP;   
+			};
+
+			if (MEATSHIELD) then {
+				// this bool can turn on/off this action 
+				sleep 10;
+				{
+					[_x, _heli] execVM "killChain\systems\cpdSystems\runCpd.sqf";
+					systemChat format ["debug - sending this: %1", _x];
 				} forEach _HKSQUADGP;   
 			};
 
