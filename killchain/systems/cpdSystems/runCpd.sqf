@@ -23,15 +23,16 @@ _heliPos = getPos _heli; // get anchor for calcs
 
 // if (_cnt > 1) then {
 
-	_anchor = _heli getRelPos [30,0];
-	_cpd1 = createMarker ["cpd1", _anchor];
+	// _anchor = _heli getRelPos [30,0];
+	_cpd1 = createMarker ["cpd1", _heliPos];
 	_cpd1 setMarkerShape "ELLIPSE";
 	_cpd1 setMarkerColor "ColorRed";
 	_cpd1 setMarkerSize [50, 50];
 	_cpd1 setMarkerAlpha 0.2;
+	sleep 5;
 
 	private _markerPos = getMarkerPos "cpd1";
-	private _playerList = allPlayers apply {[_markerPos distanceSqr _x, _x]};
+	private _playerList = allPlayers apply { [_markerPos distanceSqr _x, _x] };
 	_playerList sort true;
 	private _closestPlayer = (_playerList select 0) param [1, objNull];
 	// dedmen ^^ https://forums.bohemia.net/forums/topic/222709-get-closest-player-to-marker/
