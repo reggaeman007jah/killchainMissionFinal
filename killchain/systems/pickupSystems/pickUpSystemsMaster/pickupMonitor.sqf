@@ -171,7 +171,7 @@ while {_deploymentMission} do {
 				} forEach _HKSQUADGP;   
 			};
 
-			if (MEATSHIELD) then {
+			if (CPD) then {
 				// this bool can turn on/off this action 
 				sleep 10;
 				{

@@ -6,13 +6,43 @@ drop off units, they go to nearest player and act as meatsheild
 // -----------------------------------------------------------------------------------------
 systemChat "Loading CPD System ...";
 
-_hunterGroup = _this select 0; // the shield group 
+_cpdGroup = _this select 0; // the cpd group that was delivered 
 _heli = _this select 1; // delivery heli 
-systemChat format ["debug - running runHK, received: %1", _hunterGroup];
+systemChat format ["debug - running runCPD, deploying: %1", _hunterGroup];
 
-// confirm position of hunter leader 
-_groupLeader = leader _hunterGroup;
-_hunterPos = getPos _groupLeader;
+_groupLeader = leader _cpdGroup; // leader of cpd group 
+_cpdLeaderPos = getPos _groupLeader; // pos of cpd group leader 
+_heliPos = getPos _heli; // get anchor for calcs 
+// _dataStore = [1000]; // initial 1km value 
+// _candidate = []; // container for winning / closest player 
+
+_cnt = count allPlayers;
+
+if (_cnt > 1) then {
+
+	_cpd1 = createMarker ["cpd1", _heliPos];
+	_cpd1 setMarkerShape "ELLIPSE";
+	_cpd1 setMarkerColor "ColorRed";
+	_cpd1 setMarkerSize [50, 50];
+	_cpd1 setMarkerAlpha 0.2;
+
+	private _markerPos = getMarkerPos "cpd1";
+	private _playerList = allPlayers apply {[_markerPos distanceSqr _x, _x]};
+	_playerList sort true;
+	private _closestPlayer = (_playerList select 0) param [1, objNull];
+	// dedmen ^^ https://forums.bohemia.net/forums/topic/222709-get-closest-player-to-marker/
+
+	systemChat format ["winning player is: %1", _nearestPlayer];
+	[_closestPlayer, _hunterGroup] execVM "killchain\systems\cpdSystems\protectPlayer.sqf";
+	deleteMarker "cpd1"; 
+} else {
+	systemChat "you on your own mate .. no CPD options here";
+};
+
+
+
+
+
 
 // -----------------------------------------------------------------------------------------
 
@@ -28,26 +58,19 @@ cycle position every 20 seconds
 
 */
 
-_dataStore = [1000]; // initial 1km value 
-_candidate = [];
-_heliPos = getPos _heli;
 
-{
-	_playerPos = getPos _x;
-	_dist = _heliPos distance _playerPos;
-	if (_dist < _dataStore select 0) then {
-		_candidate pushBack _x;
-		reverse _dataStore;
-	};
-} forEach allPlayers;
 
-_nearestPlayer = _candidate select 0;
+
+
+
+
+
 
 // not done!
 
 
 
-
+/*
 
 
 _allGroups = allGroups; // get all game groups 
