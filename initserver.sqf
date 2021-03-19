@@ -48,11 +48,11 @@ execVM "eventHandlers\getInMonitor.sqf";
 // execVM "killchain\systems\pickupSystems\pickupSystems3\pickupInit.sqf";
 
 // initiate pickup systems for blackhawks and littlebirds
-[RGG_Heli7a] execVM "killchain\systems\pickupSystems\pickUpSystemsMaster\pickupInit.sqf";
-[RGG_Heli7a_1] execVM "killchain\systems\pickupSystems\pickUpSystemsMaster\pickupInit.sqf";
-[transport1a] execVM "killchain\systems\pickupSystems\pickUpSystemsMaster\pickupInit.sqf";
-[transport2a] execVM "killchain\systems\pickupSystems\pickUpSystemsMaster\pickupInit.sqf";
-[transport3a] execVM "killchain\systems\pickupSystems\pickUpSystemsMaster\pickupInit.sqf";
+[RAIDER_1] execVM "killchain\systems\pickupSystems\pickUpSystemsMaster\pickupInit.sqf";
+[RAIDER_2] execVM "killchain\systems\pickupSystems\pickUpSystemsMaster\pickupInit.sqf";
+[RAIDER_3] execVM "killchain\systems\pickupSystems\pickUpSystemsMaster\pickupInit.sqf";
+[RAIDER_4] execVM "killchain\systems\pickupSystems\pickUpSystemsMaster\pickupInit.sqf";
+[RAIDER_5] execVM "killchain\systems\pickupSystems\pickUpSystemsMaster\pickupInit.sqf";
 
 // initialise para spawner script 
 execVM "killchain\systems\spawnerSystems\spawnParas.sqf";
@@ -66,6 +66,7 @@ also add a check when doing pickups NOT to change state if you lift off without 
 
 // enables HK Team as default 
 HUNTERKILLER = true;
+CPD = false;
 
 /*
 This system needs improvement

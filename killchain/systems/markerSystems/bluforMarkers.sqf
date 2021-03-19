@@ -41,6 +41,6 @@ while {TRUE} do {
 		};
 	} forEach _RGG_bluforGroups;
 
-	sleep 15;
+	sleep 30;
 };
 

@@ -93,6 +93,9 @@ RGG_PatrolPoints pushBack (getMarkerPos "killchainFinal");
 // execVM "killchain\systems\markerSystems\indiforMarkers.sqf";
 // removed on march 05 2021
 
+// reinstated to test further - later march 2021
+execVM "killchain\systems\markerSystems\indiforMarkers.sqf";
+
 // commence mission 
 execVM "killchain\mission\missionStart.sqf";
 systemChat "RUNNING PHASE 1";

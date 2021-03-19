@@ -22,17 +22,17 @@ make sure smke systems work within attack helis
 // why not work??
 
 
-transport1a addEventHandler ["getIn", {
+RAIDER_3 addEventHandler ["getIn", {
 	params ["_vehicle", "_role", "_unit", "_turret"];
 	[_vehicle] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
 }];
 
-transport2a addEventHandler ["getIn", {
+RAIDER_4 addEventHandler ["getIn", {
 	params ["_vehicle", "_role", "_unit", "_turret"];
 	[_vehicle] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
 }];
 
-transport3a addEventHandler ["getIn", {
+RAIDER_5 addEventHandler ["getIn", {
 	params ["_vehicle", "_role", "_unit", "_turret"];
 	// systemChat format ["_unit: %1 / _role: %2 / _vehicle: %3", _unit, _role, _vehicle];
 	[_vehicle] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
@@ -46,7 +46,7 @@ transport3a addEventHandler ["getIn", {
 // }];
 
 
-RGG_Heli7a addEventHandler ["getIn", {
+RAIDER_1 addEventHandler ["getIn", {
 	params ["_vehicle", "_role", "_unit", "_turret"];
 	// systemchat format ["%1 just got into %2", _unit, _vehicle];
 	[_vehicle] call RGGc_fnc_count_heliSeats;

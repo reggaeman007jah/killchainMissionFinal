@@ -52,6 +52,7 @@ while {true} do {
 	_unitCount2 = count _units;
 
 	if (_unitCount2 == 0) then {
+		// create 10 
 		_float = diag_tickTime;
 		_stampToString = str _float;
 		_stampToString = createGroup [west, true];
@@ -87,14 +88,14 @@ while {true} do {
 			"B_A_Medic_F" createUnit [_spawn, _stampToString]; 
 			sleep 0.1;
 		};
-		for "_i" from 1 to 1 do { 
-			"B_A_Soldier_AT_F" createUnit [_spawn, _stampToString];  
-			sleep 0.1;
-		};
-		for "_i" from 1 to 1 do { 
-			"B_A_Medic_F" createUnit [_spawn, _stampToString];  
-			sleep 0.1;
-		};
+		// for "_i" from 1 to 1 do { 
+		// 	"B_A_Soldier_AT_F" createUnit [_spawn, _stampToString];  
+		// 	sleep 0.1;
+		// };
+		// for "_i" from 1 to 1 do { 
+		// 	"B_A_Medic_F" createUnit [_spawn, _stampToString];  
+		// 	sleep 0.1;
+		// };
 
 		_stampToString move [15137.7,17229.8,0];
 		_stampToString setFormation "DIAMOND";
@@ -102,28 +103,28 @@ while {true} do {
 		systemChat "DEBUG - recon squaddies 2 ready .............................................!";
 	};
 
-	sleep 20;
+	sleep 30;
 
-	 if (_unitCount2 > 1) then {
-		// here we fill gaps left by loiterers 
-		_toFill = _target - _unitCount2;
+	// if (_unitCount2 >= 1) then {
+	// 	// here we fill gaps left by loiterers 
+	// 	_toFill = _target - _unitCount2;
 
-		_float = diag_tickTime;
-		_stampToString = str _float;
-		_stampToString = createGroup [west, true];
+	// 	_float = diag_tickTime;
+	// 	_stampToString = str _float;
+	// 	_stampToString = createGroup [west, true];
 
-		for "_i" from 1 to _toFill do { 
-			_class = selectRandom _BAF_classes;
-			_class createUnit [_spawn, _stampToString];  
-			sleep 0.1;
-		};
+	// 	for "_i" from 1 to _toFill do { 
+	// 		_class = selectRandom _BAF_classes;
+	// 		_class createUnit [_spawn, _stampToString];  
+	// 		sleep 0.1;
+	// 	};
 
-		_stampToString move [15137.7,17229.8,0];
-		_stampToString setFormation "DIAMOND";
-		systemChat "DEBUG - recon squaddies 2 ready gap fillers ...........!"; 
-	 };
+	// 	_stampToString move [15137.7,17229.8,0];
+	// 	_stampToString setFormation "DIAMOND";
+	// 	systemChat "DEBUG - recon squaddies 2 ready gap fillers ...........!"; 
+	//  };
 
-	sleep 20;
+	// sleep 20;
 	
 };
 

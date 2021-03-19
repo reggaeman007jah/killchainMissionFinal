@@ -156,12 +156,15 @@ if (patrolPointsTaken > 1) then {
 	// also - this check should ensure we don't overload idifor numbers in earlier stages - untested!
 	_smoke = createVehicle ["G_40mm_smokeYELLOW", _initStartPos, [], 0, "none"]; // drop this from up high?
 	// voice broadcasts
-	execVM "media\sounds\thisIsCommand.sqf";
-	sleep 3;
-	execVM "media\sounds\rfInbound.sqf";
+
 
 	_indi = independent countSide allUnits;
-	if (_indi < 15) then {	
+	if (_indi < 15) then {
+
+		execVM "media\sounds\thisIsCommand.sqf";
+		sleep 3;
+		execVM "media\sounds\rfInbound.sqf";
+
 		for "_i" from 1 to _numberOfCycles do {
 			_indiGroup = createGroup [independent, true];
 			_pos = [_spawnPos, 20, _area] call BIS_fnc_findSafePos;
