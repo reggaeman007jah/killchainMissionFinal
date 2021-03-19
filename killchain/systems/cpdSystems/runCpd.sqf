@@ -8,19 +8,23 @@ systemChat "Loading CPD System ...";
 
 _cpdGroup = _this select 0; // the cpd group that was delivered 
 _heli = _this select 1; // delivery heli 
-systemChat format ["debug - running runCPD, deploying: %1", _hunterGroup];
+systemChat format ["debug - IMPORTANT ................. running runCPD, deploying: %1", _cpdGroup];
+format ["debug - running runCPD, deploying: %1", _cpdGroup] remoteExec ["systemChat", 0];
 
-_groupLeader = leader _cpdGroup; // leader of cpd group 
-_cpdLeaderPos = getPos _groupLeader; // pos of cpd group leader 
+
+
+// _groupLeader = leader _cpdGroup; // leader of cpd group 
+// _cpdLeaderPos = getPos _groupLeader; // pos of cpd group leader 
 _heliPos = getPos _heli; // get anchor for calcs 
 // _dataStore = [1000]; // initial 1km value 
 // _candidate = []; // container for winning / closest player 
 
-_cnt = count allPlayers;
+// _cnt = count allPlayers;
 
-if (_cnt > 1) then {
+// if (_cnt > 1) then {
 
-	_cpd1 = createMarker ["cpd1", _heliPos];
+	_anchor = _heli getRelPos [30,0];
+	_cpd1 = createMarker ["cpd1", _anchor];
 	_cpd1 setMarkerShape "ELLIPSE";
 	_cpd1 setMarkerColor "ColorRed";
 	_cpd1 setMarkerSize [50, 50];
@@ -32,14 +36,15 @@ if (_cnt > 1) then {
 	private _closestPlayer = (_playerList select 0) param [1, objNull];
 	// dedmen ^^ https://forums.bohemia.net/forums/topic/222709-get-closest-player-to-marker/
 
-	systemChat format ["winning player is: %1", _nearestPlayer];
-	[_closestPlayer, _hunterGroup] execVM "killchain\systems\cpdSystems\protectPlayer.sqf";
+	systemChat format ["winning player is: %1", _closestPlayer];
+	format ["winning player is: %1", _closestPlayer] remoteExec ["systemChat", 0];
+	[_closestPlayer, _cpdGroup] execVM "killchain\systems\cpdSystems\protectPlayer.sqf";
 	deleteMarker "cpd1"; 
-} else {
-	systemChat "you on your own mate .. no CPD options here";
-};
+// } else {
+// 	systemChat "you on your own mate .. no CPD options here";
+// };
 
-
+// i think this might tag any copilot = so make sure when cpd is deployed .. only pilot in heli 
 
 
 
