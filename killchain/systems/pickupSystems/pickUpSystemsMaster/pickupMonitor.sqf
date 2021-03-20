@@ -48,7 +48,7 @@ while {_deploymentMission} do {
 		};
 	};
  
-  // PICKUP 
+   // PICKUP 
  	if (_pickup) then {
 	// checks height - when on ground, orders an auto-board of units in greenzone 
     systemChat "Land so troops can board";
@@ -61,7 +61,7 @@ while {_deploymentMission} do {
 			_extractMarker setMarkerDir _dir;
 			_extractMarker setMarkerSize [15, 50];
 
-			// this bit does not work as intended!!!
+			// this bit does not work as intended!!! why did i write this?
   			_units = allUnits inAreaArray _markerName;
 			_candidates = [];
 			{
@@ -72,6 +72,15 @@ while {_deploymentMission} do {
 			} forEach _units; 
 			systemChat format ["_candidates %1", _candidates];
 			// here we only want to progress from green strip if there are units to auto-board 
+			
+			// I think here we should go through _candidates and if isPlayer, remove
+			// this way it will not register when you land and only player are nearby 
+			{
+				if (isPlayer _x) then {
+					_candidates deleteAt _forEachIndex;
+				};
+			} forEach _candidates;
+			
 			_cnt = count _candidates;
 			systemChat format ["_cnt %1", _cnt];
 
@@ -89,12 +98,16 @@ while {_deploymentMission} do {
 						// };
 					} forEach _candidates;	
 					_candidates orderGetIn true;
-			
 				};
+				_pickup = false; // close stage 
+				_wait = true; // trigger next stage 
+			} else {
+				_pickup = false; // close stage 
+				_initPhase = true; // go back one stage 				
 			};
-
-			_pickup = false; // close stage 
-			_wait = true; // trigger next stage 
+			// removed this - before this would always happen but now i am trying to only progress things when troops are there to be picked up 
+			// _pickup = false; // close stage 
+			// _wait = true; // trigger next stage 
 		};
 	};
 
@@ -111,7 +124,7 @@ while {_deploymentMission} do {
 	// DISEMBARK
 	if (_dropoff) then {
 	systemChat "Get the troops on the ground";
-		if ((_HELI1ATL1) < 1) exitWith {
+		if ((_HELI1ATL1) < 1.5) exitWith {
 			_extractLocation = position _heli;
 			_extractMarker = createMarker [_markerName, _extractLocation];
 			_extractMarker setMarkerShape "ELLIPSE";

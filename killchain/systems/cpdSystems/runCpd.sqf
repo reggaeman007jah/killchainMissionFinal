@@ -8,10 +8,8 @@ systemChat "Loading CPD System ...";
 
 _cpdGroup = _this select 0; // the cpd group that was delivered 
 _heli = _this select 1; // delivery heli 
-systemChat format ["debug - IMPORTANT ................. running runCPD, deploying: %1", _cpdGroup];
-format ["debug - running runCPD, deploying: %1", _cpdGroup] remoteExec ["systemChat", 0];
-
-
+systemChat format ["debug - running runCPD, deploying: %1", _cpdGroup];
+format ["debug - running runCPD, deploying: %1", _cpdGroup] remoteExec ["systemChat", 0]; // does this work??
 
 // _groupLeader = leader _cpdGroup; // leader of cpd group 
 // _cpdLeaderPos = getPos _groupLeader; // pos of cpd group leader 
@@ -23,24 +21,24 @@ _heliPos = getPos _heli; // get anchor for calcs
 
 // if (_cnt > 1) then {
 
-	// _anchor = _heli getRelPos [30,0];
-	_cpd1 = createMarker ["cpd1", _heliPos];
-	_cpd1 setMarkerShape "ELLIPSE";
-	_cpd1 setMarkerColor "ColorRed";
-	_cpd1 setMarkerSize [50, 50];
-	_cpd1 setMarkerAlpha 0.2;
-	sleep 5;
+// _anchor = _heli getRelPos [30,0];
+_cpd1 = createMarker ["cpd1", _heliPos];
+_cpd1 setMarkerShape "ELLIPSE";
+_cpd1 setMarkerColor "ColorRed";
+_cpd1 setMarkerSize [50, 50];
+_cpd1 setMarkerAlpha 0.2;
+sleep 5;
 
-	private _markerPos = getMarkerPos "cpd1";
-	private _playerList = allPlayers apply { [_markerPos distanceSqr _x, _x] };
-	_playerList sort true;
-	private _closestPlayer = (_playerList select 0) param [1, objNull];
-	// dedmen ^^ https://forums.bohemia.net/forums/topic/222709-get-closest-player-to-marker/
+private _markerPos = getMarkerPos "cpd1";
+private _playerList = allPlayers apply { [_markerPos distanceSqr _x, _x] };
+_playerList sort true;
+private _closestPlayer = (_playerList select 0) param [1, objNull];
+// dedmen ^^ https://forums.bohemia.net/forums/topic/222709-get-closest-player-to-marker/
 
-	systemChat format ["winning player is: %1", _closestPlayer];
-	format ["winning player is: %1", _closestPlayer] remoteExec ["systemChat", 0];
-	[_closestPlayer, _cpdGroup] execVM "killchain\systems\cpdSystems\protectPlayer.sqf";
-	deleteMarker "cpd1"; 
+systemChat format ["winning player is: %1", _closestPlayer];
+format ["winning player is: %1", _closestPlayer] remoteExec ["systemChat", 0];
+[_closestPlayer, _cpdGroup] execVM "killchain\systems\cpdSystems\protectPlayer.sqf";
+deleteMarker "cpd1"; 
 // } else {
 // 	systemChat "you on your own mate .. no CPD options here";
 // };

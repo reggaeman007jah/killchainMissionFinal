@@ -3,7 +3,7 @@ _shieldTeam = _this select 1;
 
 systemChat "running protectPlayer";
 systemChat format ["debug - _player: %1 cpd: %2", _player, _shieldTeam];
-format ["debug - _player: %1 cpd: %2", _player, _shieldTeam] remoteExec ["systemChat", 0];
+format ["debug - _player: %1 cpd: %2", _player, _shieldTeam] remoteExec ["systemChat", 0]; // ?
 
 sleep 5;
 
