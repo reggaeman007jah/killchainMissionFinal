@@ -9,10 +9,10 @@ _delay = 0;
 switch (patrolPointsTaken) do {
 	case 1: { _num = 1; _delay = 0; };
 	case 2: { _num = 1; _delay = 0; };
-	case 3: { _num = 2; _delay = 60; };
+	case 3: { _num = 2; _delay = 20; };
 	case 4: { _num = 2; _delay = 60; };
-	case 5: { _num = 3; _delay = 60; };
-	case 6: { _num = 3; _delay = 30; };
+	case 5: { _num = 3; _delay = 120; };
+	case 6: { _num = 4; _delay = 10; };
 	default { systemChat "zero patrol points - no technicals" };
 };
 

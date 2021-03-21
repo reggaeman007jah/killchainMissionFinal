@@ -109,7 +109,7 @@ systemChat "debug - markers done";
 
 // new camp location and items 
 _randomCampLocation = _objPos findEmptyPosition [10,50,"B_Heli_Light_01_dynamicLoadout_F"];
-
+_RGG_CampItems = [];
 _random5 = random 5;
 _random3 = random 3;
 
@@ -120,7 +120,7 @@ for "_i" from 1 to 4 do {
 	_spawnPos = _randomCampLocation getPos [_random30, _randomDir];
 	_campItem = createVehicle ["Land_TentDome_F", _spawnPos];
 	_campItem setDir _randomDir;
-	RGG_CampItems pushback _campItem;
+	_RGG_CampItems pushback _campItem;
 };
 
 // barrels and other camp stuff 
@@ -141,7 +141,7 @@ for "_i" from 1 to 3 do {
 	];
 	_campItem2 = createVehicle [_campItem, _spawnPos];
 	_campItem2 setDir _randomDir;
-	RGG_CampItems pushback _campItem2;
+	_RGG_CampItems pushback _campItem2;
 };
 
 // crates 
@@ -163,8 +163,19 @@ for "_i" from 1 to _random5 do {
 	];
 	_campItem2 = createVehicle [_campItem, _spawnPos];
 	_campItem2 setDir _randomDir;
-	RGG_CampItems pushback _campItem2;
+	_RGG_CampItems pushback _campItem2;
 };
+
+// intel item 
+_randomDir = random 359;
+_random5 = random 5;
+_random25 = random 25;
+_spawnPos = _randomCampLocation getPos [_random5, _randomDir];
+_campItem = createVehicle ["SatelliteAntenna_01_Sand_F", _spawnPos];
+_campItem setDir _randomDir;
+_RGG_CampItems pushback _campItem2;
+[_campItem] execVM "killchainMissionFinal/killchain/systems/intelSystems/enemyIntel.sqf";
+
 systemChat "debug - Campsite made";
 
 sleep 2;
@@ -561,7 +572,9 @@ while {RFCHECK2} do {
 			systemChat "note _redzoneIndi <= 5 - RF ordered while in defend state ";
 			
 			[_initStartPos, _objPos] execVM "killChain\systems\spawnerSystems\createIndiforRFUnits.sqf";
-			_smoke = createVehicle ["G_40mm_smokeYELLOW", _initStartPos, [], 0, "none"]; // drop this from up high 
+			// _smoke = createVehicle ["G_40mm_smokeYELLOW", _initStartPos, [], 0, "none"]; // drop this from up high 
+			// removing, as this is also done in a different script - but here it will always be at the last taken patrol (origin) point  
+			// so might be popping yellow even if RF are coming from point one further back 
 
 			// voice broadcasts
 			// execVM "media\sounds\thisIsCommand.sqf";
@@ -609,8 +622,13 @@ if (!BESILENT) then {
 };
 
 // delete existing camp 
-{ deleteVehicle _x } forEach RGG_CampItems;
-RGG_CampItems = [];
+// { deleteVehicle _x } forEach RGG_CampItems;
+[_RGG_CampItems] execVM "killchainMissionFinal/killchain/systems/cleanUpSystems/deleteCampItems.sqf";
+
+
+_RGG_CampItems = [];
+// this should be removed only when no players are near 
+// also means we can loot for intel 
 
 // BASE REWARDS HERE :)
 

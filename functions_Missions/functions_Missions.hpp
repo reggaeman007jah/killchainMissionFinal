@@ -24,5 +24,9 @@ class RGGm {
 		class mission_seekAndDestroy {
 			Description = "This function will create an SAD mission";
 		}; 
+
+		class mission_destroyCamp {
+			Description = "This function will create mission to destroy a local camp";
+		}; 
 	};
 };
