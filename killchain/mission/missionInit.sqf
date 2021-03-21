@@ -69,8 +69,9 @@ RGG_fieldbases = [];
 // TBC what does this hold and what is it used for?
 
 // campItems 
-RGG_CampItems = [];
+// RGG_CampItems = [];
 // used to store and then delete camp data 
+// trying a localised version of this .. this global is now hidden 
 
 // respawn location store 
 RGG_respawnStore = [];
