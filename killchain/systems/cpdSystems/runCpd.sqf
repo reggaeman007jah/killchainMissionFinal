@@ -21,13 +21,13 @@ _heliPos = getPos _heli; // get anchor for calcs
 
 // if (_cnt > 1) then {
 
-// _anchor = _heli getRelPos [30,0];
-_cpd1 = createMarker ["cpd1", _heliPos];
+_anchor = _heli getRelPos [30,0];
+_cpd1 = createMarker ["cpd1", _anchor];
 _cpd1 setMarkerShape "ELLIPSE";
 _cpd1 setMarkerColor "ColorRed";
 _cpd1 setMarkerSize [50, 50];
 _cpd1 setMarkerAlpha 0.2;
-sleep 5;
+sleep 8;
 
 private _markerPos = getMarkerPos "cpd1";
 private _playerList = allPlayers apply { [_markerPos distanceSqr _x, _x] };
@@ -36,7 +36,10 @@ private _closestPlayer = (_playerList select 0) param [1, objNull];
 // dedmen ^^ https://forums.bohemia.net/forums/topic/222709-get-closest-player-to-marker/
 
 systemChat format ["winning player is: %1", _closestPlayer];
-format ["winning player is: %1", _closestPlayer] remoteExec ["systemChat", 0];
+format ["MP debug - winning player is: %1", _closestPlayer] remoteExec ["systemChat", 0];
+sleep 3;
+
+"MP debug - calling protectPlayer" remoteExec ["systemChat", 0, true];
 [_closestPlayer, _cpdGroup] execVM "killchain\systems\cpdSystems\protectPlayer.sqf";
 deleteMarker "cpd1"; 
 // } else {

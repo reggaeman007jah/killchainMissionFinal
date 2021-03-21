@@ -67,6 +67,9 @@ also add a check when doing pickups NOT to change state if you lift off without 
 // enables HK Team as default 
 HUNTERKILLER = true;
 CPD = false;
+publicVariable "HUNTERKILLER";
+publicVariable "CPD";
+// theory here is that a mod can also change this 
 
 /*
 This system needs improvement

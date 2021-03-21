@@ -43,8 +43,9 @@ COMMANDSPEAKING = false;
 // this should ensure that second-level (random) voice alerts do not speak over mission-progression voice alerts 
 
 // enables HK Team as default 
-HUNTERKILLER = true;
+// HUNTERKILLER = true;
 // to turn off, use debug console for now, until think of better way 
+// removed as is already delcared in initServer 
 
 // enables shushing of command woman 
 BESILENT = false;
