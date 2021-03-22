@@ -21,7 +21,7 @@ _heliPos = getPos _heli; // get anchor for calcs
 
 // if (_cnt > 1) then {
 
-_anchor = _heli getRelPos [30,0];
+_anchor = _heli getRelPos [10,0];
 _cpd1 = createMarker ["cpd1", _anchor];
 _cpd1 setMarkerShape "ELLIPSE";
 _cpd1 setMarkerColor "ColorRed";
@@ -29,13 +29,29 @@ _cpd1 setMarkerSize [20, 20];
 _cpd1 setMarkerAlpha 0.8;
 sleep 8;
 
+/*
+we want to know if there are more than 1 player on server - if only one, then select 0 to apply CPD to player, if more than one ...
+... then apply select 1 to essentially ignore the player and have the nearest player to marker receive AI team 
+*/
+
+_playersInGame = count allPlayers;
+
+private ["_owner"];
+
+if (_playersInGame == 1) then {
+	_owner = 0;
+} else {
+	_owner = 1;
+};
+
+// apply team to player here 
 private _markerPos = getMarkerPos "cpd1";
 private _playerList = allPlayers apply { [_markerPos distanceSqr _x, _x] };
 _playerList sort true;
-private _closestPlayer = (_playerList select 1) param [1, objNull];
+private _closestPlayer = (_playerList select _owner) param [1, objNull];
 // dedmen ^^ https://forums.bohemia.net/forums/topic/222709-get-closest-player-to-marker/
 
-systemChat format ["winning player is: %1", _closestPlayer];
+systemChat format ["SP debug - winning player is: %1", _closestPlayer];
 format ["MP debug - winning player is: %1", _closestPlayer] remoteExec ["systemChat", 0];
 sleep 3;
 

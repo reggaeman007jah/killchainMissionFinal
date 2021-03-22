@@ -1,5 +1,5 @@
-_player = _this select 0;
-_shieldTeam = _this select 1;
+_player = _this select 0; // owner of CPD Team 
+_shieldTeam = _this select 1; // CPD Team
 
 systemChat "running protectPlayer";
 "MP debug - running protectPlayer" remoteExec ["systemChat", 0, true];
@@ -12,21 +12,31 @@ sleep 5;
 systemChat "running cycleCheck";
 "MP debug - running cycleCheck" remoteExec ["systemChat", 0, true];
 
-_cycle = true;
+// storage container to track whether player has moved enough to warrant CPD move progression 
+_dataStore = [];
+_playerPos = getPos _player;
+_dataStore pushback _playerPos;
+// here ^^ we have an initial position from which to make more movement decisions 
+
+_cycle = true; // while true, CPD will move relative to player 
+
 while {_cycle} do {
 	_count = count units _shieldTeam;
 	if (_count > 0) then {
-		// systemChat "CPD moving";
-		// "MP debug - CPD moving" remoteExec ["systemChat", 0, true];
-		_endPoint1 = _player getRelPos [60,0];
-		_shieldTeam move _endPoint1; 
+		// ie CPD has fighting units 
+		_curr = getPos _player;
+		_prev = _dataStore select 0;
+		_dist = _prev distance _curr;
+		if (_dist > 5) then {
+			// after this works we need to decide whether to retain relPos, or use direction between old and new pos, to enable walking backwards and still have CPD advance in movement direction, not look direction...
+			_endPoint1 = _player getRelPos [40,0];
+			_shieldTeam move _endPoint1; 		
+		};
+		_dataStore = []; // clean out 
+		_dataStore pushback _curr;
 	} else {
 		_cycle = false;
 		"CPD Team is all dead" remoteExec ["systemChat", 0, true];
 	};
-	sleep 15;
+	sleep 5;
 };
-
-// "MP MSG there are %1 waves incoming" remoteExec ["systemChat format", 0, true];
-// format ["Intel suggests %1 ", _numberOfAttackers] remoteExec ["hint", 0];
-// format ["The Patrol has been compromised, with %1 units", RGG_redzoneIndi] remoteExec ["hint", 0];
