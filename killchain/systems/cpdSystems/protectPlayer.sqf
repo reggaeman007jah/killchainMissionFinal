@@ -16,14 +16,13 @@ _cycle = true;
 while {_cycle} do {
 	_count = count units _shieldTeam;
 	if (_count > 0) then {
-		systemChat "CPD moving";
-		"MP debug - CPD moving" remoteExec ["systemChat", 0, true];
-		_endPoint1 = _player getRelPos [100,0];
+		// systemChat "CPD moving";
+		// "MP debug - CPD moving" remoteExec ["systemChat", 0, true];
+		_endPoint1 = _player getRelPos [60,0];
 		_shieldTeam move _endPoint1; 
 	} else {
 		_cycle = false;
-		systemChat "CPD cycle false";
-		"MP debug - CPD cycle false" remoteExec ["systemChat", 0, true];
+		"CPD Team is all dead" remoteExec ["systemChat", 0, true];
 	};
 	sleep 15;
 };
