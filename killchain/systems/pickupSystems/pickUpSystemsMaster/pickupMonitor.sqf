@@ -102,9 +102,11 @@ while {_deploymentMission} do {
 				_pickup = false; // close stage 
 				_wait = true; // trigger next stage 
 			} else {
+				deleteMarker _markerName; // added this << 
 				_pickup = false; // close stage 
 				_initPhase = true; // go back one stage 				
 			};
+			// had issues on 23rd march where green strip was not being removed .. attempting to resolve here 
 			// removed this - before this would always happen but now i am trying to only progress things when troops are there to be picked up 
 			// _pickup = false; // close stage 
 			// _wait = true; // trigger next stage 
