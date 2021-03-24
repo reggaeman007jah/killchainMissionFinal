@@ -39,7 +39,7 @@ while {_deploymentMission} do {
  
 	// set up heli for taking on passengers 
 	if (_initPhase) then {
-		if (_HELI1ATL1 > 5) then {
+		if (_HELI1ATL1 > 3) then {
 			// as heli is in air, means ready to take on passengers
 			_freeCargoPositions = _myHeli emptyPositions "cargo";
 			systemChat format ["cargo available: %1", _freeCargoPositions];
