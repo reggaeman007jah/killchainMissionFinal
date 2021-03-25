@@ -55,9 +55,16 @@ RAIDER_2 addEventHandler ["RopeAttach", {
 Big_Lifter_2 addEventHandler ["RopeBreak", {
 	params ["_object1", "_rope", "_object2"];
 
-	if (typeOf _object2 == "B_A_MRAP_03_hmg_F") then { 
+	if (typeOf _object2 == "B_A_MRAP_03_hmg_F") then {
 		systemChat "MRAP Deployed:"; 
-		[_object2] execVM "killchain\systems\hunterKillerMRAPSystems\runMRAPHK.sqf"; // needs group 
+
+		if (HUNTERKILLER) then {
+			[_object2] execVM "killchain\systems\hunterKillerMRAPSystems\runMRAPHK.sqf"; 
+		};
+		if (CPD) then {
+			[_object2] execVM "killchain\systems\cpdMRAPSystems\runMRAPCPD.sqf"; 
+		};
+
 		Big_Lifter_2 removeEventHandler ["RopeBreak", 0]; // otherwise this triggers 4 times!
 		execVM "eventHandlers\slingLoadMonitor.sqf"; // reloads EH to the designated heli - currently "heli1"
 	};
