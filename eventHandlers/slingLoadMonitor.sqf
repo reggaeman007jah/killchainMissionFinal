@@ -1,3 +1,70 @@
+sleep 1;
+
+RAIDER_1 addEventHandler ["RopeAttach", {
+	params ["_object1", "_rope", "_object2"];
+
+	if (typeOf _object2 == "B_A_MRAP_03_hmg_F") then { 
+		systemChat "MRAP Deployed:"; 
+		[_object2] execVM "killchain\systems\hunterKillerMRAPSystems\runMRAPHK.sqf"; // needs group 
+		RAIDER_1 removeEventHandler ["RopeBreak", 0]; // otherwise this triggers 4 times!
+		execVM "eventHandlers\slingLoadMonitor.sqf"; // reloads EH to the designated heli - currently "heli1"
+	};
+
+	// // food 
+	// if (typeOf _object2 == "I_supplyCrate_F") then { 
+	// 	systemChat "Supplies Loaded"; 
+	// 	RGG_Supply_Food = RGG_Supply_Food - 10;
+	// 	publicVariable "RGG_Supply_Food";
+	// 	// if (true) exitWith {};
+		
+	// 	heli1 removeEventHandler ["RopeAttach", 0]; // otherwise this triggers 4 times!
+	// 	// execVM "eventHandlers\slingLoadMonitor.sqf"; // reloads EH to the designated heli - currently "heli1"
+	// };
+	
+	// // fuel 
+	// if (typeOf _object2 == "CargoNet_01_barrels_F") then { 
+	// 	systemChat "Fuel Loaded"; 
+	// 	RGG_Supply_Fuel = RGG_Supply_Fuel - 10;
+	// 	publicVariable "RGG_Supply_Fuel";
+	// 	heli1 removeEventHandler ["RopeAttach", 0]; // otherwise this triggers 4 times!
+	// 	execVM "eventHandlers\slingLoadMonitor.sqf"; // reloads EH to the designated heli - currently "heli1"
+	// };
+
+	// // ammo 
+	// if (typeOf _object2 == "I_CargoNet_01_ammo_F") then { 
+	// 	systemChat "Ammo Loaded"; 
+	// 	RGG_Supply_Ammo = RGG_Supply_Ammo - 10;
+	// 	publicVariable "RGG_Supply_Ammo";
+	// 	heli1 removeEventHandler ["RopeAttach", 0]; // otherwise this triggers 4 times!
+	// 	execVM "eventHandlers\slingLoadMonitor.sqf"; // reloads EH to the designated heli - currently "heli1"
+	// };
+}];
+
+RAIDER_2 addEventHandler ["RopeAttach", {
+	params ["_object1", "_rope", "_object2"];
+
+	if (typeOf _object2 == "B_A_MRAP_03_hmg_F") then { 
+		systemChat "MRAP Deployed:"; 
+		[_object2] execVM "killchain\systems\hunterKillerMRAPSystems\runMRAPHK.sqf"; // needs group 
+		RAIDER_2 removeEventHandler ["RopeBreak", 0]; // otherwise this triggers 4 times!
+		execVM "eventHandlers\slingLoadMonitor.sqf"; // reloads EH to the designated heli - currently "heli1"
+	};
+
+}];
+
+Big_Lifter_2 addEventHandler ["RopeBreak", {
+	params ["_object1", "_rope", "_object2"];
+
+	if (typeOf _object2 == "B_A_MRAP_03_hmg_F") then { 
+		systemChat "MRAP Deployed:"; 
+		[_object2] execVM "killchain\systems\hunterKillerMRAPSystems\runMRAPHK.sqf"; // needs group 
+		Big_Lifter_2 removeEventHandler ["RopeBreak", 0]; // otherwise this triggers 4 times!
+		execVM "eventHandlers\slingLoadMonitor.sqf"; // reloads EH to the designated heli - currently "heli1"
+	};
+
+}];
+
+
 /*
 This EH manages the actions following the dropping off of a sling load item 
 B_Slingload_01_Medevac_F = creates med-base 
@@ -154,4 +221,5 @@ bigHeli1 addEventHandler ["RopeBreak", {
 // 		execVM "eventHandlers\slingLoadMonitor.sqf"; // reloads EH to the designated heli - currently "heli1"
 // 	};
 // }];
+
 

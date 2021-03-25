@@ -57,6 +57,7 @@ execVM "eventHandlers\getInMonitor.sqf";
 // initialise para spawner script 
 execVM "killchain\systems\spawnerSystems\spawnParas.sqf";
 execVM "killchain\systems\spawnerSystems\spawnParas2.sqf";
+execVM "killchain\systems\spawnerSystems\spawnMrap.sqf";
 /*
 To-do - make the spawner system better 
 make sure the renewal system works 
