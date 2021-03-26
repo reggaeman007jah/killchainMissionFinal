@@ -5,7 +5,7 @@ need a repair system so that the MRAP team will repair if hit
 _player = _this select 0; // owner of CPD Team 
 _shieldTeam = _this select 1; // CPD Team
 
-systemChat "running protectPlayer";
+systemChat "running protectPlayer - MRAP";
 "MP debug - running protectPlayer - MRAP" remoteExec ["systemChat", 0, true];
 
 systemChat format ["debug - _player: %1 cpd: %2", _player, _shieldTeam];
@@ -40,7 +40,7 @@ while {_cycle} do {
 			if (_dist > 5) then {
 				// after this works we need to decide whether to retain relPos, or use direction between old and new pos, to 
 				// enable walking backwards and still have CPD advance in movement direction, not look direction...
-				_endPoint1 = _player getRelPos [20,0];
+				_endPoint1 = _player getRelPos [60,0];
 				_shieldTeam move _endPoint1; 
 				// _shieldTeam setFormation "line";
 				// combat stance 		

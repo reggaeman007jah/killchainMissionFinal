@@ -1,5 +1,7 @@
-_mrap = _this select 0;
 
+systemChat "running runMRAPCPD.sqf";
+
+_mrap = _this select 0;
 systemChat format ["dropping off %1", _mrap];
 
 sleep 1;
@@ -73,6 +75,6 @@ sleep 3;
 deleteMarker "cpd1"; 
 
 // -----------------------------------------------------------------------------------------
-
-[_closestPlayer, _group] execVM "killchain/systems/cpdMRAPSystems/protectPlayerMRAP.sqf";
+                                 
+[_closestPlayer, _group] execVM "killchain\systems\cpdMRAPSystems\protectPlayerMRAP.sqf";
 systemChat format ["sending this: %1", _group];

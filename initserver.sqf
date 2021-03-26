@@ -105,3 +105,25 @@ publicVariable "RGG_Barracks_Food";
 publicVariable "RGG_Barracks_Ammo";
 publicVariable "RGG_Barracks_Fuel";
 publicVariable "RGG_Barracks_Sentries";
+
+// TEST
+
+_pack = "B_RadioBag_01_sage_F" createVehicle [12813.7,16690.2,0];
+private "_pack";
+
+_pack addAction ["Set up Sat-Dish from backpack", {
+	params ["_target", "_caller", "_actionId", "_arguments"];
+	_pos = _caller getRelPos [4,0];
+	_dish = "SatelliteAntenna_01_Small_Sand_F" createVehicle _pos;
+	
+	systemChat "Finding signal ...";
+	sleep 1;
+	systemChat "Synchronising cryptographic hashes ...";
+	sleep 1;
+	systemChat "System ready";
+	sleep 1;
+	
+	[_caller, _dish] execVM "activateRadar.sqf";
+	_target removeAction _actionId;
+}];
+
