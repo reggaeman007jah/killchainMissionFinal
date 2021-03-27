@@ -785,11 +785,14 @@ while {_activateCheck} do {
 // NOW, PROGRESS PATROL 
 
 // determine whether another camp obj or final obj 
-if (patrolPointsTaken <= 5) then {
+// if (patrolPointsTaken <= 5) then {
+if (patrolPointsTaken <= 3) then {
 	[_anchor, _objPos] execVM "killChain\mission\patrolCycle.sqf";	
 } else {
 	[_anchor, _objPos] execVM "killChain\mission\patrolFinal.sqf";	
 };
+// here I am changing the points needed from 6 to 4
+
 
 // blanket move order here 
 _units = allUnits inAreaArray "redzone";
