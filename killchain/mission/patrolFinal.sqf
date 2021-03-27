@@ -1,15 +1,15 @@
 
 hint "DEBUG - FINAL STAGE";
 
-_initStartPos = _this select 0; // starting point for any new mission
-_objPos = _this select 1; // objective point for any new mission 
+_initStartPos = _this select 0; // starting point 
+_objPos = _this select 1; // objective point 
 
 // Base 
 _testCrate = "B_Slingload_01_Ammo_F" createVehicle _objPos; // make sure this is big and flat, to accomodate a base footprint 
 [_testCrate, "B_Slingload_01_Ammo_F"] spawn RGGb_fnc_build_bluforBarracks;
 
 /*
-There are issues with the creation of the base in MP .. so we much give it time to build up before progressing the script 
+There are issues with the creation of the base in MP .. so we must give it time to build up before progressing the script 
 */
 
 sleep 60; 
@@ -190,7 +190,7 @@ for "_i" from 1 to 4 do {
 	[_objPos] execVM "killchain\systems\spawnerSystems\spawnEnemyStatics.sqf";  								
 };
 
-for "_i" from 1 to 2 do {
+for "_i" from 1 to 4 do {
 	[_objPos] execVM "killchain\systems\spawnerSystems\spawnEnemyMortars.sqf";  								
 };
 
@@ -237,7 +237,7 @@ while {RFCHECK} do {
 	} forEach _unitsCore;
 
 	// debug stats 
-	systemChat "RFCHECK1";
+	systemChat "RFCHECK1 - FINAL STAGE";
 	systemChat format ["TOTAL INDI: %1", _indi];
 	systemChat format ["TOTAL OPFOR: %1", _east];
 	systemChat ".....";
@@ -277,6 +277,15 @@ while {RFCHECK} do {
 
 // consider using a cycle system to track how long this has been running 
 // i.e. a timer - if too long, then paradrop more opfor in 
+
+/*
+here we now want to bring in final QRF wave - BUT send them directly to player positions 
+
+create wave 1 from random direction - send into player pos (HK system)
+wait 2 mins, bring second wave in, then same again - 3 in total 
+include mil-technicals 
+*/
+
 
 // pop phase-change smoke to celebrate 
 _smoke = createVehicle ["G_40mm_smokeYELLOW", _objPos, [], 0, "none"]; // drop this from up high 
