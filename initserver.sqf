@@ -18,15 +18,16 @@ VAA_Activate = true;
 
 // this manages the start of the mission
 KILLCHAINMISSIONSTART = false;
+SIDEMISSIONSTART = false;
+
+ROPEBREAK = false;
 
 // initialise killchain 
 execVM "killchain\mission\missionInit.sqf"; 
+execVM "killchain\sideMissions\sideMissionInit.sqf"; 
 sleep 0.5;
 
-// initialise Side Missions 
-_pos = getPos ammo1;
-[_pos] spawn RGGm_fnc_mission_supportLRRP;
-[_pos] spawn RGGm_fnc_mission_seekAndDestroy;
+
 
 // slingload EH 
 execVM "eventHandlers\slingLoadMonitor.sqf";

@@ -179,123 +179,128 @@ _cycle = 1;
 // systemChat format ["There are %1 opfor groups", _cnt]; // debug info 
 
 // catch situation where no enemy - TBD
-if (_cnt == 0) exitwith {}; 
-
-// process all known opfor groups to grab the one nearest to hunter group
-{
-	_leader = leader _x; // get group leader 
-	_leaderPos = getPos _leader; // get pos of leader 
-	_dist = _leaderPos distance _hunterLeaderPos; // get distance between hunter and hunted 
-	systemChat format ["Iteration %1", _cycle]; // debug info - iteraration
-	systemChat format ["opfor group %1 distance: %2", _x, _dist]; // debug info 
-	_enemyGroupDistances pushBack _dist;
-	_cnt = count _enemyGroupDistances;
-	systemChat format ["_enemyGroupDistances array count is: %1", _cnt]; // debug info 
-	// -----------------------
-	_pos0 = _enemyGroupDistances select 0;
-	_pos1 = _enemyGroupDistances select 1;
-	systemChat format ["_pos0: %1", _pos0]; // debug info 
-	systemChat format ["_pos1: %1", _pos1]; // debug info 
-	// -----------------------
-	if (_pos1 < _pos0) then {
-		_enemyGroupDistances deleteAt 0;
-		_targetGroup deleteAt 0;
-		_targetGroup pushBack _x;
-		systemChat format ["_pos1 %1 is less than _pos0 %2", _pos1, _pos0]; // debug info 
-	} else {
-		systemChat format ["_pos1 %1 is greater than or equal to _pos0 %2", _pos1, _pos0]; // debug info 
-		systemChat "too far away";
-		_enemyGroupDistances deleteAt 1;
-	};
-	// sleep 3;
-	systemChat format ["_targetGroup is currently %1", _targetGroup]; // debug info
-	systemChat "cycling";
-	_cycle = _cycle + 1;
-	sleep 0.2;
-} forEach _opforGroups;
-
-// -----------------------------------------------------------------------------------------
-
-// get markers for targets - DEBUG ONLY
-// {
-// 	_leader = leader _x; // get group leader 
-// 	_leaderPos = getPos _leader; // get pos of leader 
-// 	_name = str _x;
-// 	deleteMarker _name;
-// 	_marker = createMarker [_name, _leaderPos];
-// 	_name setMarkerShape "rectangle";
-// 	_name setMarkerSize [5,5];
-// 	_name setMarkerColor "colorred";
-// 	_name setMarkerText _name;
-// } forEach _opforGroups;
-
-systemChat format ["target group is %1, and is %2 m away", _targetGroup, _enemyGroupDistances]; // debug info 
-systemChat format ["hunter group is %1", _hunterGroup]; // debug info 
-
-// -----------------------------------------------------------------------------------------
-_target = _targetGroup select 0;
-_targetDist = _enemyGroupDistances select 0;
-_unitCount = count units _target;
-_leader = leader _target; // get group leader 
-_leaderPos = getPos _leader; // get pos of leader 
-
-_hkUnitCount = count units _hunterGroup;
-
-if (_unitCount >= 1) then {
-	systemChat format ["calling HK order on group %1, %2 away, size: %3", _target, _targetDist, _unitCount]; // debug info 
-	_hunterGroup move _leaderPos;
+// if (_cnt == 0) exitwith {}; 
+if (_cnt == 0) then {
+	// wait and re-try
+	sleep 120;
+	systemChat "re-trying HK MRAP Check";
+	[_hunterGroup] execVM "killchain\systems\hunterKillerSystems\runHK.sqf";
 } else {
-	systemChat "error - found empty group - deleting empty group - retrying";
-	deleteGroup _target;
-	sleep 10;
-	if (_hkUnitCount > 0) then {
-		[_hunterGroup] execVM "killchain\systems\hunterKillerSystems\runHK.sqf"; // re-run 
-		systemChat "IMPORTANT - RERUN OF HK SYSTEM - DOES THIS WORK?";
-	};
-};
+	// process all known opfor groups to grab the one nearest to hunter group
+	{
+		_leader = leader _x; // get group leader 
+		_leaderPos = getPos _leader; // get pos of leader 
+		_dist = _leaderPos distance _hunterLeaderPos; // get distance between hunter and hunted 
+		systemChat format ["Iteration %1", _cycle]; // debug info - iteraration
+		systemChat format ["opfor group %1 distance: %2", _x, _dist]; // debug info 
+		_enemyGroupDistances pushBack _dist;
+		_cnt = count _enemyGroupDistances;
+		systemChat format ["_enemyGroupDistances array count is: %1", _cnt]; // debug info 
+		// -----------------------
+		_pos0 = _enemyGroupDistances select 0;
+		_pos1 = _enemyGroupDistances select 1;
+		systemChat format ["_pos0: %1", _pos0]; // debug info 
+		systemChat format ["_pos1: %1", _pos1]; // debug info 
+		// -----------------------
+		if (_pos1 < _pos0) then {
+			_enemyGroupDistances deleteAt 0;
+			_targetGroup deleteAt 0;
+			_targetGroup pushBack _x;
+			systemChat format ["_pos1 %1 is less than _pos0 %2", _pos1, _pos0]; // debug info 
+		} else {
+			systemChat format ["_pos1 %1 is greater than or equal to _pos0 %2", _pos1, _pos0]; // debug info 
+			systemChat "too far away";
+			_enemyGroupDistances deleteAt 1;
+		};
+		// sleep 3;
+		systemChat format ["_targetGroup is currently %1", _targetGroup]; // debug info
+		systemChat "cycling";
+		_cycle = _cycle + 1;
+		sleep 0.2;
+	} forEach _opforGroups;
 
-_HKACTIVE = true;
+	// -----------------------------------------------------------------------------------------
 
-while {_HKACTIVE} do {
-	systemChat "running _HKACTIVE";
+	// get markers for targets - DEBUG ONLY
+	// {
+	// 	_leader = leader _x; // get group leader 
+	// 	_leaderPos = getPos _leader; // get pos of leader 
+	// 	_name = str _x;
+	// 	deleteMarker _name;
+	// 	_marker = createMarker [_name, _leaderPos];
+	// 	_name setMarkerShape "rectangle";
+	// 	_name setMarkerSize [5,5];
+	// 	_name setMarkerColor "colorred";
+	// 	_name setMarkerText _name;
+	// } forEach _opforGroups;
+
+	systemChat format ["target group is %1, and is %2 m away", _targetGroup, _enemyGroupDistances]; // debug info 
+	systemChat format ["hunter group is %1", _hunterGroup]; // debug info 
+
+	// -----------------------------------------------------------------------------------------
 	_target = _targetGroup select 0;
 	_targetDist = _enemyGroupDistances select 0;
 	_unitCount = count units _target;
 	_leader = leader _target; // get group leader 
 	_leaderPos = getPos _leader; // get pos of leader 
 
-	systemChat format ["TARGET COUNT: %1", _unitCount]; // debug info 
+	_hkUnitCount = count units _hunterGroup;
 
-	if (_unitCount == 0) then {
-		// deleteGroup _target; // this should be done anyway 
-		hint "SUCCCESS ALL TANGOS DOWN";
-		_HKACTIVE = false;
-		// [] execVM "hkSystemv2\runHK.sqf";
-		systemChat "re-running HK systems";
-		[_hunterGroup] execVM "killChain\systems\hunterKillerSystems\runHK.sqf";
-		systemChat "IMPORTANT 2 - RERUN OF HK SYSTEM - DOES THIS WORK?";
-	} else {
+	if (_unitCount >= 1) then {
+		systemChat format ["calling HK order on group %1, %2 away, size: %3", _target, _targetDist, _unitCount]; // debug info 
 		_hunterGroup move _leaderPos;
-		systemChat format ["STILL HUNTING: %1", _target]; // debug info 
+	} else {
+		systemChat "error - found empty group - deleting empty group - retrying";
+		deleteGroup _target;
+		sleep 10;
+		if (_hkUnitCount > 0) then {
+			[_hunterGroup] execVM "killchain\systems\hunterKillerSystems\runHK.sqf"; // re-run 
+			systemChat "IMPORTANT - RERUN OF HK SYSTEM - DOES THIS WORK?";
+		};
+	};
+
+	_HKACTIVE = true;
+
+	while {_HKACTIVE} do {
+		systemChat "running _HKACTIVE";
+		_target = _targetGroup select 0;
+		_targetDist = _enemyGroupDistances select 0;
+		_unitCount = count units _target;
+		_leader = leader _target; // get group leader 
+		_leaderPos = getPos _leader; // get pos of leader 
+
 		systemChat format ["TARGET COUNT: %1", _unitCount]; // debug info 
+
+		if (_unitCount == 0) then {
+			// deleteGroup _target; // this should be done anyway 
+			hint "SUCCCESS ALL TANGOS DOWN";
+			_HKACTIVE = false;
+			// [] execVM "hkSystemv2\runHK.sqf";
+			systemChat "re-running HK systems";
+			[_hunterGroup] execVM "killChain\systems\hunterKillerSystems\runHK.sqf";
+			systemChat "IMPORTANT 2 - RERUN OF HK SYSTEM - DOES THIS WORK?";
+		} else {
+			_hunterGroup move _leaderPos;
+			systemChat format ["STILL HUNTING: %1", _target]; // debug info 
+			systemChat format ["TARGET COUNT: %1", _unitCount]; // debug info 
+		};
+
+		// if (_hkUnitCount == 0) then {
+		// 	_HKACTIVE = false;
+		// 	systemChat "HK Team is DEAD";
+		// };
+		if (isNull _hunterGroup) then {
+			_HKACTIVE = false;
+			systemChat "HK Team is DEAD";
+			hint "HK Team is DEAD";
+		};
+		// should kill loop if HK team are dead 
+
+		sleep 30;
+		systemChat format ["HKACTIVE CHECK - Group: %1", _hunterGroup];
 	};
 
-	// if (_hkUnitCount == 0) then {
-	// 	_HKACTIVE = false;
-	// 	systemChat "HK Team is DEAD";
-	// };
-	if (isNull _hunterGroup) then {
-		_HKACTIVE = false;
-		systemChat "HK Team is DEAD";
-		hint "HK Team is DEAD";
-	};
-	// should kill loop if HK team are dead 
-
-	sleep 30;
-	systemChat format ["HKACTIVE CHECK - Group: %1", _hunterGroup];
 };
-
-
 
 
 

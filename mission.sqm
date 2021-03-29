@@ -8,7 +8,7 @@ class EditorData
 	toggles=1;
 	class ItemIDProvider
 	{
-		nextID=1313;
+		nextID=1316;
 	};
 	class MarkerIDProvider
 	{
@@ -16,10 +16,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={12876.43,100.16655,16739.699};
-		dir[]={0.60598481,-0.5797919,0.54463178};
-		up[]={0.4312228,0.81476462,0.38756359};
-		aside[]={0.66845298,1.4901161e-008,-0.74375451};
+		pos[]={12916.752,122.05758,16692.59};
+		dir[]={-0.10182981,-0.57253593,0.81353134};
+		up[]={-0.071109481,0.81987971,0.5681029};
+		aside[]={0.99225718,-1.8626451e-008,0.12420093};
 	};
 };
 binarizationWanted=0;
@@ -414,7 +414,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=203;
+		items=204;
 		class Item0
 		{
 			dataType="Logic";
@@ -3282,8 +3282,8 @@ class Mission
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={12900.62,85.591248,16759.609};
-				angles[]={0.0026703537,5.3872728,6.0857887};
+				position[]={12897.959,86.098221,16758.07};
+				angles[]={0.0026520467,2.0266733,6.0973544};
 			};
 			side="Empty";
 			flags=4;
@@ -3293,7 +3293,7 @@ class Mission
 			};
 			id=492;
 			type="B_Heli_Transport_03_unarmed_F";
-			atlOffset=-0.059997559;
+			atlOffset=-0.057647705;
 		};
 		class Item81
 		{
@@ -6809,6 +6809,24 @@ class Mission
 			id=1312;
 			type="SatelliteAntenna_01_Sand_F";
 			atlOffset=-0.032226563;
+		};
+		class Item203
+		{
+			dataType="Trigger";
+			position[]={12797.66,86.660446,16691.188};
+			angle=5.2612233;
+			class Attributes
+			{
+				condition="call{this}";
+				onActivation="call{""SIDE MISSIONS ARE NOW LIVE"" remoteExec [""hint"", 0, true]; SIDEMISSIONSTART = true;}";
+				sizeA=0.5;
+				sizeB=1.8;
+				sizeC=2;
+				activationBy="WEST";
+				isRectangle=1;
+			};
+			id=1313;
+			type="EmptyDetector";
 		};
 	};
 	class Connections

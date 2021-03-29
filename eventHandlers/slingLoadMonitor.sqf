@@ -54,23 +54,32 @@ RAIDER_2 addEventHandler ["RopeAttach", {
 
 BIGBIRD_1 addEventHandler ["RopeBreak", {
 	params ["_object1", "_rope", "_object2"];
-
-	if (typeOf _object2 == "B_MRAP_01_gmg_F") then {
-		systemChat "MRAP Deployed:"; 
-
-		if (HUNTERKILLER) then {
-			[_object2] execVM "killchain\systems\hunterKillerMRAPSystems\runMRAPHK.sqf"; 
-		};
-		if (CPD) then {
-			[_object2] execVM "killchain\systems\cpdMRAPSystems\runMRAPCPD.sqf"; 
-		};
-
-		Big_Lifter_2 removeEventHandler ["RopeBreak", 0]; // otherwise this triggers 4 times!
-		execVM "eventHandlers\slingLoadMonitor.sqf"; // reloads EH to the designated heli - currently "heli1"
+	if (ROPEBREAK == false) then {
+		if (typeOf _object2 == "B_MRAP_01_gmg_F") then {
+			ROPEBREAK = true;
+			
+			systemChat "MRAP Deployed:"; 
+			[_object2] execVM "eventHandlers\slingLoadMRAPCheck.sqf"; 
+			Big_Lifter_2 removeEventHandler ["RopeBreak", 0]; // otherwise this triggers 4 times!
+			execVM "eventHandlers\slingLoadMonitor.sqf"; // reloads EH to the designated heli - currently "heli1"
+		};	
 	};
-
 }];
 
+
+		// if (HUNTERKILLER) then {
+		// 	systemChat "HK";
+		// 	[_object2] execVM "killchain\systems\hunterKillerMRAPSystems\runMRAPHK.sqf"; 
+		// 	Big_Lifter_2 removeEventHandler ["RopeBreak", 0]; // otherwise this triggers 4 times!
+		// 	execVM "eventHandlers\slingLoadMonitor.sqf"; // reloads EH to the designated heli - currently "heli1"
+		// };
+
+		// if (CPD) then {
+		// 	systemChat "CPD";
+		// 	[_object2] execVM "killchain\systems\cpdMRAPSystems\runMRAPCPD.sqf"; 
+		// 	Big_Lifter_2 removeEventHandler ["RopeBreak", 0]; // otherwise this triggers 4 times!
+		// 	execVM "eventHandlers\slingLoadMonitor.sqf"; // reloads EH to the designated heli - currently "heli1"
+		// };
 
 /*
 This EH manages the actions following the dropping off of a sling load item 
