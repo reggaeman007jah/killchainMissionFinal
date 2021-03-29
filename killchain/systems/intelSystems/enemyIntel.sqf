@@ -25,9 +25,11 @@ while {_playersNotNear} do {
 		// systemChat "players are near - create mini-mission";
 		// decide on best anchor for mission and pass to creation script  
 		
-		[] execVM "";
+		// [] execVM "";
+		[_anchorPos] spawn RGGm_fnc_mission_destroyRadar;
 		_playersNotNear = false;
 	};
 
-	sleep 5; 
+	sleep 10; 
 };
+
