@@ -75,14 +75,13 @@ _pos1 setMarkerShape "ELLIPSE";
 _pos1 setMarkerColor "ColorRed";
 _pos1 setMarkerAlpha 0.3;
 _pos1 setMarkerSize [2000, 2000];
-// replace this with voice markers  
+// add voice markers  
 
-// add marker icon here 
+// call marker icon function  
 KILLZONE = true; // for marker system 
 [_missionPos, "hd_objective", "KILLZONE_Marker", "colorRed"] spawn RGGe_fnc_effects_markersSAD;
 
-// hold - check for player near 
-// deleteAll checks here - ensure no players near 
+// hold - check/wait for player(s) near 
 _anchorPos = getMarkerPos 'KILLZONE';
 _activateCheck = true;
 
@@ -143,32 +142,6 @@ _opGroup = createGroup [east, true];
 } forEach _assetsInfi;
 // to-do manage positions and ambient walking etc 
 
-// add diff levels based on near players ..?
-
-// _dataStore = [];
-// {
-// 	_playerPos = getPos _x;
-// 	_dist = _anchorPos distance _playerPos;
-
-// 	if (_dist < 1500) then {
-// 		_dataStore pushback _x;
-// 	};
-// } forEach allPlayers;
-
-// _nearPlayers = count _dataStore;
-
-// _medDiff = false;
-// _hardDiff = false;
-// if (_nearPlayers < 4) then {
-// 	// medium diff 
-// 	_medDiff = true;
-// } else {
-// 	// hard diff 
-// 	_hardDiff = true;
-// };
-
-// if (_medDiff) then {
-// 4 mraps 
 for "_i" from 1 to 4 do {
 	_rndtype = selectRandom [
 		"O_R_APC_Wheeled_02_rcws_v2_ard_F",
@@ -186,39 +159,6 @@ for "_i" from 1 to 4 do {
 	// _opforVic setDir _dir; cc
 	sleep 0.5;						
 };
-// };
-
-// if (_hardDiff) then {
-// 	// 2 mraps and 2 tanks 
-// 	for "_i" from 1 to 2 do {
-// 		_rndtype = selectRandom [
-// 			"O_R_APC_Wheeled_02_rcws_v2_ard_F",
-// 			"O_R_APC_Tracked_02_medical_ard_F",
-// 			"O_R_APC_Tracked_02_cannon_ard_F",
-// 			"O_R_Truck_03_fuel_ard_F",
-// 			"O_R_Truck_02_fuel_ard_F",
-// 			"O_R_Truck_02_ard_F",
-// 			"O_R_Truck_02_MRL_ard_F"
-// 		];
-// 		_pos = [_missionPos, 0, 100] call BIS_fnc_findSafePos;
-// 		_opforVic = [_pos, 180, _rndtype, east] call BIS_fnc_spawnVehicle;
-// 		// _dir = random 359;
-// 		// _opforVic setDir _dir;
-// 		sleep 0.5;						
-// 	};
-// 	for "_i" from 1 to 2 do {
-// 		_rndtype = selectRandom [
-// 			"O_R_MBT_04_command_ard_F",
-// 			"O_R_MBT_04_cannon_ard_F",
-// 			"O_R_MBT_02_cannon_ard_F"
-// 		];
-// 		_pos = [_missionPos, 0, 100] call BIS_fnc_findSafePos;
-// 		_opforVic = [_pos, 180, _rndtype, east] call BIS_fnc_spawnVehicle;
-// 		// _dir = random 359;
-// 		// _opforVic setDir _dir;
-// 		sleep 0.5;						
-// 	};
-// };
 
 // to-do check for fired weapon and move opfor towards pos 
 
