@@ -688,12 +688,12 @@ RGG_respawnStore pushBack [_bluforSpawn, _indiSpawn]; // sending to global array
 // define right name for spawn point  
 private ["_spawnPointName"];
 switch (patrolPointsTaken) do {
-	case 0: { _spawnPointName = "POINT 1-BRAVO" };
-	case 1: { _spawnPointName = "POINT 2-BRAVO" };
-	case 2: { _spawnPointName = "POINT 3-BRAVO" };
-	case 3: { _spawnPointName = "POINT 4-BRAVO" };
-	case 4: { _spawnPointName = "POINT 5-BRAVO" };
-	case 5: { _spawnPointName = "POINT 6-BRAVO" };
+	case 0: { _spawnPointName = "ALPHA" };
+	case 1: { _spawnPointName = "BRAVO" };
+	case 2: { _spawnPointName = "CHARLIE" };
+	case 3: { _spawnPointName = "DELTA" };
+	case 4: { _spawnPointName = "ECHO" };
+	case 5: { _spawnPointName = "FOXTROT" };
 	default { systemChat "error: Patrol Point switch" };
 };
 [west, _bluforSpawn, _spawnPointName] call BIS_fnc_addRespawnPosition; // create blu resapwn
@@ -747,16 +747,52 @@ switch (patrolPointsTaken) do {
 };
 
 // pause to regroup - is this needed??
-systemChat "debug - get Ready - 60 seconds";
-sleep 60;
-systemChat "debug - here we go";
+// systemChat "debug - get Ready - 60 seconds";
+// sleep 60;
+// systemChat "debug - here we go";
+
+// NEW - adding checker for players 
+sleep 120;
+
+// PROXIMITY REGROUP SYSTEM 
+_pos1 = createMarker ["REGROUP", _objPos];
+_pos1 setMarkerShape "ELLIPSE";
+_pos1 setMarkerAlpha 0.3;
+_pos1 setMarkerSize [100, 100];
+
+_activateCheck = true;
+_anchorPos = getMarkerPos 'REGROUP';
+
+while {_activateCheck} do {
+	_dataStore = [];
+	{
+		_playerPos = getPos _x;
+		_dist = _anchorPos distance _playerPos;
+
+		if (_dist < 100) then {
+			_dataStore pushback _x;
+		};
+	} forEach allPlayers;
+
+	_cnt = count _dataStore;
+
+	if (_cnt == 0) then {
+		deleteMarker "REGROUP";
+		_activateCheck = false;
+	};
+	sleep 10; // cycle frequency 
+};
+// NOW, PROGRESS PATROL 
 
 // determine whether another camp obj or final obj 
-if (patrolPointsTaken <= 5) then {
+// if (patrolPointsTaken <= 5) then {
+if (patrolPointsTaken <= 3) then {
 	[_anchor, _objPos] execVM "killChain\mission\patrolCycle.sqf";	
 } else {
 	[_anchor, _objPos] execVM "killChain\mission\patrolFinal.sqf";	
 };
+// here I am changing the points needed from 6 to 4
+
 
 // blanket move order here 
 _units = allUnits inAreaArray "redzone";
