@@ -110,7 +110,7 @@ if (patrolPointsTaken > 1) then {
 	} else {
 		// deliver RF as per expected 
 		
-		_smoke = createVehicle ["G_40mm_smokeYELLOW", _initStartPos, [], 0, "none"]; // drop this from up high?
+		_smoke = createVehicle ["G_40mm_smokeYELLOW", _spawnPos, [], 0, "none"]; // drop this from up high?
 		// voice broadcasts
 		execVM "media\sounds\thisIsCommand.sqf";
 		sleep 3;
@@ -154,7 +154,7 @@ if (patrolPointsTaken > 1) then {
 	// note this is duplication as the same coe is uded in the above block - so ..
 	// we need to use a function here !!
 	// also - this check should ensure we don't overload idifor numbers in earlier stages - untested!
-	_smoke = createVehicle ["G_40mm_smokeYELLOW", _initStartPos, [], 0, "none"]; // drop this from up high?
+	_smoke = createVehicle ["G_40mm_smokeYELLOW", _spawnPos, [], 0, "none"]; // drop this from up high?
 	// voice broadcasts
 
 

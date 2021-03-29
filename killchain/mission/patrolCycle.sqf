@@ -173,8 +173,8 @@ _random25 = random 25;
 _spawnPos = _randomCampLocation getPos [_random5, _randomDir];
 _campItem = createVehicle ["SatelliteAntenna_01_Sand_F", _spawnPos];
 _campItem setDir _randomDir;
-_RGG_CampItems pushback _campItem2;
-[_campItem] execVM "killchainMissionFinal/killchain/systems/intelSystems/enemyIntel.sqf";
+_RGG_CampItems pushback _campItem;
+[_campItem] execVM "killchain\systems\intelSystems\enemyIntel.sqf";
 
 systemChat "debug - Campsite made";
 
@@ -623,7 +623,7 @@ if (!BESILENT) then {
 
 // delete existing camp 
 // { deleteVehicle _x } forEach RGG_CampItems;
-[_RGG_CampItems] execVM "killchainMissionFinal/killchain/systems/cleanUpSystems/deleteCampItems.sqf";
+[_RGG_CampItems] execVM "killchain\systems\cleanUpSystems\deleteCampItems.sqf";
 
 
 _RGG_CampItems = [];

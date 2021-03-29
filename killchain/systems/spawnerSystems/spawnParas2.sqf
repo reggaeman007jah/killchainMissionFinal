@@ -32,18 +32,25 @@ systemChat "para spawner 2 activated";
 
 _target = 10;
 
-_BAF_classes =[
-	"B_A_Soldier_SL_F",
-	"B_A_Soldier_AR_F",
-	"B_A_Soldier_GL_F",
-	"B_A_soldier_M_F",
-	"B_A_Soldier_AT_F",
-	"B_A_Soldier_AAT_F",
-	"B_A_Soldier_A_F",
-	"B_A_Medic_F",
-	"B_A_Soldier_AT_F",
-	"B_A_Medic_F"
-];
+// _BAF_classes =[
+// 	"B_A_Soldier_SL_F",
+// 	"B_A_Soldier_AR_F",
+// 	"B_A_Soldier_GL_F",
+// 	"B_A_soldier_M_F",
+// 	"B_A_Soldier_AT_F",
+// 	"B_A_Soldier_AAT_F",
+// 	"B_A_Soldier_A_F",
+// 	"B_A_Medic_F",
+// 	"B_A_Soldier_AT_F",
+// 	"B_A_Medic_F"
+// ];
+
+
+
+
+
+
+
 
 while {true} do {
 
@@ -57,37 +64,37 @@ while {true} do {
 		_stampToString = str _float;
 		_stampToString = createGroup [west, true];
 		for "_i" from 1 to 1 do { 
-			"B_A_Soldier_SL_F" createUnit [_spawn, _stampToString]; 
+			"B_Soldier_TL_F" createUnit [_spawn, _stampToString]; 
 			sleep 0.1;
 		};
 		for "_i" from 1 to 1 do { 
-			"B_A_Soldier_AR_F" createUnit [_spawn, _stampToString]; 
+			"B_support_GMG_F" createUnit [_spawn, _stampToString]; 
 			sleep 0.1;
 		};
 		for "_i" from 1 to 1 do { 
-			"B_A_Soldier_GL_F" createUnit [_spawn, _stampToString]; 
+			"B_support_AMG_F" createUnit [_spawn, _stampToString]; 
 			sleep 0.1;
 		};
 		for "_i" from 1 to 1 do { 
-			"B_A_soldier_M_F" createUnit [_spawn, _stampToString];  
+			"B_Soldier_TL_F" createUnit [_spawn, _stampToString];  
 			sleep 0.1;
 		};
 		for "_i" from 1 to 1 do { 
-			"B_A_Soldier_AT_F" createUnit [_spawn, _stampToString];  
+			"B_support_MG_F" createUnit [_spawn, _stampToString];  
 			sleep 0.1;
 		};
 		for "_i" from 1 to 1 do { 
-			"B_A_Soldier_AAT_F" createUnit [_spawn, _stampToString]; 
+			"B_support_AMG_F" createUnit [_spawn, _stampToString]; 
 			sleep 0.1;
 		};
-		for "_i" from 1 to 1 do { 
-			"B_A_Soldier_A_F" createUnit [_spawn, _stampToString]; 
-			sleep 0.1;
-		};
-		for "_i" from 1 to 1 do { 
-			"B_A_Medic_F" createUnit [_spawn, _stampToString]; 
-			sleep 0.1;
-		};
+		// for "_i" from 1 to 1 do { 
+		// 	"B_A_Soldier_A_F" createUnit [_spawn, _stampToString]; 
+		// 	sleep 0.1;
+		// };
+		// for "_i" from 1 to 1 do { 
+		// 	"B_A_Medic_F" createUnit [_spawn, _stampToString]; 
+		// 	sleep 0.1;
+		// };
 		// for "_i" from 1 to 1 do { 
 		// 	"B_A_Soldier_AT_F" createUnit [_spawn, _stampToString];  
 		// 	sleep 0.1;

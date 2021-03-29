@@ -53,6 +53,7 @@ execVM "eventHandlers\getInMonitor.sqf";
 [RAIDER_3] execVM "killchain\systems\pickupSystems\pickUpSystemsMaster\pickupInit.sqf";
 [RAIDER_4] execVM "killchain\systems\pickupSystems\pickUpSystemsMaster\pickupInit.sqf";
 [RAIDER_5] execVM "killchain\systems\pickupSystems\pickUpSystemsMaster\pickupInit.sqf";
+[BIGBIRD_1] execVM "killchain\systems\pickupSystems\pickUpSystemsMaster\pickupInit.sqf";
 
 // initialise para spawner script 
 execVM "killchain\systems\spawnerSystems\spawnParas.sqf";

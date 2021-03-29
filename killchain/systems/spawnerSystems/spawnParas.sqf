@@ -27,24 +27,48 @@ while {true} do {
 		_float = diag_tickTime;
 		_stampToString = str _float;
 		_stampToString = createGroup [west, true];
+		// for "_i" from 1 to 1 do { 
+		// 	"B_W_Recon_AR_F" createUnit [_spawn, _stampToString]; 
+		// 	sleep 0.1;
+		// };
+		// for "_i" from 1 to 1 do { 
+		// 	"B_W_Recon_LAT_F" createUnit [_spawn, _stampToString]; 
+		// 	sleep 0.1;
+		// };
+		// for "_i" from 1 to 1 do { 
+		// 	"B_W_Recon_Sharpshooter_F" createUnit [_spawn, _stampToString]; 
+		// 	sleep 0.1;
+		// };
+		// for "_i" from 1 to 1 do { 
+		// 	"B_W_Recon_TL_F" createUnit [_spawn, _stampToString];  
+		// 	sleep 0.1;
+		// };
+		// for "_i" from 1 to 1 do { 
+		// 	"B_W_Recon_TL_F" createUnit [_spawn, _stampToString];  
+		// 	sleep 0.1;
+		// };
 		for "_i" from 1 to 1 do { 
-			"B_W_Recon_AR_F" createUnit [_spawn, _stampToString]; 
+			"B_Soldier_TL_F" createUnit [_spawn, _stampToString]; 
 			sleep 0.1;
 		};
 		for "_i" from 1 to 1 do { 
-			"B_W_Recon_LAT_F" createUnit [_spawn, _stampToString]; 
+			"B_support_GMG_F" createUnit [_spawn, _stampToString]; 
 			sleep 0.1;
 		};
 		for "_i" from 1 to 1 do { 
-			"B_W_Recon_Sharpshooter_F" createUnit [_spawn, _stampToString]; 
+			"B_support_AMG_F" createUnit [_spawn, _stampToString]; 
 			sleep 0.1;
 		};
 		for "_i" from 1 to 1 do { 
-			"B_W_Recon_TL_F" createUnit [_spawn, _stampToString];  
+			"B_Soldier_TL_F" createUnit [_spawn, _stampToString];  
 			sleep 0.1;
 		};
 		for "_i" from 1 to 1 do { 
-			"B_W_Recon_TL_F" createUnit [_spawn, _stampToString];  
+			"B_support_MG_F" createUnit [_spawn, _stampToString];  
+			sleep 0.1;
+		};
+		for "_i" from 1 to 1 do { 
+			"B_support_AMG_F" createUnit [_spawn, _stampToString]; 
 			sleep 0.1;
 		};
 		_stampToString move [15123.5,17202.7,0];

@@ -52,10 +52,10 @@ RAIDER_2 addEventHandler ["RopeAttach", {
 
 }];
 
-Big_Lifter_2 addEventHandler ["RopeBreak", {
+BIGBIRD_1 addEventHandler ["RopeBreak", {
 	params ["_object1", "_rope", "_object2"];
 
-	if (typeOf _object2 == "B_A_MRAP_03_hmg_F") then {
+	if (typeOf _object2 == "B_MRAP_01_gmg_F") then {
 		systemChat "MRAP Deployed:"; 
 
 		if (HUNTERKILLER) then {
