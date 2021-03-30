@@ -77,6 +77,10 @@ RGG_fieldbases = [];
 RGG_respawnStore = [];
 // used to manage the last-point-spawn system 
 
+// this means that there is a cycleChance that specOps will hunt down players 
+SPECOPSATTACKS = true;
+// side missions disable this 
+
 // mission status 
 MISSIONTASK = "Setting up initial patrol";
 publicVariable "MISSIONTASK";

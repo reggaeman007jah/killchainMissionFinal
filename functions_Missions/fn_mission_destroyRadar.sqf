@@ -14,77 +14,77 @@ to-do:
 */
 
 systemChat "DEBUG - RUNNING: missions_destroyRadar";
+huntLocalPlayers = false;
 
 _areaCenter = _this select 0; // sat dish object from patrol point  
 
 _assetsCamp = [
-	"Land_Cargo_HQ_V4_F",
-	"Land_MedicalTent_01_CSAT_greenhex_generic_outer_F",
-	"Land_MobileRadar_01_radar_F"
+	"Land_Cargo_HQ_V4_F"
+	// "Land_MobileRadar_01_radar_F"
 ];
 
 // opfor infi 
 _assetsInfi = [
-	"O_R_Soldier_SL_ard_F",
-	"O_R_RadioOperator_ard_F",
-	"O_R_Soldier_LAT_ard_F",
-	"O_R_soldier_M_ard_F",
-	"O_R_Soldier_TL_ard_F",
-	"O_R_soldier_AR_ard_F",
-	"O_R_Soldier_A_ard_F",
-	"O_R_medic_ard_F",
-	"O_R_Soldier_SL_ard_F",
-	"O_R_soldier_AR_ard_F",
-	"O_R_Soldier_GL_ard_F",
-	"O_R_soldier_M_ard_F",
-	"O_R_soldier_AT_ard_F",
-	"O_R_Soldier_AAT_ard_F",
-	"O_R_Soldier_A_ard_F",
-	"O_R_medic_ard_F"
+	"O_R_Soldier_TL_F",
+	"O_R_Soldier_AR_F",
+	"O_R_medic_F",
+	"O_R_Soldier_LAT_F",
+	"O_R_Soldier_GL_F",
+	"O_R_Soldier_AR_F",
+	"O_R_Soldier_LAT_F"
 ];
 
 // opfor RF 
-_assetsInfiRF = [
-	"O_R_soldier_AR_ard_F",
-	"O_R_Soldier_GL_ard_F",
-	"O_R_soldier_M_ard_F",
-	"O_R_soldier_AT_ard_F",
-	"O_R_Soldier_AAT_ard_F",
-	"O_R_Soldier_A_ard_F",
-	"O_R_medic_ard_F"
+// _assetsInfiRF = [
+// 	"O_R_soldier_AR_ard_F",
+// 	"O_R_Soldier_GL_ard_F",
+// 	"O_R_soldier_M_ard_F",
+// 	"O_R_soldier_AT_ard_F",
+// 	"O_R_Soldier_AAT_ard_F",
+// 	"O_R_Soldier_A_ard_F",
+// 	"O_R_medic_ard_F"
+// ];
+
+// internal assetss 
+_assets = [
+	"Land_MultiScreenComputer_01_sand_F",
+	"Land_Computer_01_sand_F",
+	"Land_MultiScreenComputer_01_closed_black_F",
+	"Land_PCSet_Intel_01_F",
+	"Land_TripodScreen_01_large_F"
 ];
 
 // light armour
 _assetsMRAP = [
-	"O_R_APC_Wheeled_02_rcws_v2_ard_F",
-	"O_R_APC_Tracked_02_medical_ard_F",
-	"O_R_APC_Tracked_02_cannon_ard_F",
-	"O_R_Truck_03_fuel_ard_F",
-	"O_R_Truck_02_fuel_ard_F",
-	"O_R_Truck_02_ard_F",
-	"O_R_Truck_02_MRL_ard_F"
+	"O_LSV_02_armed_F",
+	"O_MRAP_02_F"
 ];
 
 // mission pos 
 // _missionPos = [_areaCenter, 6000, 6500, 10, 0, 1, 0] call BIS_fnc_findSafePos; // original 
-_missionPos = [_areaCenter, 6000, 6500, 10, 0, 1, 0, 1000] call RGGf_fnc_find_locationNoPlayers; // last param is prox dist check 
+_missionPos = [_areaCenter, 1000, 1200, 10, 0, 1, 0, 1000] call RGGf_fnc_find_locationNoPlayers; // last param is prox dist check 
 // _missionPos = [_areaCenter, 6000, 6500, 10, 0, 1, 0] call BIS_fnc_findSafePos;
+sleep 5;
+// systemChat "creating marker";
+// sleep 2;
 
-deleteMarker "KILLZONE";
+// deleteMarker "KILLZONE";
 _pos1 = createMarker ["KILLZONE", _missionPos];
 _pos1 setMarkerShape "ELLIPSE";
 _pos1 setMarkerColor "ColorRed";
-_pos1 setMarkerAlpha 0.3;
-_pos1 setMarkerSize [2000, 2000];
+// _pos1 setMarkerAlpha 0.3;
+_pos1 setMarkerSize [300, 300];
 // add voice markers  
 
 // call marker icon function  
-KILLZONE = true; // for marker system 
-[_missionPos, "hd_objective", "KILLZONE_Marker", "colorRed"] spawn RGGe_fnc_effects_markersSAD;
+// KILLZONE = true; // for marker system 
+// [_missionPos, "hd_objective", "KILLZONE_Marker", "colorRed"] spawn RGGe_fnc_effects_markersSAD;
 
 // hold - check/wait for player(s) near 
 _anchorPos = getMarkerPos 'KILLZONE';
 _activateCheck = true;
+// systemChat "running _activateCheck";
+// sleep 1;
 
 while {_activateCheck} do {
 	_dataStore = [];
@@ -92,7 +92,7 @@ while {_activateCheck} do {
 		_playerPos = getPos _x;
 		_dist = _anchorPos distance _playerPos;
 
-		if (_dist < 2500) then {
+		if (_dist < 600) then {
 			_dataStore pushback _x;
 		};
 	} forEach allPlayers;
@@ -104,15 +104,15 @@ while {_activateCheck} do {
 		_activateCheck = false;
 	};
 
-	sleep 20; // cycle frequency 
+	sleep 10; // cycle frequency 
 };
 
 // create items 
-systemChat "debug - creating items";
+// systemChat "debug - creating items";
 
 _assetPos = [];
 {
-	_dist = random 100;
+	_dist = random 30;
 	_dir = random 359;
 	_thingPos = _missionPos getPos [_dist, _dir];
 	_thing = _x createVehicle _thingPos;
@@ -142,125 +142,188 @@ _opGroup = createGroup [east, true];
 	sleep 0.1;
 } forEach _assetsInfi;
 
-for "_i" from 1 to 4 do {
-	_rndtype = selectRandom [
-		"O_R_APC_Wheeled_02_rcws_v2_ard_F",
-		"O_R_APC_Tracked_02_medical_ard_F",
-		"O_R_APC_Tracked_02_cannon_ard_F",
-		"O_R_Truck_03_fuel_ard_F",
-		"O_R_Truck_02_fuel_ard_F",
-		"O_R_Truck_02_ard_F",
-		"O_R_Truck_02_MRL_ard_F"
-	];
+// for "_i" from 1 to 2 do {
+// 	_rndtype = selectRandom [
+// 		"O_MRAP_02_gmg_F",
+// 		"O_LSV_02_armed_F",
+// 		"O_MRAP_02_F"
+// 	];
 
-	_pos = [_missionPos, 0, 100] call BIS_fnc_findSafePos;
-	_opforVic = [_pos, 180, _rndtype, east] call BIS_fnc_spawnVehicle;
-	// _dir = random 359;
-	// _opforVic setDir _dir; cc
-	sleep 0.5;						
-};
+// 	_pos = [_missionPos, 0, 100] call BIS_fnc_findSafePos;
+// 	_opforVic = [_pos, 180, _rndtype, east] call BIS_fnc_spawnVehicle;
+// 	// _dir = random 359;
+// 	// _opforVic setDir _dir; cc
+// 	sleep 0.5;						
+// };
 
 // to-do check for fired weapon and move opfor towards pos 
 
 // check for opfor alive 
-_RADARMISSION = true; 
+// _RADARMISSION = true; 
 
-while {_RADARMISSION} do {
-		
+// // add EH to check if destroyed 
+// _building = _assetsCamp select 0;
+// _buildingPos = getPos _building;
+// _mybuilding = nearestbuilding _buildingPos;
+
+// mybuilding addMissionEventHandler ["BuildingChanged", {
+// 	params ["_previousObject", "_newObject", "_isRuin"];
+// 	// if (_isRuin) then {
+// 	// 	hint "WINNING WINNING";
+// 	// };
+// };];
+
+//
+
+_item1 = true;
+_item2 = true;
+
+_huntLocalPlayers = false;
+
+_satDish = "SatelliteAntenna_01_Sand_F" createVehicle _missionPos;
+_satDish addEventHandler ["Explosion", {
+	params ["_vehicle", "_damage"];
+	systemChat "item 1 destroyed";
+	SPECOPSATTACKS = false;
+	huntLocalPlayers = true;
+	deleteVehicle _vehicle;
+	_item1 = false;
+	// _radar = _assetsCamp select 0;
+	// _radarPos = getPos _radar;
+	// deleteVehicle _radar;
+	// _ruin = "Land_MobileRadar_01_radar_ruins_F" createVehicle _radarPos;
+}];
+
+// spawn pack in building
+// B_RadioBag_01_hex_F
+
+_basePos = _assetPos select 0; 
+_pack = "Land_MultiScreenComputer_01_black_F" createVehicle _missionPos;
+// _pack setPos [getPos _basePos select 0, getPos _basePos select 1, (getPos _basePos select 2) +4];
+
+_pack addEventHandler ["Explosion", {
+	params ["_vehicle", "_damage"];
+	systemChat "item 2 destroyed";
+	SPECOPSATTACKS = false;
+	huntLocalPlayers = true;
+	deleteVehicle _vehicle;
+	_item2 = false;
+	// _radar = _assetsCamp select 0;
+	// _radarPos = getPos _radar;
+	// deleteVehicle _radar;
+	// _ruin = "Land_MobileRadar_01_radar_ruins_F" createVehicle _radarPos;
+}];
+
+//
+
+
+// BIGBIRD_1 addEventHandler ["RopeBreak", {
+// 	params ["_object1", "_rope", "_object2"];
+// 	if (ROPEBREAK == false) then {
+// 		if (typeOf _object2 == "B_MRAP_01_gmg_F") then {
+// 			ROPEBREAK = true;
+			
+// 			systemChat "MRAP Deployed:"; 
+// 			[_object2] execVM "eventHandlers\slingLoadMRAPCheck.sqf"; 
+// 			Big_Lifter_2 removeEventHandler ["RopeBreak", 0]; // otherwise this triggers 4 times!
+// 			execVM "eventHandlers\slingLoadMonitor.sqf"; // reloads EH to the designated heli - currently "heli1"
+// 		};	
+// 	};
+// }];
+
+waitUntil { huntLocalPlayers };
+sleep 2;
+hint "hunting begins here";
+
+while { huntLocalPlayers } do {
+	// _unitsRedzone = allUnits inAreaArray "KILLZONE";
 	// get overall numbers of troops in redzone 
 	_unitsRedzone = allUnits inAreaArray "KILLZONE";
-
+	systemChat "hunting cycle";
 	// check indi and opfor numbers in redzone 
-	_redzoneBlufor = 0;
-	_redzoneOpfor = 0; 
+	_opforUnits = []; 
+	_bluforUnits = [];
 	{
 		switch ((side _x)) do
 		{
-			case WEST: {_redzoneBlufor = _redzoneBlufor + 1};
-			case EAST: {_redzoneOpfor = _redzoneOpfor + 1};
+			case EAST: {_opforUnits pushBack _x};
+			case WEST: {_bluforUnits pushBack _x};
 		};
 	} forEach _unitsRedzone;
 
-	// mid-point opfor RF 
-	if ((_redzoneOpfor < 10) && (_redzoneBlufor > 1)) then {
-		hint "opfor RF inbound";
-		// find nearest player 
-		_dataStore = [];
-		{
-			_playerPos = getPos _x;
-			_dist = _anchorPos distance _playerPos;
+	systemChat format ["_opforHunters: %1", _opforUnits];
+	systemChat format ["_bluforHunted: %1", _bluforUnits];
 
-			if (_dist < 1500) then {
-				_dataStore pushback _x;
-			};
-		} forEach allPlayers;
-
-		// make sure this only happens if players are near 
-		_nearPlayers = count _dataStore;
-		if (_nearPlayers >= 1) then {
-			_rfTarget = _dataStore select 0;
-			_rfTargetPos = getPos _rfTarget;
-
-			_opGroup = createGroup [east, true];
-			{
-				_unit = _opGroup createUnit [_x, _opforSpawnPos, [], 0.1, "none"]; 
-				systemChat "creating RF unit here";
-				systemChat str _opforSpawnPos;
-				_unit doMove _rfTargetPos;
-				systemChat "moving to player pos:";
-				systemChat str _rfTargetPos;
-				sleep 10;
-			} forEach _assetsInfiRF;
-		};
-	};
-
-	// STAGE WIN LOGIC 
-	if ((_redzoneOpfor < 1) && (_redzoneBlufor > 1)) then {
-		hint "mission won";
-		// regroup, healup and get prizes
-		_SADMISSION = false;
-	};
-
-	// debug stats 
-	systemChat format ["REDZONE WEST: %1", _redzoneBlufor];
-	systemChat format ["REDZONE EAST: %1", _redzoneOpfor];
-
-	sleep 10;
-};
-
-// cleanup section - deleteAll checks happen here - ensure no players near before deleting everything 
-_anchorPos = getMarkerPos 'KILLZONE'; // can delete? is this a duplicate?
-_deleteCheck = true;
-
-while {_deleteCheck} do {
-
+	// find nearest player 
 	_dataStore = [];
 	{
 		_playerPos = getPos _x;
 		_dist = _anchorPos distance _playerPos;
 
-		if (_dist < 3000) then {
+		if (_dist < 500) then {
 			_dataStore pushback _x;
-			systemChat format ["debug - pushing back based on %1 value", _dist]
 		};
-	} forEach allPlayers;
+	} forEach _bluforUnits;
+	systemChat format ["_dataStore: %1", _dataStore];
 
-	_cnt = count _dataStore;
-
-	if (_cnt == 0) then {
-		systemChat "there no players within 3km of obj - safe to delete";
-		systemChat "mission now complete and can be deleted as no player proximity";
-		[_anchorPos] call RGGd_fnc_Delete_AllWithinArea;
-		_deleteCheck = false;
-		// set up new mission 
-		KILLZONE = false;
-		deleteMarker "KILLZONE";
-
-		sleep 10;
-
-		// here we want to assign any reward or benefit to players as reward ...
+	// make sure this only happens if players are near 
+	_nearPlayers = count _dataStore;
+	if (_nearPlayers >= 1) then {
+		_rfTarget = _dataStore select 0;
+		_rfTargetPos = getPos _rfTarget;
+		{
+			_x doMove _rfTargetPos;
+		} forEach _opforUnits;
 	};
 
-	sleep 5; // cycle frequency 
+	_cntOp = count _opforUnits;
+	_cntBl = count _bluforUnits;
+	if ((_cntOp == 0) or (_cntBl == 0)) then {
+		huntLocalPlayers = false; // breakout 
+	};
+
+	sleep 30;
 };
+
+if ((!_item1) && (!_item2)) then {
+	sleep 5;
+	hint "WIIIIIIINER";	
+	huntLocalPlayers = false; // breakout? i thinkn this is wrong - we wouldnt have this state at this stage..?
+};
+
+// cleanup section - deleteAll checks happen here - ensure no players near before deleting everything 
+// _anchorPos = getMarkerPos 'KILLZONE'; // can delete? is this a duplicate?
+// _deleteCheck = true;
+
+// while {_deleteCheck} do {
+
+// 	_dataStore = [];
+// 	{
+// 		_playerPos = getPos _x;
+// 		_dist = _anchorPos distance _playerPos;
+
+// 		if (_dist < 3000) then {
+// 			_dataStore pushback _x;
+// 			systemChat format ["debug - pushing back based on %1 value", _dist]
+// 		};
+// 	} forEach allPlayers;
+
+// 	_cnt = count _dataStore;
+
+// 	if (_cnt == 0) then {
+// 		systemChat "there no players within 3km of obj - safe to delete";
+// 		systemChat "mission now complete and can be deleted as no player proximity";
+// 		[_anchorPos] call RGGd_fnc_Delete_AllWithinArea;
+// 		_deleteCheck = false;
+// 		// set up new mission 
+// 		KILLZONE = false;
+// 		deleteMarker "KILLZONE";
+
+// 		sleep 10;
+
+// 		// here we want to assign any reward or benefit to players as reward ...
+// 	};
+
+// 	sleep 5; // cycle frequency 
+// };
 

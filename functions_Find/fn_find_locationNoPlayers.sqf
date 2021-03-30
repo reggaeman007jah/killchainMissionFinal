@@ -44,7 +44,7 @@ while {!_success} do {
 		_success = true; // breaks out of checkLoop 
 	};
 
-	sleep 5; 
+	// sleep 5; 
 };
 
 systemChat format ["FNC RETURN - locationNoPlayers: %1", _missionPos];

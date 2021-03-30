@@ -8,7 +8,7 @@ class EditorData
 	toggles=1;
 	class ItemIDProvider
 	{
-		nextID=1345;
+		nextID=1385;
 	};
 	class MarkerIDProvider
 	{
@@ -16,10 +16,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={13127.753,128.67979,16711.799};
-		dir[]={-0.92110735,-0.361036,-0.14565168};
-		up[]={-0.35660523,0.9325518,-0.056388818};
-		aside[]={-0.15618613,3.7252903e-009,0.98772764};
+		pos[]={12528.556,28.189964,16944.115};
+		dir[]={-0.95812362,-0.26506788,0.10834362};
+		up[]={-0.26338929,0.9642297,0.029783785};
+		aside[]={0.11236285,0,0.9936673};
 	};
 };
 binarizationWanted=0;
@@ -422,7 +422,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=205;
+		items=206;
 		class Item0
 		{
 			dataType="Logic";
@@ -6849,7 +6849,7 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={12818.999,86.614601,16712.023};
+						position[]={12780.271,85.207031,16723.926};
 						angles[]={0,3.3737154,0};
 					};
 					side="Civilian";
@@ -6907,7 +6907,7 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={12816.872,86.583374,16714.229};
+						position[]={12786.338,85.090088,16733.182};
 					};
 					side="Civilian";
 					flags=5;
@@ -6963,7 +6963,7 @@ class Mission
 				{
 					dataType="Waypoint";
 					loiterAltitude=-3.4028235e+038;
-					position[]={12816.787,86.750519,16697.695};
+					position[]={12787.628,87.441788,16645.279};
 					formation="DIAMOND";
 					speed="LIMITED";
 					combat="CARELESS";
@@ -6973,13 +6973,12 @@ class Mission
 					showWP="NEVER";
 					id=1323;
 					type="Move";
-					atlOffset=-7.6293945e-006;
 				};
 				class Item3
 				{
 					dataType="Waypoint";
 					loiterAltitude=-3.4028235e+038;
-					position[]={12794.527,87.456223,16640.893};
+					position[]={12819.563,87.559692,16631.406};
 					class Effects
 					{
 					};
@@ -6991,46 +6990,153 @@ class Mission
 				{
 					dataType="Waypoint";
 					loiterAltitude=-3.4028235e+038;
-					position[]={12925.185,80.111214,16747.904};
+					position[]={12910.608,81.955612,16725.234};
 					class Effects
 					{
 					};
 					showWP="NEVER";
 					id=1325;
 					type="Move";
-					atlOffset=7.6293945e-006;
 				};
 				class Item5
 				{
 					dataType="Waypoint";
 					loiterAltitude=-3.4028235e+038;
-					position[]={12876.502,82.556213,16777.945};
+					position[]={12847.99,84.831421,16773.764};
 					class Effects
 					{
 					};
 					showWP="NEVER";
 					id=1326;
 					type="Move";
-					atlOffset=0.00067901611;
 				};
 				class Item6
 				{
 					dataType="Waypoint";
 					loiterAltitude=-3.4028235e+038;
-					position[]={12822.767,86.849739,16751.934};
+					position[]={12806.958,86.094788,16720.867};
 					type="Cycle";
 					class Effects
 					{
 					};
 					showWP="NEVER";
 					id=1327;
-					atlOffset=-7.6293945e-006;
 				};
 			};
 			class Attributes
 			{
 			};
 			id=1321;
+		};
+		class Item205
+		{
+			dataType="Group";
+			side="West";
+			class Entities
+			{
+				items=1;
+				class Item0
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={12828.77,88.455795,16686.281};
+						angles[]={0,2.3102391,0};
+					};
+					side="West";
+					flags=7;
+					class Attributes
+					{
+						isPlayer=1;
+					};
+					id=1366;
+					type="B_soldier_exp_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property="allowDamage";
+							expression="_this allowdamage _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[]=
+										{
+											"BOOL"
+										};
+									};
+									value=0;
+								};
+							};
+						};
+						class Attribute1
+						{
+							property="speaker";
+							expression="_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[]=
+										{
+											"STRING"
+										};
+									};
+									value="Male05ENG";
+								};
+							};
+						};
+						class Attribute2
+						{
+							property="pitch";
+							expression="_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[]=
+										{
+											"SCALAR"
+										};
+									};
+									value=0.95999998;
+								};
+							};
+						};
+						class Attribute3
+						{
+							property="enableStamina";
+							expression="_this enablestamina _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[]=
+										{
+											"BOOL"
+										};
+									};
+									value=0;
+								};
+							};
+						};
+						nAttributes=4;
+					};
+				};
+			};
+			class Attributes
+			{
+			};
+			id=1345;
 		};
 	};
 	class Connections
