@@ -128,3 +128,4 @@ systemChat "RUNNING PHASE 1";
 // execVM "killChain\systems\randomThreatSystems\randomThreats.sqf";
 // note: Roamers are triggered during phases
 
+execVM "killChain\systems\hunterKillerSystemsOpfor\runHK.sqf";

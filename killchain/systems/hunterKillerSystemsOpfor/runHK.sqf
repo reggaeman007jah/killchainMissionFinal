@@ -1,4 +1,27 @@
 /*
+
+no work has been done on this yet - but this system will gen specops to constantly harass players 
+they will spawn in near a player, and come directly for that player 
+one player at a time 
+
+.....
+
+select player on the ground 
+
+select position to spawn in specops - where no players are near 
+
+send specops to player on a cycle 
+
+disable fire until firedUpon 
+
+get them close before opening up 
+
+.....
+
+
+
+
+
 Runs HK system for a fire team dropped into the AO 
 
 Takes name of hunting group the only param 
@@ -124,6 +147,89 @@ Takes name of hunting group the only param
 // _nearestEnemyDist = selectMin 
 
 // _min = selectMin [1,2,3,4,5]; //1
+
+_specOps = [
+	"O_R_recon_TL_F",
+	"O_R_recon_medic_F",
+	"O_R_recon_M_F",
+	"O_R_recon_AR_F"
+];
+
+while {SPECOPSATTACKS} do {
+	// .....
+
+	// select player on the ground 
+
+	// get all players 
+	_dataStore = [];
+	{
+		_playerPos = getPos _x;
+
+		if ((_playerPos select 2) < 2) then {
+			_dataStore pushback _x;
+		};
+	} forEach allPlayers;
+
+	// choose a player at random 
+	_ranTarget = selectRandom _dataStore;
+	systemChat format ["specops dataStore for player targets: %1", _ranTarget];
+
+	sleep 14;
+
+	// select position to spawn in specops - where no players are near 
+	_targetPos = getPos _ranTarget;
+	_spawnPos = [_targetPos, 400, 400, 10, 0, 1, 0, 400] call RGGf_fnc_find_locationNoPlayers;
+
+	_opGroup = createGroup [east, true];
+	{
+		_dist = random 5;
+		_dir = random 359;
+		_pos = _spawnPos getPos [_dist, _dir];
+
+		_unit = _opGroup createUnit [_x, _pos, [], 0.1, "none"]; 
+		_stance = selectRandom ["up", "middle", "down"];
+		_unit setUnitPos _stance;
+		_unit setDir _dir;
+		_unit setBehaviour "STEALTH";
+		_unit setCombatMode "GREEN";
+
+		sleep 0.1;
+	} forEach _specOps;
+
+	// _cnt = count _opGroup;
+
+	_hunt = true;
+	while {_hunt} do {
+		_target = getPos _ranTarget;
+		_opGroup move _target;
+		systemChat "OPFOR KILLERS MOVING";
+		if (count (units _opGroup) < 1) then { 
+			_hunt = false;
+			systemChat "re-running opfor HK"; 
+		};
+		// _cnt = count _opGroup;
+		// if (_cnt ==0) then {
+		// 	_hunt = false;
+		// };
+		sleep 30;
+	};
+
+
+	// send specops to player on a cycle 
+
+	// disable fire until firedUpon 
+
+	// get them close before opening up 
+
+	// .....
+};
+
+
+
+
+
+
+
 
 
 // -----------------------------------------------------------------------------------------

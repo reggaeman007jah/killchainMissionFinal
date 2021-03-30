@@ -8,7 +8,7 @@ class EditorData
 	toggles=1;
 	class ItemIDProvider
 	{
-		nextID=1385;
+		nextID=1392;
 	};
 	class MarkerIDProvider
 	{
@@ -16,10 +16,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={12528.556,28.189964,16944.115};
-		dir[]={-0.95812362,-0.26506788,0.10834362};
-		up[]={-0.26338929,0.9642297,0.029783785};
-		aside[]={0.11236285,0,0.9936673};
+		pos[]={12858.431,124.5413,16665.656};
+		dir[]={-0.7226848,-0.56093705,0.40384257};
+		up[]={-0.48967075,0.82785684,0.27363241};
+		aside[]={0.48781586,2.1727465e-007,0.87295485};
 	};
 };
 binarizationWanted=0;
@@ -422,7 +422,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=206;
+		items=205;
 		class Item0
 		{
 			dataType="Logic";
@@ -6985,6 +6985,7 @@ class Mission
 					showWP="NEVER";
 					id=1324;
 					type="Move";
+					atlOffset=-3.0517578e-005;
 				};
 				class Item4
 				{
@@ -7027,116 +7028,6 @@ class Mission
 			{
 			};
 			id=1321;
-		};
-		class Item205
-		{
-			dataType="Group";
-			side="West";
-			class Entities
-			{
-				items=1;
-				class Item0
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={12828.77,88.455795,16686.281};
-						angles[]={0,2.3102391,0};
-					};
-					side="West";
-					flags=7;
-					class Attributes
-					{
-						isPlayer=1;
-					};
-					id=1366;
-					type="B_soldier_exp_F";
-					class CustomAttributes
-					{
-						class Attribute0
-						{
-							property="allowDamage";
-							expression="_this allowdamage _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"BOOL"
-										};
-									};
-									value=0;
-								};
-							};
-						};
-						class Attribute1
-						{
-							property="speaker";
-							expression="_this setspeaker _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
-									value="Male05ENG";
-								};
-							};
-						};
-						class Attribute2
-						{
-							property="pitch";
-							expression="_this setpitch _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"SCALAR"
-										};
-									};
-									value=0.95999998;
-								};
-							};
-						};
-						class Attribute3
-						{
-							property="enableStamina";
-							expression="_this enablestamina _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"BOOL"
-										};
-									};
-									value=0;
-								};
-							};
-						};
-						nAttributes=4;
-					};
-				};
-			};
-			class Attributes
-			{
-			};
-			id=1345;
 		};
 	};
 	class Connections
