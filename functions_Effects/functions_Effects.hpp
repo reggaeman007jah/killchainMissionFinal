@@ -1,4 +1,4 @@
-// RGGc - Effects Classes
+// RGGe - Effects Classes
 
 class RGGe {
 	tag = "RGGe";

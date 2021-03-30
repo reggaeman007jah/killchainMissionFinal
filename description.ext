@@ -12,6 +12,7 @@ class CfgFunctions {
 	#include "functions_Count\functions_Count.hpp"
 	#include "functions_Delete\functions_Delete.hpp"
 	#include "functions_Effects\functions_Effects.hpp"
+	#include "functions_Find\functions_Find.hpp"
 	#include "functions_LocalAttacks\functions_LocalAttacks.hpp"
 	#include "functions_Missions\functions_Missions.hpp"
 	#include "functions_Spawn\functions_Spawn.hpp"

@@ -7,20 +7,19 @@ Options:
 - Have a backpck that can show opfor positions / deploy radar dish 
 - need more ideas 
 
+to-do:
+- add voice system 
+- to-do manage positions and ambient walking etc 
+
 */
 
 systemChat "DEBUG - RUNNING: missions_destroyRadar";
-// to do - add voice system 
-// to do - make good 
 
 _areaCenter = _this select 0; // sat dish object from patrol point  
 
 _assetsCamp = [
-	"Land_BagBunker_01_large_green_F",
-	"CamoNet_ghex_big_F",
 	"Land_Cargo_HQ_V4_F",
 	"Land_MedicalTent_01_CSAT_greenhex_generic_outer_F",
-	"Land_PillboxBunker_01_hex_F",
 	"Land_MobileRadar_01_radar_F"
 ];
 
@@ -67,7 +66,9 @@ _assetsMRAP = [
 ];
 
 // mission pos 
-_missionPos = [_areaCenter, 6000, 6500, 10, 0, 1, 0] call BIS_fnc_findSafePos;
+// _missionPos = [_areaCenter, 6000, 6500, 10, 0, 1, 0] call BIS_fnc_findSafePos; // original 
+_missionPos = [_areaCenter, 6000, 6500, 10, 0, 1, 0, 1000] call RGGf_fnc_find_locationNoPlayers; // last param is prox dist check 
+// _missionPos = [_areaCenter, 6000, 6500, 10, 0, 1, 0] call BIS_fnc_findSafePos;
 
 deleteMarker "KILLZONE";
 _pos1 = createMarker ["KILLZONE", _missionPos];
@@ -140,7 +141,6 @@ _opGroup = createGroup [east, true];
 
 	sleep 0.1;
 } forEach _assetsInfi;
-// to-do manage positions and ambient walking etc 
 
 for "_i" from 1 to 4 do {
 	_rndtype = selectRandom [
