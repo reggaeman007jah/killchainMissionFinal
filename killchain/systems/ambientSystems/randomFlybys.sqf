@@ -40,17 +40,29 @@ _objPos = _this select 0; // starting point for any new mission
 
 if (flybyIsActive) then {
 	flybyIsActive = false;
-	_height = selectRandom [100, 200, 300]; // random height 
+	_height = selectRandom [100, 200, 300, 500, 800]; // random height 
 	_sleep = selectRandom [120, 180, 240, 300]; // determines how long between call of script  
-	 
 	_number = selectRandom [1,2,3]; // determines how many ambients per spawn event 
-	_type = selectRandom ["B_Plane_CAS_01_dynamicLoadout_F", "B_Heli_Transport_01_F", "B_Heli_Transport_03_F", "B_Heli_Light_01_dynamicLoadout_F"]; // 4 types, each batch is always the same type - you wont get a jet and an MH6 together 
+	_type = selectRandom [
+		"B_Plane_CAS_01_dynamicLoadout_F", 
+		"B_Heli_Transport_01_F", 
+		"B_Heli_Transport_03_F", 
+		"B_Heli_Light_01_dynamicLoadout_F",
+		"B_Heli_Attack_01_F",
+		"B_T_VTOL_01_infantry_F",
+		"B_Plane_Fighter_01_F",
+		"I_Heli_Transport_02_F",
+		"I_Plane_Fighter_03_CAS_F",
+		"I_Plane_Fighter_04_F",
+		"I_Heli_light_03_F"
+	]; // 4 types, each batch is always the same type - you wont get a jet and an MH6 together 
 	_startPos = _objPos getPos [5000, 90]; // starts east of the patrol point 
 	_endPos = _objPos getPos [5000, 270]; // ends west of the patrol point 
 
 	for "_i" from 1 to _number do {
 		[_startPos, _endPos, _height, "FULL", _type, west] call BIS_fnc_ambientFlyby;
-		sleep 5; // spacer sleep between each iteration to prevent spawn overlaps 	
+		_slp = selectRandom [3,4,5];
+		sleep _slp; // spacer sleep between each iteration to prevent spawn overlaps 	
 	};
 	
 	sleep _sleep; // random sleep between spawn batches // test if moving this line solves the pos problem 
