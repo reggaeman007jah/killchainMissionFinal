@@ -1,4 +1,8 @@
 // generate side-tasks when player near 
+/*
+To-do:
+make sure this only runs if dish is alive - end process if dish is dead / removed 
+*/
 systemChat "enemy intel system running";
 
 _dish = _this select 0;
@@ -30,6 +34,6 @@ while {_playersNotNear} do {
 		_playersNotNear = false;
 	};
 
-	sleep 10; 
+	sleep 30; 
 };
 
