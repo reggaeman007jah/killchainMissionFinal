@@ -763,25 +763,35 @@ _pos1 setMarkerSize [100, 100];
 _activateCheck = true;
 _anchorPos = getMarkerPos 'REGROUP';
 
+hint "progression / hold activated";
+
 while {_activateCheck} do {
+	systemChat "activateCheck running";
+	systemChat "sleeping for 120";
+	sleep 120; // cycle frequency
 	_dataStore = [];
 	{
 		_playerPos = getPos _x;
 		_dist = _anchorPos distance _playerPos;
 
-		if (_dist < 100) then {
+		if (_dist < 200) then {
 			_dataStore pushback _x;
 		};
 	} forEach allPlayers;
-
 	_cnt = count _dataStore;
-
+	systemChat format ["_dataStore: %1", _dataStore];
+	systemChat format ["_cnt: %1", _cnt];
+	format ["Debug - _dataStore: %1", _dataStore] remoteExec ["systemChat", 0];
+	format ["Debug - _cnt: %1", _cnt] remoteExec ["systemChat", 0];
 	if (_cnt == 0) then {
 		deleteMarker "REGROUP";
 		_activateCheck = false;
+		systemChat "NOTE: _cnt == 0";
+		// format ["Debug - NOTE: _cnt == 0", _cnt] remoteExec ["systemChat", 0];
 	};
-	sleep 10; // cycle frequency 
 };
+
+hint "progression / hold completed";
 // NOW, PROGRESS PATROL 
 
 // determine whether another camp obj or final obj 

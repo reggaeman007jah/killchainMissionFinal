@@ -50,11 +50,17 @@ execVM "eventHandlers\getInMonitor.sqf";
 
 // initiate pickup systems for blackhawks and littlebirds
 [RAIDER_1] execVM "killchain\systems\pickupSystems\pickUpSystemsMaster\pickupInit.sqf";
+sleep 0.5;
 [RAIDER_2] execVM "killchain\systems\pickupSystems\pickUpSystemsMaster\pickupInit.sqf";
+sleep 0.5;
 [RAIDER_3] execVM "killchain\systems\pickupSystems\pickUpSystemsMaster\pickupInit.sqf";
+sleep 0.5;
 [RAIDER_4] execVM "killchain\systems\pickupSystems\pickUpSystemsMaster\pickupInit.sqf";
+sleep 0.5;
 [RAIDER_5] execVM "killchain\systems\pickupSystems\pickUpSystemsMaster\pickupInit.sqf";
+sleep 0.5;
 [BIGBIRD_1] execVM "killchain\systems\pickupSystems\pickUpSystemsMaster\pickupInit.sqf";
+sleep 0.5;
 
 // initialise para spawner script 
 execVM "killchain\systems\spawnerSystems\spawnParas.sqf";

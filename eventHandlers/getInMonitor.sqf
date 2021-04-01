@@ -22,21 +22,25 @@ make sure smke systems work within attack helis
 // why not work??
 
 
-RAIDER_3 addEventHandler ["getIn", {
-	params ["_vehicle", "_role", "_unit", "_turret"];
-	[_vehicle] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
-}];
+// fuck knows why this does not delete itself ... 
+// RAIDER_3 addEventHandler ["getIn", {
+// 	params ["_vehicle", "_role", "_unit", "_turret"];
+// 	RAIDER_3 removeEventHandler ["getIn", 0];
+// 	[_vehicle] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
+// }];
 
-RAIDER_4 addEventHandler ["getIn", {
-	params ["_vehicle", "_role", "_unit", "_turret"];
-	[_vehicle] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
-}];
+// RAIDER_4 addEventHandler ["getIn", {
+// 	params ["_vehicle", "_role", "_unit", "_turret"];
+// 	RAIDER_4 removeEventHandler ["getIn", 0];
+// 	[_vehicle] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
+// }];
 
-RAIDER_5 addEventHandler ["getIn", {
-	params ["_vehicle", "_role", "_unit", "_turret"];
-	// systemChat format ["_unit: %1 / _role: %2 / _vehicle: %3", _unit, _role, _vehicle];
-	[_vehicle] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
-}];
+// RAIDER_5 addEventHandler ["getIn", {
+// 	params ["_vehicle", "_role", "_unit", "_turret"];
+// 	// systemChat format ["_unit: %1 / _role: %2 / _vehicle: %3", _unit, _role, _vehicle];
+// 	RAIDER_5 removeEventHandler ["getIn", 0];
+// 	[_vehicle] execVM "killchain\systems\smokeSystems\smokeSystems.sqf";
+// }];
 
 
 

@@ -8,7 +8,7 @@ class EditorData
 	toggles=1;
 	class ItemIDProvider
 	{
-		nextID=1392;
+		nextID=1394;
 	};
 	class MarkerIDProvider
 	{
@@ -16,10 +16,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={12858.431,124.5413,16665.656};
-		dir[]={-0.7226848,-0.56093705,0.40384257};
-		up[]={-0.48967075,0.82785684,0.27363241};
-		aside[]={0.48781586,2.1727465e-007,0.87295485};
+		pos[]={12806.626,105.3987,16715.82};
+		dir[]={0.86969161,-0.41373417,0.26918545};
+		up[]={0.39523509,0.91039771,0.12233248};
+		aside[]={0.29567894,0,-0.95528752};
 	};
 };
 binarizationWanted=0;
@@ -532,7 +532,7 @@ class Mission
 			class PositionInfo
 			{
 				position[]={12873.8,87.360123,16696.641};
-				angles[]={0.022662206,0,6.2299027};
+				angles[]={0.022654373,0,6.2299004};
 			};
 			id=2;
 			type="ModuleRespawnVehicle_F";
@@ -572,7 +572,7 @@ class Mission
 									"STRING"
 								};
 							};
-							value="[_this select 0] execVM ""killchain\systems\ammoSystems\noAmmo.sqf"";; [_this select 0] execVM ""killchain\systems\smokeSystems\smokeSystems.sqf"";";
+							value="[_this select 0] execVM ""killchain\systems\ammoSystems\noAmmo.sqf""; [_this select 0] execVM ""killchain\systems\smokeSystems\smokeSystems.sqf"";";
 						};
 					};
 				};
@@ -828,7 +828,7 @@ class Mission
 			class Attributes
 			{
 				ammo=0;
-				fuel=0.28504011;
+				fuel=0.69401288;
 				name="RAPTOR_2";
 			};
 			id=12;
@@ -938,7 +938,7 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={12813.96,87.939392,16676.979};
+						position[]={12805.199,87.601128,16676.072};
 						angles[]={0,4.9330688,0};
 					};
 					side="West";
@@ -949,6 +949,7 @@ class Mission
 					};
 					id=20;
 					type="B_W_Soldier_LAT_F";
+					atlOffset=7.6293945e-006;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -1016,6 +1017,7 @@ class Mission
 			{
 			};
 			id=19;
+			atlOffset=7.6293945e-006;
 		};
 		class Item11
 		{
@@ -1029,7 +1031,7 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={12812.799,87.814545,16680.166};
+						position[]={12804.038,87.519493,16679.26};
 						angles[]={0,2.7524714,0};
 					};
 					side="West";
@@ -1211,7 +1213,7 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={12814.654,88.000435,16675.719};
+						position[]={12805.894,87.640755,16674.813};
 						angles[]={0,6.0823674,0};
 					};
 					side="West";
@@ -1222,6 +1224,7 @@ class Mission
 					};
 					id=28;
 					type="B_W_Soldier_LAT_F";
+					atlOffset=7.6293945e-006;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -1289,6 +1292,7 @@ class Mission
 			{
 			};
 			id=27;
+			atlOffset=7.6293945e-006;
 		};
 		class Item14
 		{
@@ -1393,7 +1397,7 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={12813.476,87.884071,16678.727};
+						position[]={12804.715,87.541077,16677.82};
 						angles[]={0,3.3671765,0};
 					};
 					side="West";
@@ -1404,6 +1408,7 @@ class Mission
 					};
 					id=32;
 					type="B_W_Soldier_Exp_F";
+					atlOffset=7.6293945e-006;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -1471,6 +1476,7 @@ class Mission
 			{
 			};
 			id=31;
+			atlOffset=7.6293945e-006;
 		};
 		class Item16
 		{
@@ -2240,11 +2246,11 @@ class Mission
 			dataType="Logic";
 			class PositionInfo
 			{
-				position[]={12805.271,88.841972,16649.545};
+				position[]={12806.181,88.910782,16654.361};
 			};
 			id=83;
 			type="ModuleRespawnVehicle_F";
-			atlOffset=1.2529984;
+			atlOffset=1.2529831;
 			class CustomAttributes
 			{
 				class Attribute0
@@ -3734,8 +3740,8 @@ class Mission
 			dataType="Logic";
 			class PositionInfo
 			{
-				position[]={12887.63,83.978874,16751.609};
-				angles[]={6.2725158,0,6.1940894};
+				position[]={12875.311,84.703316,16743.516};
+				angles[]={0.012007865,0,6.2259207};
 			};
 			id=560;
 			type="ModuleRespawnVehicle_F";
@@ -3775,7 +3781,7 @@ class Mission
 									"STRING"
 								};
 							};
-							value="[_this select 0] execVM ""autoPatrolSystem\pickupSystems\pickupConfig.sqf"";";
+							value="[_this select 0] execVM ""killchain\systems\pickupSystems\pickUpSystemsMaster\pickupInit.sqf"";";
 						};
 					};
 				};
@@ -4749,7 +4755,7 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={12815.16,88.047615,16673.902};
+						position[]={12807.156,87.664047,16673.828};
 						angles[]={0,5.4143782,0};
 					};
 					side="West";
@@ -5817,7 +5823,7 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={12810.222,87.695717,16662.205};
+						position[]={12808.191,87.705505,16668.967};
 					};
 					side="West";
 					flags=7;
@@ -5888,7 +5894,7 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={12810.194,87.682739,16657.887};
+						position[]={12808.164,87.697716,16664.648};
 					};
 					side="West";
 					flags=7;
@@ -5959,7 +5965,7 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={12813.442,87.909546,16663.094};
+						position[]={12811.412,87.79805,16669.855};
 					};
 					side="West";
 					flags=7;
@@ -6030,7 +6036,7 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={12810.266,87.692413,16660.086};
+						position[]={12808.235,87.707878,16666.848};
 					};
 					side="West";
 					flags=7;
@@ -6040,6 +6046,7 @@ class Mission
 					};
 					id=1005;
 					type="B_sniper_F";
+					atlOffset=7.6293945e-006;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -6088,6 +6095,7 @@ class Mission
 			{
 			};
 			id=1004;
+			atlOffset=7.6293945e-006;
 		};
 		class Item163
 		{
@@ -6101,7 +6109,7 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={12813.661,87.87545,16660.811};
+						position[]={12811.631,87.818596,16667.572};
 					};
 					side="West";
 					flags=7;
@@ -6344,7 +6352,7 @@ class Mission
 			class Attributes
 			{
 				ammo=0;
-				fuel=0.28504011;
+				fuel=0.75303996;
 				name="RAPTOR_1";
 			};
 			id=1062;
@@ -6717,8 +6725,8 @@ class Mission
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={12856.485,87.317223,16736.381};
-				angles[]={0.014664836,3.803055,6.2551923};
+				position[]={12856.485,87.31749,16736.381};
+				angles[]={0.014660765,3.803055,6.2551899};
 			};
 			side="Empty";
 			flags=4;
@@ -6728,15 +6736,15 @@ class Mission
 			};
 			id=1291;
 			type="B_Heli_Light_01_F";
-			atlOffset=-0.0042648315;
+			atlOffset=-0.0039978027;
 		};
 		class Item198
 		{
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={12856.168,86.968788,16755.01};
-				angles[]={0.022664838,3.803055,6.256525};
+				position[]={12856.168,86.968742,16755.01};
+				angles[]={0.022671828,3.803055,6.2565165};
 			};
 			side="Empty";
 			flags=4;
@@ -6746,7 +6754,6 @@ class Mission
 			};
 			id=1294;
 			type="B_Heli_Light_01_F";
-			atlOffset=4.5776367e-005;
 		};
 		class Item199
 		{
@@ -6806,36 +6813,40 @@ class Mission
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={12882.17,87.387779,16713.506};
+				position[]={12882.169,87.388901,16713.506};
 				angles[]={0.15475833,5.3316665,6.1467004};
 			};
 			side="Empty";
 			flags=4;
 			class Attributes
 			{
+				ammo=0;
+				fuel=0.74882394;
 				name="RAPTOR_4";
 			};
 			id=1317;
 			type="B_Heli_Light_01_dynamicLoadout_F";
-			atlOffset=-0.00099182129;
+			atlOffset=7.6293945e-006;
 		};
 		class Item203
 		{
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={12869.533,88.656013,16709.004};
+				position[]={12869.533,88.656181,16709.004};
 				angles[]={0.083810709,5.3316665,0.029321531};
 			};
 			side="Empty";
 			flags=4;
 			class Attributes
 			{
+				ammo=0;
+				fuel=0.71931028;
 				name="RAPTOR_3";
 			};
 			id=1320;
 			type="B_Heli_Light_01_dynamicLoadout_F";
-			atlOffset=-0.00016021729;
+			atlOffset=7.6293945e-006;
 		};
 		class Item204
 		{
@@ -6907,7 +6918,7 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={12786.338,85.090088,16733.182};
+						position[]={12783.175,85.13015,16727.086};
 					};
 					side="Civilian";
 					flags=5;
@@ -7015,7 +7026,7 @@ class Mission
 				{
 					dataType="Waypoint";
 					loiterAltitude=-3.4028235e+038;
-					position[]={12806.958,86.094788,16720.867};
+					position[]={12800.034,85.758591,16728.023};
 					type="Cycle";
 					class Effects
 					{
