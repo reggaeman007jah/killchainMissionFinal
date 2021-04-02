@@ -709,48 +709,6 @@ switch (patrolPointsTaken) do {
 // 	RGG_respawnStore deleteAt 0;
 // };
 
-patrolPointsTaken = patrolPointsTaken +1;
-
-// set up next obj 
-_anchor = _objPos; // switcheroo 
-// private ["_mainAnchor"]; // may not need this..?
-
-// this switch repurposes the _objPos value with the next obj position 
-switch (patrolPointsTaken) do {
-	case 1: {
-		_objPos = RGG_PatrolPoints select 1;
-		systemChat "RUNNING PHASE 2";	
-	};
-	case 2: {
-		_objPos = RGG_PatrolPoints select 2;
-		systemChat "RUNNING PHASE 3";	
-	};
-	case 3: {
-		_objPos = RGG_PatrolPoints select 3;
-		systemChat "RUNNING PHASE 4";	
-	};
-	case 4: {
-		_objPos = RGG_PatrolPoints select 4;
-		systemChat "RUNNING PHASE 5";	
-	};
-	case 5: {
-		_objPos = RGG_PatrolPoints select 5;
-		systemChat "RUNNING PHASE 6";	
-	};
-	case 6: {
-		_objPos = RGG_PatrolPoints select 6;
-		systemChat "RUNNING ENDGAME";	
-	};
-	default {
-		systemChat "error: Patrol Point switch";
-	};
-};
-
-// pause to regroup - is this needed??
-// systemChat "debug - get Ready - 60 seconds";
-// sleep 60;
-// systemChat "debug - here we go";
-
 // NEW - adding checker for players 
 sleep 120;
 
@@ -793,6 +751,51 @@ while {_activateCheck} do {
 
 hint "progression / hold completed";
 // NOW, PROGRESS PATROL 
+
+// resume here ...
+patrolPointsTaken = patrolPointsTaken +1;
+
+// set up next obj 
+_anchor = _objPos; // switcheroo 
+// private ["_mainAnchor"]; // may not need this..?
+
+// this switch repurposes the _objPos value with the next obj position 
+switch (patrolPointsTaken) do {
+	case 1: {
+		_objPos = RGG_PatrolPoints select 1;
+		systemChat "RUNNING PHASE 2";	
+	};
+	case 2: {
+		_objPos = RGG_PatrolPoints select 2;
+		systemChat "RUNNING PHASE 3";	
+	};
+	case 3: {
+		_objPos = RGG_PatrolPoints select 3;
+		systemChat "RUNNING PHASE 4";	
+	};
+	case 4: {
+		_objPos = RGG_PatrolPoints select 4;
+		systemChat "RUNNING PHASE 5";	
+	};
+	case 5: {
+		_objPos = RGG_PatrolPoints select 5;
+		systemChat "RUNNING PHASE 6";	
+	};
+	case 6: {
+		_objPos = RGG_PatrolPoints select 6;
+		systemChat "RUNNING ENDGAME";	
+	};
+	default {
+		systemChat "error: Patrol Point switch";
+	};
+};
+
+// pause to regroup - is this needed??
+// systemChat "debug - get Ready - 60 seconds";
+// sleep 60;
+// systemChat "debug - here we go";
+
+
 
 // determine whether another camp obj or final obj 
 // if (patrolPointsTaken <= 5) then {
