@@ -173,47 +173,56 @@ while {SPECOPSATTACKS} do {
 		};
 	} forEach allPlayers;
 
-	// choose a player at random 
-	_ranTarget = selectRandom _dataStore;
-	systemChat format ["specops dataStore for player targets: %1", _ranTarget];
+	_cnt = count _dataStore;
 
-	sleep 10;
+	if (_cnt > 0) then {
 
-	// select position to spawn in specops - where no players are near 
-	_targetPos = getPos _ranTarget;
-	_spawnPos = [_targetPos, 400, 400, 10, 0, 1, 0, 400] call RGGf_fnc_find_locationNoPlayers;
+		// choose a player at random 
+		_ranTarget = selectRandom _dataStore;
+		systemChat format ["specops dataStore for player targets: %1", _ranTarget];
 
-	_opGroup = createGroup [east, true];
-	{
-		_dist = random 5;
-		_dir = random 359;
-		_pos = _spawnPos getPos [_dist, _dir];
-		_unit = _opGroup createUnit [_x, _pos, [], 0.1, "none"]; 
-		// _stance = selectRandom ["up", "middle", "down"];
-		// _unit setUnitPos _stance;
-		// _unit setDir _dir;
-		// _unit setBehaviour "STEALTH";
-		_unit setCombatMode "GREEN";
-		sleep 0.2;
-	} forEach _specOps;
+		sleep 10;
 
-	// _cnt = count _opGroup;
+		// select position to spawn in specops - where no players are near 
+		_targetPos = getPos _ranTarget;
+		_spawnPos = [_targetPos, 400, 400, 10, 0, 1, 0, 400] call RGGf_fnc_find_locationNoPlayers;
 
-	_hunt = true;
-	while {_hunt} do {
-		_target = getPos _ranTarget;
-		_opGroup move _target;
-		// systemChat "OPFOR KILLERS MOVING";
-		if (count (units _opGroup) < 1) then { 
-			_hunt = false;
-			systemChat "re-running opfor HK"; 
-		};
+		_opGroup = createGroup [east, true];
+		{
+			_dist = random 5;
+			_dir = random 359;
+			_pos = _spawnPos getPos [_dist, _dir];
+			_unit = _opGroup createUnit [_x, _pos, [], 0.1, "none"]; 
+			// _stance = selectRandom ["up", "middle", "down"];
+			// _unit setUnitPos _stance;
+			// _unit setDir _dir;
+			// _unit setBehaviour "STEALTH";
+			_unit setCombatMode "GREEN";
+			sleep 0.2;
+		} forEach _specOps;
+
 		// _cnt = count _opGroup;
-		// if (_cnt ==0) then {
-		// 	_hunt = false;
-		// };
-		sleep 30;
+
+		_hunt = true;
+		while {_hunt} do {
+			_target = getPos _ranTarget;
+			_opGroup move _target;
+			// systemChat "OPFOR KILLERS MOVING";
+			if (count (units _opGroup) < 1) then { 
+				_hunt = false;
+				systemChat "re-running opfor HK"; 
+			};
+			// - need to check if player was killed too, so they can move to next target 
+			// - need to check if distance is too far away, to remove and reset team 
+			// _cnt = count _opGroup;
+			// if (_cnt ==0) then {
+			// 	_hunt = false;
+			// };
+			sleep 30;
+		};
+
 	};
+
 
 
 	// send specops to player on a cycle 
@@ -223,6 +232,7 @@ while {SPECOPSATTACKS} do {
 	// get them close before opening up 
 
 	// .....
+	sleep 30;
 };
 
 

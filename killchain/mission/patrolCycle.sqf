@@ -721,12 +721,9 @@ _pos1 setMarkerSize [100, 100];
 _activateCheck = true;
 _anchorPos = getMarkerPos 'REGROUP';
 
-hint "progression / hold activated";
-
+"progression / hold activated" remoteExec ["systemChat", 0, true];
 while {_activateCheck} do {
-	systemChat "activateCheck running";
-	systemChat "sleeping for 120";
-	sleep 120; // cycle frequency
+	sleep 30; // cycle frequency
 	_dataStore = [];
 	{
 		_playerPos = getPos _x;
@@ -737,19 +734,17 @@ while {_activateCheck} do {
 		};
 	} forEach allPlayers;
 	_cnt = count _dataStore;
-	systemChat format ["_dataStore: %1", _dataStore];
-	systemChat format ["_cnt: %1", _cnt];
-	format ["Debug - _dataStore: %1", _dataStore] remoteExec ["systemChat", 0];
-	format ["Debug - _cnt: %1", _cnt] remoteExec ["systemChat", 0];
+	format ["Players near basecamp: %1", _cnt] remoteExec ["systemChat", 0];
 	if (_cnt == 0) then {
 		deleteMarker "REGROUP";
 		_activateCheck = false;
-		systemChat "NOTE: _cnt == 0";
+		"progression / hold completed" remoteExec ["systemChat", 0, true];
 		// format ["Debug - NOTE: _cnt == 0", _cnt] remoteExec ["systemChat", 0];
 	};
 };
 
-hint "progression / hold completed";
+
+
 // NOW, PROGRESS PATROL 
 
 // resume here ...

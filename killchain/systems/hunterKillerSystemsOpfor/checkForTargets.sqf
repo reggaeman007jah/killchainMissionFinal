@@ -2,7 +2,7 @@
 // doing this here means it is outside of the heli loop 
 // need to build in time for troopss to disembark 
 
-sleep 10;
+sleep 300; // no base hits ideally 
 
 _groups = _this select 0; // this array will contain hk groups
 
