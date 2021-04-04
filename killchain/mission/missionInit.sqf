@@ -77,6 +77,12 @@ RGG_fieldbases = [];
 RGG_respawnStore = [];
 // used to manage the last-point-spawn system 
 
+// check for whether ok to delete quickVics 
+[] spawn RGGd_fnc_delete_quickVics;
+
+// will hold disposable vics like quads 
+RGG_quickVics = [];
+
 // this means that there is a cycleChance that specOps will hunt down players 
 SPECOPSATTACKS = true;
 // side missions disable this 

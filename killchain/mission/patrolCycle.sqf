@@ -656,15 +656,22 @@ sleep 0.6;
 
 // create vics and vic rewards 
 _vicLocation = _buildLocation findEmptyPosition [10,100,"B_Heli_Light_01_dynamicLoadout_F"];
-_quaddy = createVehicle ["I_G_Quadbike_01_F", _vicLocation]; // quad
+// _quaddy = createVehicle ["I_G_Quadbike_01_F", _vicLocation]; // quad
+// sleep 1;
+// _vic = selectRandom [
+// 	"I_G_Offroad_01_armed_F", 
+// 	"I_C_Offroad_02_LMG_F", 
+// 	"I_C_Offroad_02_LMG_F", 
+// 	"B_LSV_01_armed_F"
+// ];
+// _rewardSpawn = createVehicle [_vic, _vicLocation]; // reward vic 
+
+["I_G_Quadbike_01_F", _vicLocation] call RGGv_fnc_vehicle_quickTransport;
 sleep 1;
-_vic = selectRandom [
-	"I_G_Offroad_01_armed_F", 
-	"I_C_Offroad_02_LMG_F", 
-	"I_C_Offroad_02_LMG_F", 
-	"B_LSV_01_armed_F"
-];
-_rewardSpawn = createVehicle [_vic, _vicLocation]; // reward vic 
+["B_LSV_01_armed_F", _vicLocation] call RGGv_fnc_vehicle_quickTransport;
+/*
+NOTE - the above should be replaced with better spawn fnc for vics 
+*/
 
 // to do - choose better patrol vics 
 
