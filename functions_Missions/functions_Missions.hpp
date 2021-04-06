@@ -9,6 +9,10 @@ class RGGm {
 			Description = "This function will create a medevac mission";
 		};
 		
+		class mission_raptorOps {
+			Description = "This function will create CAS mission to defend beleagured patrol";
+		}; 
+
 		class mission_extractDamagedTank {
 			Description = "This function will create a mission to pick up a damaged tank";
 		}; 

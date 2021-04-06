@@ -17,6 +17,10 @@ class RGGe {
 			Description = "This function will make LZ markers flash";
 		};
 
+		class effects_markersRaptor {
+			Description = "This function will make Raptor Ops markers flash";
+		};
+
 		class effects_markersSAD {
 			Description = "This function will make Destroy markers flash";
 		};

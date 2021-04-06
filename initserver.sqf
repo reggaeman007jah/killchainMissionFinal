@@ -19,12 +19,14 @@ VAA_Activate = true;
 // this manages the start of the mission
 KILLCHAINMISSIONSTART = false;
 SIDEMISSIONSTART = false;
+RAPTOROPS = false;
 
 ROPEBREAK = false;
 
 // initialise killchain 
 execVM "killchain\mission\missionInit.sqf"; 
 execVM "killchain\sideMissions\sideMissionInit.sqf"; 
+execVM "killchain\sideMissions\raptorOpsInit.sqf"; 
 sleep 0.5;
 
 
