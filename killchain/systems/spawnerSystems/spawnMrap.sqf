@@ -43,7 +43,7 @@ while {true} do {
 		// _stampToString setFormation "DIAMOND";
 		_opforVic = [[15057,17159], 116, "B_MRAP_01_gmg_F", west] call BIS_fnc_spawnVehicle;
 		// _opforVic setDir 116;
-		_opforVic doMove [15090.8,17142.2,0];
+		_opforVic doMove [15091.1,17142.1,0];
 		systemChat "MRAP ready .............................................!";
 	};
 

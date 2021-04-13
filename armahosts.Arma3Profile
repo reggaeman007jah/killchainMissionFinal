@@ -1,0 +1,56 @@
+version=1;
+blood=1;
+singleVoice=0;
+gamma=1;
+brightness=1;
+difficulty="Custom";
+class DifficultyPresets
+{
+	class CustomDifficulty
+	{
+		class Options
+		{
+			autoReport=0;
+			cameraShake=1;
+			commands=1;
+			deathMessages=0;
+			detectedMines=0;
+			enemyTags=0;
+			friendlyTags=0;
+			groupIndicators=2;
+			mapContent=1;
+			multipleSaves=0;
+			reducedDamage=0;
+			scoreTable=1;
+			staminaBar=1;
+			stanceIndicator=1;
+			thirdPersonView=1;
+			visionAid=0;
+			vonID=1;
+			waypoints=2;
+			weaponCrosshair=0;
+			weaponInfo=2;
+		};
+		aiLevelPreset=2;
+	};
+	class CustomAILevel
+	{
+		skillAI=1;
+		precisionAI=0;
+	};
+};
+activeKeys[]=
+{
+	"BIS_killchain2.Altis_done"
+};
+sceneComplexity=400000;
+shadowZDistance=100;
+viewDistance=1000;
+preferredObjectViewDistance=800;
+terrainGrid=25;
+volumeCD=5;
+volumeFX=5;
+volumeSpeech=5;
+volumeVoN=10;
+maxSamplesPlayed=96;
+vonRecThreshold=0.029999999;
