@@ -45,3 +45,32 @@ To do: reinstall JTAC and Voice Marker System here
 
 
 
+// from Woofer ...
+
+// This is an addaction that needs to go somewhere where a player can access it
+// Preferably on the arsenal box and maybe a transport helo
+// this addAction ["save player loadout", {KILLCHAIN_SAVED_LOADOUT = getUnitLoadout player}];
+
+// This is an addaction that needs to go somewhere where a player can access it
+// Preferably on the arsenal box and maybe a transport helo
+/*
+this addAction ["load saved loadout", {
+	if (isNil {missionNamespace getVariable "KILLCHAIN_SAVED_LOADOUT"}) then {
+	systemChat "KILLCHAIN: no loadout saved";
+	} else {player setUnitLoadout KILLCHAIN_SAVED_LOADOUT;};
+}];
+*/
+
+
+
+// // If the loadout variable hasn't been set by the player, do nothing
+// if (isNil {missionNamespace getVariable "KILLCHAIN_SAVED_LOADOUT"}) then {
+
+// 	systemChat "KILLCHAIN: no loadout saved";
+
+// // If the loadout variable has been set by a player at some point, load the saved loadout to the player
+// } else {
+
+// 	player setUnitLoadout KILLCHAIN_SAVED_LOADOUT;
+
+// };
